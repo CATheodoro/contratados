@@ -1,0 +1,58 @@
+package br.com.projeto.contratados.rest.controller.usuario;
+
+import br.com.projeto.contratados.domain.service.usuario.ExperienciaService;
+import br.com.projeto.contratados.rest.model.response.ExperienciaResponse;
+import br.com.projeto.contratados.rest.model.request.usuario.experiencia.AtualizacaoExperienciaRequest;
+import br.com.projeto.contratados.rest.model.request.usuario.experiencia.ExperienciaRequest;
+import br.com.projeto.contratados.domain.entity.usuario.Experiencia;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.net.URI;
+
+@RestController
+@RequestMapping("/experiencia")
+public class ExperienciaController {
+
+    @Autowired
+    private ExperienciaService experienciaService;
+
+    @PostMapping
+    private ResponseEntity<ExperienciaResponse> cadastrar(@RequestBody @Valid ExperienciaRequest form, UriComponentsBuilder uriComponentsBuilder){
+
+        Experiencia experiencia = experienciaService.cadastrar(form);
+
+        URI uri = uriComponentsBuilder.path("/experiencia/{id}").buildAndExpand(experiencia.getId()).toUri();
+        return ResponseEntity.created(uri).body(new ExperienciaResponse(experiencia));
+    }
+
+    @GetMapping
+    private ResponseEntity<Page<ExperienciaResponse>> listar(@PathVariable(required = false) String descricao ,
+                                                                        @PageableDefault(page = 0, size = 30, sort = "descricao",direction = Sort.Direction.ASC)Pageable paginacao){
+        Page<Experiencia> experiencia = experienciaService.listar(descricao, paginacao);
+        return ResponseEntity.ok(ExperienciaResponse.converterExperienciaDto(experiencia));
+
+    }
+
+    @PutMapping("/{id}")
+    private ResponseEntity<ExperienciaResponse> atualizar(@PathVariable Integer id, @RequestBody AtualizacaoExperienciaRequest form){
+        Experiencia experiencia = experienciaService.atualizar(id, form);
+
+        return ResponseEntity.ok(new ExperienciaResponse(experiencia));
+    }
+
+    @DeleteMapping("/{id}")
+    private ResponseEntity<ExperienciaResponse> deletar(@PathVariable Integer id) {
+
+        Experiencia experiencia = experienciaService.deletar(id);
+        return ResponseEntity.ok(new ExperienciaResponse(experiencia));
+    }
+
+}
