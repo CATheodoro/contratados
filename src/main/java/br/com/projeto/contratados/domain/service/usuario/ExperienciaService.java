@@ -1,7 +1,7 @@
 package br.com.projeto.contratados.domain.service.usuario;
 
-import br.com.projeto.contratados.config.exception.ExperienciaNaoEncontrada;
-import br.com.projeto.contratados.config.exception.UsuarioNaoEncontrado;
+import br.com.projeto.contratados.config.exception.ExperienciaNaoEncontradaException;
+import br.com.projeto.contratados.config.exception.UsuarioNaoEncontradoException;
 import br.com.projeto.contratados.domain.entity.usuario.Experiencia;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.repository.usuario.ExperienciaRepository;
@@ -29,7 +29,7 @@ public class ExperienciaService {
 
         Optional<Usuario> optional = usuarioRepository.findById(experiencia.getUsuario().getId());
         if (optional.isEmpty())
-            throw new UsuarioNaoEncontrado("Usuário não encontrado, não foi possível adicinar uma formação");
+            throw new UsuarioNaoEncontradoException("Usuário não encontrado, não foi possível adicinar uma formação");
 
         return experienciaRepository.save(experiencia);
     }
@@ -46,7 +46,7 @@ public class ExperienciaService {
 
         Optional<Experiencia> optional = experienciaRepository.findById(id);
         if (optional.isEmpty())
-            throw new ExperienciaNaoEncontrada("Experiência não encontrada, não pode ser atualizada");
+            throw new ExperienciaNaoEncontradaException("Experiência não encontrada, não pode ser atualizada");
 
         Experiencia experiencia = form.atualizacaoExperienciaForm(id, experienciaRepository);
         return experienciaRepository.save(experiencia);
@@ -55,7 +55,7 @@ public class ExperienciaService {
     public Experiencia deletar(Integer id) {
         Optional<Experiencia> optional = experienciaRepository.findById(id);
         if(optional.isEmpty())
-            throw new ExperienciaNaoEncontrada("Experiência não encontrada, não pode ser deletada");
+            throw new ExperienciaNaoEncontradaException("Experiência não encontrada, não pode ser deletada");
 
         Experiencia experiencia = experienciaRepository.getOne(id);
         experienciaRepository.deleteById(id);

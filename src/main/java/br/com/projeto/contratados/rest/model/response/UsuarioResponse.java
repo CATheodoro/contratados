@@ -25,10 +25,10 @@ public class UsuarioResponse {
     private final StatusUsuario status;
     private final LocalDateTime dataCriacaoPerfil;
 
-    private boolean accountNonExpired;
-    private boolean accountNonLocked;
-    private boolean credentialsNonExpired;
-    private boolean enable;
+    private final boolean accountNonExpired;
+    private final boolean accountNonLocked;
+    private final boolean credentialsNonExpired;
+    private final boolean enable;
 
     private List<FormacaoResponse> formacao;
     private List<ExperienciaResponse> experiencia;
@@ -67,5 +67,5 @@ public class UsuarioResponse {
 
     }
 
-    public static Page<UsuarioResponse> converterUsuarioDto(Page<Usuario> usuario){ return usuario.map(UsuarioResponse::new); }
+    public static Page<UsuarioResponse> converter(Page<Usuario> usuario){ return usuario.map(UsuarioResponse::new); }
 }

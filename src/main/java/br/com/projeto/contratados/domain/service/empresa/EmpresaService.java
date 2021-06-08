@@ -1,7 +1,7 @@
 package br.com.projeto.contratados.domain.service.empresa;
 
-import br.com.projeto.contratados.config.exception.EmailJaCadastrado;
-import br.com.projeto.contratados.config.exception.EmpresaNaoEncontrada;
+import br.com.projeto.contratados.config.exception.EmailJaCadastradoException;
+import br.com.projeto.contratados.config.exception.EmpresaNaoEncontradaException;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarEmailEmpresaRequest;
@@ -23,7 +23,7 @@ public class EmpresaService {
     public Empresa cadastrar(EmpresaRequest form) {
         Empresa empresa = form.converter();
         if(empresaRepository.existsByEmail(empresa.getEmail()))
-            throw new EmailJaCadastrado("E-mail já cadastrado");
+            throw new EmailJaCadastradoException("E-mail já cadastrado");
 
         return empresaRepository.save(empresa);
     }
@@ -38,7 +38,7 @@ public class EmpresaService {
     public Empresa atualizar(Integer id, AtualizarEmpresaRequest form) {
         Optional<Empresa> optional = empresaRepository.findById(id);
         if(optional.isEmpty())
-            throw new EmpresaNaoEncontrada("Empresa não encontrada, não pode ser atualizada");
+            throw new EmpresaNaoEncontradaException("Empresa não encontrada, não pode ser atualizada");
 
         Empresa empresa = form.atualizacaoEmpresaForm(id, empresaRepository);
         return empresaRepository.save(empresa);
@@ -47,12 +47,12 @@ public class EmpresaService {
     public Empresa atualizarEmail(Integer id, AtualizarEmailEmpresaRequest form) {
         Optional<Empresa> optional = empresaRepository.findById(id);
         if(optional.isEmpty())
-            throw new EmpresaNaoEncontrada("Empresa não encontrada, E-mail não pode ser atualizada");
+            throw new EmpresaNaoEncontradaException("Empresa não encontrada, E-mail não pode ser atualizada");
 
         Empresa empresa = form.atualizarSenhaEmpresaRequest(id, empresaRepository);
 
         if (empresaRepository.existsByEmail(empresa.getEmail()))
-            throw new EmailJaCadastrado("E-mail já cadastrado");
+            throw new EmailJaCadastradoException("E-mail já cadastrado");
 
         return empresaRepository.save(empresa);
     }
@@ -60,7 +60,7 @@ public class EmpresaService {
     public Empresa atualizarSenha(Integer id, AtualizarSenhaEmpresaRequest form) {
         Optional<Empresa> optional = empresaRepository.findById(id);
         if(optional.isEmpty())
-            throw new EmpresaNaoEncontrada("Empresa não encontrada, senha não pode ser atualizada");
+            throw new EmpresaNaoEncontradaException("Empresa não encontrada, senha não pode ser atualizada");
 
         Empresa empresa = form.atualizarSenhaEmpresaRequest(id, empresaRepository);
         return empresaRepository.save(empresa);

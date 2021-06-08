@@ -2,7 +2,6 @@ package br.com.projeto.contratados.config.exception.handler;
 
 import br.com.projeto.contratados.config.exception.*;
 import br.com.projeto.contratados.config.exception.model.StandardError;
-import br.com.projeto.contratados.domain.entity.usuario.Experiencia;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ApplicationExceptionHandler {
 
-    @ExceptionHandler(EmailJaCadastrado.class)
-    public ResponseEntity<StandardError> emailJaCadastrado(EmailJaCadastrado e, HttpServletRequest request){
+    @ExceptionHandler(EmailJaCadastradoException.class)
+    public ResponseEntity<StandardError> emailJaCadastrado(EmailJaCadastradoException e, HttpServletRequest request){
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
@@ -26,8 +25,8 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
-    @ExceptionHandler(UsuarioNaoEncontrado.class)
-    public ResponseEntity<StandardError> usuarioNaoEncontrado(UsuarioNaoEncontrado e){
+    @ExceptionHandler(UsuarioNaoEncontradoException.class)
+    public ResponseEntity<StandardError> usuarioNaoEncontrado(UsuarioNaoEncontradoException e){
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
@@ -49,8 +48,8 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
-    @ExceptionHandler(FormacaoNaoEncontrada.class)
-    public ResponseEntity<StandardError> formacaoNaoEncontrada(FormacaoNaoEncontrada e){
+    @ExceptionHandler(FormacaoNaoEncontradaException.class)
+    public ResponseEntity<StandardError> formacaoNaoEncontrada(FormacaoNaoEncontradaException e){
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
@@ -60,8 +59,8 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
 
-    @ExceptionHandler(ExperienciaNaoEncontrada.class)
-    public ResponseEntity<StandardError> experienciaNaoEncontrada(ExperienciaNaoEncontrada e){
+    @ExceptionHandler(ExperienciaNaoEncontradaException.class)
+    public ResponseEntity<StandardError> experienciaNaoEncontrada(ExperienciaNaoEncontradaException e){
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
@@ -71,8 +70,8 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
 
-    @ExceptionHandler(EmpresaNaoEncontrada.class)
-    public ResponseEntity<StandardError> empresaNaoEncontrada(EmpresaNaoEncontrada e){
+    @ExceptionHandler(EmpresaNaoEncontradaException.class)
+    public ResponseEntity<StandardError> empresaNaoEncontrada(EmpresaNaoEncontradaException e){
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
@@ -82,8 +81,8 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
 
-    @ExceptionHandler(AnuncioVagaNaoEncontrado.class)
-    public ResponseEntity<StandardError> anuncioVagaNaoEncontrado(AnuncioVagaNaoEncontrado e){
+    @ExceptionHandler(AnuncioVagaNaoEncontradoException.class)
+    public ResponseEntity<StandardError> anuncioVagaNaoEncontrado(AnuncioVagaNaoEncontradoException e){
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
@@ -93,8 +92,8 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
 
-    @ExceptionHandler(SetorCargoNaoEncontrado.class)
-    public ResponseEntity<StandardError> setorCargoNaoEncontrado(SetorCargoNaoEncontrado e){
+    @ExceptionHandler(SetorCargoNaoEncontradoException.class)
+    public ResponseEntity<StandardError> setorCargoNaoEncontrado(SetorCargoNaoEncontradoException e){
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
@@ -104,8 +103,8 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
 
-    @ExceptionHandler(AltenticacaoInvalida.class)
-    public ResponseEntity<StandardError> altenticacaoInvalida(AltenticacaoInvalida e){
+    @ExceptionHandler(AltenticacaoInvalidaException.class)
+    public ResponseEntity<StandardError> altenticacaoInvalida(AltenticacaoInvalidaException e){
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
@@ -115,8 +114,8 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
     }
 
-    @ExceptionHandler(SolicitacaoNaoEncontrada.class)
-    public ResponseEntity<StandardError> solicitacaoNaoEncontrada(SolicitacaoNaoEncontrada e){
+    @ExceptionHandler(SolicitacaoNaoEncontradaException.class)
+    public ResponseEntity<StandardError> solicitacaoNaoEncontrada(SolicitacaoNaoEncontradaException e){
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
@@ -126,8 +125,8 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
 
-    @ExceptionHandler(NaoFoiPossivelAtualizarSolicitacaoEmpresa.class)
-    public ResponseEntity<StandardError> naoFoiPossivelAtualizarSolicitacaoEmpresa(NaoFoiPossivelAtualizarSolicitacaoEmpresa e){
+    @ExceptionHandler(NaoFoiPossivelAtualizarSolicitacaoEmpresaException.class)
+    public ResponseEntity<StandardError> naoFoiPossivelAtualizarSolicitacaoEmpresa(NaoFoiPossivelAtualizarSolicitacaoEmpresaException e){
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
@@ -137,8 +136,8 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
-    @ExceptionHandler(NaoFoiPossivelAtualizarConfirmacaoUsuario.class)
-    public ResponseEntity<StandardError> naoFoiPossivelAtualizarConfirmacaoUsuario(NaoFoiPossivelAtualizarConfirmacaoUsuario e){
+    @ExceptionHandler(NaoFoiPossivelAtualizarConfirmacaoUsuarioException.class)
+    public ResponseEntity<StandardError> naoFoiPossivelAtualizarConfirmacaoUsuario(NaoFoiPossivelAtualizarConfirmacaoUsuarioException e){
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
@@ -148,8 +147,8 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
-    @ExceptionHandler(SolicitacaoJaEnviada.class)
-    public ResponseEntity<StandardError> solicitacaoJaEnviada(SolicitacaoJaEnviada e){
+    @ExceptionHandler(SolicitacaoJaEnviadaException.class)
+    public ResponseEntity<StandardError> solicitacaoJaEnviada(SolicitacaoJaEnviadaException e){
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.BAD_REQUEST.value())

@@ -1,7 +1,7 @@
 package br.com.projeto.contratados.domain.service.empresa;
 
-import br.com.projeto.contratados.config.exception.AnuncioVagaNaoEncontrado;
-import br.com.projeto.contratados.config.exception.EmpresaNaoEncontrada;
+import br.com.projeto.contratados.config.exception.AnuncioVagaNaoEncontradoException;
+import br.com.projeto.contratados.config.exception.EmpresaNaoEncontradaException;
 import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.domain.repository.empresa.AnuncioVagaRepository;
@@ -9,7 +9,6 @@ import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
 import br.com.projeto.contratados.rest.model.request.empresa.anuncio_vaga.AnuncioVagaAtualizarRequest;
 import br.com.projeto.contratados.rest.model.request.empresa.anuncio_vaga.AnuncioVagaAtualizarStatusRequest;
 import br.com.projeto.contratados.rest.model.request.empresa.anuncio_vaga.AnuncioVagaRequest;
-import br.com.projeto.contratados.rest.model.request.empresa.empresa.EmpresaRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +31,7 @@ public class AnuncioVagaService {
 
         Optional<Empresa> optional = empresaRepository.findById(anuncioVaga.getEmpresa().getId());
         if (optional.isEmpty())
-            throw new EmpresaNaoEncontrada("Empresa não encontrada, não foi possível criar o anúncio");
+            throw new EmpresaNaoEncontradaException("Empresa não encontrada, não foi possível criar o anúncio");
 
         return anuncioVagaRepository.save(anuncioVaga);
     }
@@ -45,7 +44,7 @@ public class AnuncioVagaService {
 
         Optional<AnuncioVaga> optional = anuncioVagaRepository.findById(id);
         if (optional.isEmpty())
-            throw new AnuncioVagaNaoEncontrado("Anúncio de Vagas não encontrado, não pode ser atualizado");
+            throw new AnuncioVagaNaoEncontradoException("Anúncio de Vagas não encontrado, não pode ser atualizado");
 
         AnuncioVaga anuncioVaga = form.converter(id, anuncioVagaRepository);
         return anuncioVagaRepository.save(anuncioVaga);
@@ -54,7 +53,7 @@ public class AnuncioVagaService {
     public AnuncioVaga atualizarStatus(Integer id, AnuncioVagaAtualizarStatusRequest form) {
         Optional<AnuncioVaga> optional = anuncioVagaRepository.findById(id);
         if (optional.isEmpty())
-            throw new AnuncioVagaNaoEncontrado("Anúncio de Vagas não encontrado, seu status não pode ser alterado");
+            throw new AnuncioVagaNaoEncontradoException("Anúncio de Vagas não encontrado, seu status não pode ser alterado");
 
         AnuncioVaga anuncioVaga = form.converter(id, anuncioVagaRepository);
         return anuncioVagaRepository.save(anuncioVaga);

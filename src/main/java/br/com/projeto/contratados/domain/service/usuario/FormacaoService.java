@@ -1,7 +1,7 @@
 package br.com.projeto.contratados.domain.service.usuario;
 
-import br.com.projeto.contratados.config.exception.FormacaoNaoEncontrada;
-import br.com.projeto.contratados.config.exception.UsuarioNaoEncontrado;
+import br.com.projeto.contratados.config.exception.FormacaoNaoEncontradaException;
+import br.com.projeto.contratados.config.exception.UsuarioNaoEncontradoException;
 import br.com.projeto.contratados.domain.entity.usuario.Formacao;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.repository.usuario.FormacaoRepository;
@@ -29,7 +29,7 @@ public class FormacaoService {
 
         Optional<Usuario> optional = usuarioRepository.findById(formacao.getUsuario().getId());
         if (optional.isEmpty())
-            throw new UsuarioNaoEncontrado("Usuário não encontrado, não foi possível adicinar uma formação");
+            throw new UsuarioNaoEncontradoException("Usuário não encontrado, não foi possível adicinar uma formação");
 
 
         return formacaoRepository.save(formacao);
@@ -49,7 +49,7 @@ public class FormacaoService {
 
         Optional<Formacao> optional = formacaoRepository.findById(id);
         if (optional.isEmpty())
-            throw new FormacaoNaoEncontrada("Formação não encontrada");
+            throw new FormacaoNaoEncontradaException("Formação não encontrada");
 
         Formacao formacao = form.atualizacaoFormacaoForm(id, formacaoRepository);
         return formacaoRepository.save(formacao);
@@ -59,7 +59,7 @@ public class FormacaoService {
 
         Optional<Formacao> optional = formacaoRepository.findById(id);
         if (optional.isEmpty())
-            throw new FormacaoNaoEncontrada("Formação não encontrada");
+            throw new FormacaoNaoEncontradaException("Formação não encontrada");
 
         Formacao formacao = formacaoRepository.getOne(id);
         formacaoRepository.deleteById(id);

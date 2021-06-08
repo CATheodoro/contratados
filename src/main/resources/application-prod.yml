@@ -1,25 +1,27 @@
 server:
   port: 8080
+# servelet:
+  #    context-path: /api
 
-# data source
+# Sql
 spring:
-  datasource:
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:mem:contratados
-    username: sa
-    password:
-
-  # jpa
+  application:
+    name: contratados-api
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
-  # h2 trocar MySql
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+  datasource:
+    # usuário e senha de conexão com o banco de dados
+    username: root
+    password: password
+    # url de conexão do banco de dados
+    url: jdbc:mysql://localhost:3306/contratados?allowPublicKeyRetrieval=true&sslMode=DISABLED&useSSL=false&serverTimezone=UTC
+
 
 # jwt
 contratados:

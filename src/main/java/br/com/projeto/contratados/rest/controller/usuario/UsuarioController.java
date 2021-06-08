@@ -42,7 +42,7 @@ public class UsuarioController {
                                                           @PageableDefault(page = 0, size = 10, sort = "nome", direction = Sort.Direction.ASC) Pageable paginacao){
 
         Page<Usuario> usuario = usuarioService.listar(nome, paginacao);
-        return ResponseEntity.ok(UsuarioResponse.converterUsuarioDto(usuario));
+        return ResponseEntity.ok(UsuarioResponse.converter(usuario));
     }
 
 

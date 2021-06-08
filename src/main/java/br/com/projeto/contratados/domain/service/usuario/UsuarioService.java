@@ -1,7 +1,7 @@
 package br.com.projeto.contratados.domain.service.usuario;
 
-import br.com.projeto.contratados.config.exception.EmailJaCadastrado;
-import br.com.projeto.contratados.config.exception.UsuarioNaoEncontrado;
+import br.com.projeto.contratados.config.exception.EmailJaCadastradoException;
+import br.com.projeto.contratados.config.exception.UsuarioNaoEncontradoException;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
 import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizacaoUsuarioRequest;
@@ -26,7 +26,7 @@ public class UsuarioService {
         Usuario usuario = request.converter();
 
         if (usuarioRepository.existsByEmail(usuario.getEmail()))
-            throw new EmailJaCadastrado("Email já cadastrado");
+            throw new EmailJaCadastradoException("Email já cadastrado");
 
 
         return usuarioRepository.save(usuario);
@@ -46,7 +46,7 @@ public class UsuarioService {
         Optional<Usuario> optional = usuarioRepository.findById(id);
 
         if(optional.isEmpty())
-            throw new UsuarioNaoEncontrado("Usuario não encontrado");
+            throw new UsuarioNaoEncontradoException("Usuario não encontrado");
 
 
         Usuario usuario = form.atualizacaoUsuarioForm(id, usuarioRepository);
@@ -60,7 +60,7 @@ public class UsuarioService {
         Optional<Usuario> optional = usuarioRepository.findById(id);
 
         if(optional.isEmpty())
-            throw new UsuarioNaoEncontrado("Usuario não encontrado, Senha não alterada");
+            throw new UsuarioNaoEncontradoException("Usuario não encontrado, Senha não alterada");
 
         Usuario usuario = form.atualizarSenhaUsuario(id, usuarioRepository);
         return usuarioRepository.save(usuario);
@@ -70,13 +70,13 @@ public class UsuarioService {
         Optional<Usuario> optional = usuarioRepository.findById(id);
 
         if(optional.isEmpty())
-            throw new UsuarioNaoEncontrado("Usuario não encontrado, E-mail não alterada");
+            throw new UsuarioNaoEncontradoException("Usuario não encontrado, E-mail não alterada");
 
 
         Usuario usuario = form.atualizarEmailUsuario(id, usuarioRepository);
 
         if (usuarioRepository.existsByEmail(usuario.getEmail()))
-            throw new EmailJaCadastrado("Email já cadastrado");
+            throw new EmailJaCadastradoException("Email já cadastrado");
 
 
         return usuarioRepository.save(usuario);

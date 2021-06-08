@@ -6,7 +6,7 @@ import br.com.projeto.contratados.domain.entity.solicitacao.Solicitacao;
 import br.com.projeto.contratados.domain.entity.solicitacao.SolicitacaoEmpresaStatus;
 import br.com.projeto.contratados.domain.entity.solicitacao.SolicitacaoUsuarioStatus;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
-import br.com.projeto.contratados.domain.repository.SolicitacaoInterface;
+import br.com.projeto.contratados.domain.repository.SolicitacaoRepository;
 import br.com.projeto.contratados.domain.repository.empresa.AnuncioVagaRepository;
 import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
 import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoAtualizarEmpresaRequest;
@@ -25,7 +25,7 @@ import java.util.Optional;
 public class SolicitacaoService {
 
     @Autowired
-    private SolicitacaoInterface solicitacaoInterface;
+    private SolicitacaoRepository solicitacaoRepository;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -39,83 +39,83 @@ public class SolicitacaoService {
 
         Optional<AnuncioVaga> anuncioVagaOptional = anuncioVagaRepository.findById(solicitacao.getAnuncioVaga().getId());
         if (anuncioVagaOptional.isEmpty())
-            throw new AnuncioVagaNaoEncontrado("Anúncio de Vaga não encontrado, não foi possível enviar a solicitação");
+            throw new AnuncioVagaNaoEncontradoException("Anúncio de Vaga não encontrado, não foi possível enviar a solicitação");
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(solicitacao.getUsuario().getId());
         if (usuarioOptional.isEmpty())
-            throw new UsuarioNaoEncontrado("Usuário não encontrado, não foi possível enviar a solicitação");
+            throw new UsuarioNaoEncontradoException("Usuário não encontrado, não foi possível enviar a solicitação");
 
-        if (solicitacaoInterface.existsByUsuarioId(solicitacao.getUsuario().getId()) && solicitacaoInterface.existsByAnuncioVagaId(solicitacao.getAnuncioVaga().getId()))
-            throw new SolicitacaoJaEnviada("Usuário já enviou a solicitação");
+        if (solicitacaoRepository.existsByUsuarioId(solicitacao.getUsuario().getId()) && solicitacaoRepository.existsByAnuncioVagaId(solicitacao.getAnuncioVaga().getId()))
+            throw new SolicitacaoJaEnviadaException("Usuário já enviou a solicitação");
 
-        return solicitacaoInterface.save(solicitacao);
+        return solicitacaoRepository.save(solicitacao);
     }
 
 
     public Page<Solicitacao> listar(Pageable paginacao) {
-        return solicitacaoInterface.findAll(paginacao);
+        return solicitacaoRepository.findAll(paginacao);
     }
 
 
 
     public Solicitacao atualizarSolicitacaoEmpresa(Integer id, SolicitacaoAtualizarEmpresaRequest form) throws IOException {
 
-        Optional<Solicitacao> optional = solicitacaoInterface.findById(id);
+        Optional<Solicitacao> optional = solicitacaoRepository.findById(id);
 
         if (optional.isEmpty())
-            throw new SolicitacaoNaoEncontrada("Solicitação não encontrada, não foi possível alterar");
+            throw new SolicitacaoNaoEncontradaException("Solicitação não encontrada, não foi possível alterar");
 
-        Solicitacao solicitacao = form.atualizar(id, solicitacaoInterface);
+        Solicitacao solicitacao = form.atualizar(id, solicitacaoRepository);
 
         if (solicitacao.getSolicitacaoEmpresaStatus() == SolicitacaoEmpresaStatus.RECUSADO)
-            throw new NaoFoiPossivelAtualizarSolicitacaoEmpresa("Não é possível alterar dados, solicitação recusada anteriormente");
+            throw new NaoFoiPossivelAtualizarSolicitacaoEmpresaException("Não é possível alterar dados, solicitação recusada anteriormente");
 
         if (solicitacao.getSolicitacaoEmpresaStatus() == SolicitacaoEmpresaStatus.PENDENTE)
-            throw new NaoFoiPossivelAtualizarSolicitacaoEmpresa("Não é possível alterar dados, status da solicitação ainda está pendente");
+            throw new NaoFoiPossivelAtualizarSolicitacaoEmpresaException("Não é possível alterar dados, status da solicitação ainda está pendente");
 
-        return solicitacaoInterface.save(solicitacao);
+        return solicitacaoRepository.save(solicitacao);
     }
 
 
 
     public Solicitacao solicitacaoEmpresa(Integer id, SolicitacaoEmpresaRequest form) throws IOException {
 
-        Optional<Solicitacao> optional = solicitacaoInterface.findById(id);
+        Optional<Solicitacao> optional = solicitacaoRepository.findById(id);
 
         if (optional.isEmpty())
-            throw new SolicitacaoNaoEncontrada("Solicitação não encontrada, não foi possível enviar sua confirmação");
+            throw new SolicitacaoNaoEncontradaException("Solicitação não encontrada, não foi possível enviar sua confirmação");
 
-        Solicitacao confirmarStatus = solicitacaoInterface.getOne(id);
+        Solicitacao confirmarStatus = solicitacaoRepository.getOne(id);
 
         if (confirmarStatus.getSolicitacaoEmpresaStatus() != SolicitacaoEmpresaStatus.PENDENTE)
-            throw new NaoFoiPossivelAtualizarSolicitacaoEmpresa("Não é possível alterar dados já cadastrado");
+            throw new NaoFoiPossivelAtualizarSolicitacaoEmpresaException("Não é possível alterar dados já cadastrado");
 
-        Solicitacao solicitacao = form.solicitacaoEmpresaRequest(id, solicitacaoInterface);
+        Solicitacao solicitacao = form.solicitacaoEmpresaRequest(id, solicitacaoRepository);
 
-        return solicitacaoInterface.save(solicitacao);
+        return solicitacaoRepository.save(solicitacao);
     }
 
     public Solicitacao solicitacaoUsuario(Integer id, SolicitacaoUsuarioRequest form) {
 
-        Optional<Solicitacao> optional = solicitacaoInterface.findById(id);
+        Optional<Solicitacao> optional = solicitacaoRepository.findById(id);
 
         if (optional.isEmpty())
-            throw new SolicitacaoNaoEncontrada("Solicitação não encontrada, não foi possível confirmar sua solicitação");
+            throw new SolicitacaoNaoEncontradaException("Solicitação não encontrada, não foi possível confirmar sua solicitação");
 
-        Solicitacao confirmarStatus = solicitacaoInterface.getOne(id);
+        Solicitacao confirmarStatus = solicitacaoRepository.getOne(id);
 
         if (confirmarStatus.getSolicitacaoUsuarioStatus() == SolicitacaoUsuarioStatus.CANCELADO)
-            throw new NaoFoiPossivelAtualizarConfirmacaoUsuario("Não foi possível confirmar solicitação, proposta cancelada anteriormenente");
+            throw new NaoFoiPossivelAtualizarConfirmacaoUsuarioException("Não foi possível confirmar solicitação, proposta cancelada anteriormenente");
 
         if (confirmarStatus.getSolicitacaoEmpresaStatus() == SolicitacaoEmpresaStatus.RECUSADO)
-            throw new NaoFoiPossivelAtualizarConfirmacaoUsuario("Não foi possível confirmar solicitação, empresa não aceitou sua solicitação");
+            throw new NaoFoiPossivelAtualizarConfirmacaoUsuarioException("Não foi possível confirmar solicitação, empresa não aceitou sua solicitação");
 
         if (confirmarStatus.getSolicitacaoEmpresaStatus() == SolicitacaoEmpresaStatus.PENDENTE)
-            throw new NaoFoiPossivelAtualizarConfirmacaoUsuario("Não foi possível confirmar solicitação, empresa ainda não checou sua solicitação");
+            throw new NaoFoiPossivelAtualizarConfirmacaoUsuarioException("Não foi possível confirmar solicitação, empresa ainda não checou sua solicitação");
 
-        Solicitacao solicitacao = form.solicitacaoUsuarioRequest(id, solicitacaoInterface);
+        Solicitacao solicitacao = form.solicitacaoUsuarioRequest(id, solicitacaoRepository);
 
-        return solicitacaoInterface.save(solicitacao);
+        return solicitacaoRepository.save(solicitacao);
 
     }
 }

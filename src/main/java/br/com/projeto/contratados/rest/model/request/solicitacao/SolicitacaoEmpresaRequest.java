@@ -3,7 +3,7 @@ package br.com.projeto.contratados.rest.model.request.solicitacao;
 import br.com.projeto.contratados.domain.entity.Endereco;
 import br.com.projeto.contratados.domain.entity.solicitacao.Solicitacao;
 import br.com.projeto.contratados.domain.entity.solicitacao.SolicitacaoEmpresaStatus;
-import br.com.projeto.contratados.domain.repository.SolicitacaoInterface;
+import br.com.projeto.contratados.domain.repository.SolicitacaoRepository;
 import com.github.gilbertotorrezan.viacep.se.ViaCEPClient;
 import com.github.gilbertotorrezan.viacep.shared.ViaCEPEndereco;
 import lombok.Builder;
@@ -27,9 +27,9 @@ public class SolicitacaoEmpresaRequest {
     private Time horaEntrevista;
     private Date dataEntrevista;
 
-    public Solicitacao solicitacaoEmpresaRequest(Integer id, SolicitacaoInterface solicitacaoInterface) throws IOException {
+    public Solicitacao solicitacaoEmpresaRequest(Integer id, SolicitacaoRepository solicitacaoRepository) throws IOException {
 
-        Solicitacao solicitacao = solicitacaoInterface.getOne(id);
+        Solicitacao solicitacao = solicitacaoRepository.getOne(id);
 
         solicitacao.setSolicitacaoEmpresaStatus(this.solicitacaoEmpresaStatus);
 
