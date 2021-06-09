@@ -1,5 +1,6 @@
 package br.com.projeto.contratados.empresa;
 
+import br.com.projeto.contratados.ContratadosApplicationTests;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.helper.MockMvcHelper;
 import br.com.projeto.contratados.rest.model.request.empresa.anuncio_vaga.AnuncioVagaAtualizarRequest;
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.sql.Time;

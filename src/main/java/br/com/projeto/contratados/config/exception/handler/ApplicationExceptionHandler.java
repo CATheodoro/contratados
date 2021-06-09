@@ -1,6 +1,6 @@
 package br.com.projeto.contratados.config.exception.handler;
 
-import br.com.projeto.contratados.config.exception.*;
+import br.com.projeto.contratados.config.exception.excecoes.*;
 import br.com.projeto.contratados.config.exception.model.StandardError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -103,8 +103,8 @@ public class ApplicationExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
 
-    @ExceptionHandler(AltenticacaoInvalidaException.class)
-    public ResponseEntity<StandardError> altenticacaoInvalida(AltenticacaoInvalidaException e){
+    @ExceptionHandler(AutenticacaoInvalidaException.class)
+    public ResponseEntity<StandardError> altenticacaoInvalida(AutenticacaoInvalidaException e){
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())

@@ -23,7 +23,7 @@ public class EmpresaResponse {
 
     public EmpresaResponse(Empresa empresa) {
         this.id = empresa.getId();
-        this.email = empresa.getEmail();
+        this.email = empresa.getUser().getEmail();
         this.nomeFantasia = empresa.getNomeFantasia();
         this.descricao = empresa.getDescricao();
         this.celular = empresa.getCelular();

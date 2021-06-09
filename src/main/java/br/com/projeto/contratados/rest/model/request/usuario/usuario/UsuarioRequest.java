@@ -1,6 +1,8 @@
 package br.com.projeto.contratados.rest.model.request.usuario.usuario;
 
 import br.com.projeto.contratados.domain.entity.*;
+import br.com.projeto.contratados.domain.entity.user.Perfil;
+import br.com.projeto.contratados.domain.entity.user.User;
 import br.com.projeto.contratados.domain.entity.usuario.StatusUsuario;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import com.github.gilbertotorrezan.viacep.se.ViaCEPClient;
@@ -60,19 +62,22 @@ public class UsuarioRequest {
                     .ibge(viaCEPEndereco.getIbge())
                     .build();
         }
+
+        User user = User.builder()
+                .email(this.email)
+                .password(new BCryptPasswordEncoder().encode(this.senha))
+                .perfil(Perfil.USUARIO)
+                .build();
+
+
         return Usuario.builder()
                 .endereco(endereco)
-                .email(email)
-                .senha(new BCryptPasswordEncoder().encode(this.senha))
+                .user(user)
                 .nome(nome)
                 .dataNascimento(dataNascimento)
                 .celular(celular)
                 .telefone(telefone)
                 .status(status)
-                .accountNonExpired(true)
-                .accountNonLocked(true)
-                .credentialsNonExpired(true)
-                .enable(true)
                 .dataCriacaoPerfil(LocalDateTime.now())
                 .build();
     }

@@ -1,5 +1,7 @@
 package br.com.projeto.contratados.usuario;
 
+import br.com.projeto.contratados.ContratadosApplication;
+import br.com.projeto.contratados.ContratadosApplicationTests;
 import br.com.projeto.contratados.domain.entity.Endereco;
 import br.com.projeto.contratados.domain.entity.usuario.StatusUsuario;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
@@ -17,12 +19,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.access.method.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.sql.Date;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
 @SpringBootTest
 @ActiveProfiles("test")
 @EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
@@ -30,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(value = "classpath:cenarios/clean-all.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value = "classpath:cenarios/data-test.sql")
 @Sql(value = "classpath:cenarios/clean-all.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+
 public class UsuarioControllerTest {
 
     @Autowired

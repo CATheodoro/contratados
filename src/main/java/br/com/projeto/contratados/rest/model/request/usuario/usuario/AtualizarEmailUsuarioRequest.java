@@ -18,7 +18,7 @@ public class AtualizarEmailUsuarioRequest {
 
     public Usuario atualizarEmailUsuario(Integer id, UsuarioRepository usuarioRepository){
         Usuario usuario = usuarioRepository.getOne(id);
-        usuario.setEmail(this.email);
+        usuario.getUser().setEmail(this.email);
 
         return usuario;
     }

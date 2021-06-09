@@ -1,7 +1,7 @@
 package br.com.projeto.contratados.domain.service.empresa;
 
-import br.com.projeto.contratados.config.exception.EmailJaCadastradoException;
-import br.com.projeto.contratados.config.exception.EmpresaNaoEncontradaException;
+import br.com.projeto.contratados.config.exception.excecoes.EmailJaCadastradoException;
+import br.com.projeto.contratados.config.exception.excecoes.EmpresaNaoEncontradaException;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarEmailEmpresaRequest;

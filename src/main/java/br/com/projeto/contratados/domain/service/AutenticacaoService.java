@@ -1,6 +1,7 @@
 package br.com.projeto.contratados.domain.service;
 
-import br.com.projeto.contratados.config.exception.AltenticacaoInvalidaException;
+
+import br.com.projeto.contratados.config.exception.excecoes.AutenticacaoInvalidaException;
 import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.rest.model.request.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class AutenticacaoService {
             return tokenService.gerarToken(authentication);
 
         } catch (AuthenticationException e){
-           throw new AltenticacaoInvalidaException(e);
+           throw new AutenticacaoInvalidaException(e);
         }
 
     }

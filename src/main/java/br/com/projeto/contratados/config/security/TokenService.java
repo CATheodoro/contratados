@@ -1,5 +1,6 @@
 package br.com.projeto.contratados.config.security;
 
+import br.com.projeto.contratados.domain.entity.user.User;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -21,13 +22,13 @@ public class TokenService {
     private String secret;
 
     public String gerarToken(Authentication authentication) {
-        Usuario logado = (Usuario) authentication.getPrincipal();
+        User logado = (User) authentication.getPrincipal();
         Date hoje = new Date();
         Date dataExpiracao = new Date((hoje.getTime() + expiration));
 
         return Jwts.builder()
                 .setIssuer("API Contratados")
-                .setSubject(logado.getId().toString())
+                .setSubject(logado.getEmail()) //antes era getID
                 .setIssuedAt(hoje)
                 .setExpiration(dataExpiracao)
                 .signWith(SignatureAlgorithm.HS256, secret)
@@ -43,8 +44,8 @@ public class TokenService {
         }
     }
 
-    public Integer getIdUsuario(String token) {
+    public String getEmailUsuario(String token) {
         Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
-        return Integer.parseInt(claims.getSubject());
+        return claims.getSubject();
     }
 }

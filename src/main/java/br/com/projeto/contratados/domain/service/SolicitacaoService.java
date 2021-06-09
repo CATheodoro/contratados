@@ -1,6 +1,6 @@
 package br.com.projeto.contratados.domain.service;
 
-import br.com.projeto.contratados.config.exception.*;
+import br.com.projeto.contratados.config.exception.excecoes.*;
 import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.domain.entity.solicitacao.Solicitacao;
 import br.com.projeto.contratados.domain.entity.solicitacao.SolicitacaoEmpresaStatus;

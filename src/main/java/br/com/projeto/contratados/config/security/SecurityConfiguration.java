@@ -66,21 +66,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     //Configuracoes de Autorizacao
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .antMatchers("/").permitAll()
+//                .antMatchers("/h2-console/**").permitAll();
+//
+//        http.csrf().disable();
+//        http.headers().frameOptions().disable();
+
         http.authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/h2-console/**").permitAll();
-
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
-
-        /*http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
                 .antMatchers(HttpMethod.GET, "/usuario").permitAll()
                 .antMatchers(HttpMethod.POST, Arrays.toString(PUBLIC_MATCHERS_POST)).permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class); //*/
+                .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
     }
 
 }

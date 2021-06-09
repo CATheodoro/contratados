@@ -1,7 +1,7 @@
 package br.com.projeto.contratados.domain.service.usuario;
 
-import br.com.projeto.contratados.config.exception.FormacaoNaoEncontradaException;
-import br.com.projeto.contratados.config.exception.UsuarioNaoEncontradoException;
+import br.com.projeto.contratados.config.exception.excecoes.FormacaoNaoEncontradaException;
+import br.com.projeto.contratados.config.exception.excecoes.UsuarioNaoEncontradoException;
 import br.com.projeto.contratados.domain.entity.usuario.Formacao;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.repository.usuario.FormacaoRepository;

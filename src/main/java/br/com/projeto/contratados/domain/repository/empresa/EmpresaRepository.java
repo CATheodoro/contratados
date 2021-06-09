@@ -6,10 +6,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
 
     Page<Empresa> findByNomeFantasia(String nomeFantasia, Pageable paginacao);
 
-    boolean existsByEmail(String email);
+    boolean existsByUserEmail(String email);
+
+    Optional<Empresa> findByUserEmail(String email);
 }
