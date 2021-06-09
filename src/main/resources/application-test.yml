@@ -1,5 +1,7 @@
 server:
   port: 8080
+#  servelet:
+#    context-path: /contratados
 
 # data source
 spring:
