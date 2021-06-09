@@ -25,7 +25,7 @@ public class UsuarioService {
     public Usuario cadastrar(UsuarioRequest request) throws IOException {
         Usuario usuario = request.converter();
 
-        if (usuarioRepository.existsByEmail(usuario.getEmail()))
+        if (usuarioRepository.existsByUserEmail(usuario.getUser().getEmail()))
             throw new EmailJaCadastradoException("Email já cadastrado");
 
 
@@ -75,7 +75,7 @@ public class UsuarioService {
 
         Usuario usuario = form.atualizarEmailUsuario(id, usuarioRepository);
 
-        if (usuarioRepository.existsByEmail(usuario.getEmail()))
+        if (usuarioRepository.existsByUserEmail(usuario.getUser().getEmail()))
             throw new EmailJaCadastradoException("Email já cadastrado");
 
 

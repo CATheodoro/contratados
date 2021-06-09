@@ -22,7 +22,7 @@ public class EmpresaService {
 
     public Empresa cadastrar(EmpresaRequest form) {
         Empresa empresa = form.converter();
-        if(empresaRepository.existsByEmail(empresa.getEmail()))
+        if(empresaRepository.existsByUserEmail(empresa.getUser().getEmail()))
             throw new EmailJaCadastradoException("E-mail já cadastrado");
 
         return empresaRepository.save(empresa);
@@ -51,7 +51,7 @@ public class EmpresaService {
 
         Empresa empresa = form.atualizarSenhaEmpresaRequest(id, empresaRepository);
 
-        if (empresaRepository.existsByEmail(empresa.getEmail()))
+        if (empresaRepository.existsByUserEmail(empresa.getUser().getEmail()))
             throw new EmailJaCadastradoException("E-mail já cadastrado");
 
         return empresaRepository.save(empresa);
