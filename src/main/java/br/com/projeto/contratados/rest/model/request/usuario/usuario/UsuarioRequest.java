@@ -67,6 +67,10 @@ public class UsuarioRequest {
                 .email(this.email)
                 .password(new BCryptPasswordEncoder().encode(this.senha))
                 .perfil(Perfil.USUARIO)
+                .accountNonExpired(true)
+                .accountNonLocked(true)
+                .credentialsNonExpired(true)
+                .enable(true)
                 .build();
 
 

@@ -46,7 +46,7 @@ public class Usuario {
     private String telefone;
 
     @Enumerated(EnumType.STRING)
-    private StatusUsuario status = StatusUsuario.DISPONIVEL;
+    private StatusUsuario status;
     private LocalDateTime dataCriacaoPerfil;
 
     @Embedded

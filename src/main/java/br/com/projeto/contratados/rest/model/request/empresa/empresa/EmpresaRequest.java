@@ -40,6 +40,10 @@ public class EmpresaRequest {
                 .email(this.email)
                 .password(new BCryptPasswordEncoder().encode(this.senha))
                 .perfil(Perfil.EMPRESA)
+                .accountNonExpired(true)
+                .accountNonLocked(true)
+                .credentialsNonExpired(true)
+                .enable(true)
                 .build();
 
         return Empresa.builder()

@@ -4,9 +4,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import java.util.*;
 
 @Embeddable
@@ -17,10 +15,19 @@ import java.util.*;
 @AllArgsConstructor(access =AccessLevel.PRIVATE)
 public class User implements UserDetails {
 
+
+    @Column(length = 50, nullable = false, unique = true)
     private String email;
+    @Column(length = 60, nullable = false)
     private String password;
+
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
+
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enable;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -39,21 +46,21 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enable;
     }
 }
