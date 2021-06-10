@@ -157,4 +157,15 @@ public class ApplicationExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
+
+    @ExceptionHandler(UserAuthException.class)
+    public ResponseEntity<StandardError> userAuthException(UserAuthException e){
+
+        StandardError err =  StandardError.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(e.getMessage())
+                .timeStamp(System.currentTimeMillis())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
 }

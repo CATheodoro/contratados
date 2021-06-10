@@ -1,5 +1,8 @@
 package br.com.projeto.contratados.rest.controller.usuario;
 
+import antlr.Token;
+import br.com.projeto.contratados.config.security.TokenService;
+import br.com.projeto.contratados.domain.entity.user.User;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.service.usuario.UsuarioService;
 import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizacaoUsuarioRequest;
@@ -28,6 +31,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping
     @Transactional
     private ResponseEntity<UsuarioResponse> cadastrar (@RequestBody @Valid UsuarioRequest form, UriComponentsBuilder uriComponentsBuilder) throws IOException {
@@ -49,7 +55,9 @@ public class UsuarioController {
     @PutMapping("/{id}")
     @Transactional
     private ResponseEntity<UsuarioResponse> atualizar (@PathVariable Integer id, @RequestBody @Valid AtualizacaoUsuarioRequest form) throws IOException {
-        Usuario usuario = usuarioService.atualizar(id, form);
+        Integer idUsuario = tokenService.getAuthenticatedUsuario();
+        Usuario usuario = usuarioService.atualizar(idUsuario, form);
+
         return ResponseEntity.ok(new UsuarioResponse(usuario));
     }
 

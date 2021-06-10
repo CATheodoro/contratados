@@ -49,11 +49,10 @@ public class UsuarioService {
 
     public Usuario atualizar(Integer id, AtualizacaoUsuarioRequest form) throws IOException {
 
-        Optional<Usuario> optional = usuarioRepository.findById(id);
+        Optional<User> optional = userRepository.findById(id);
 
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuario não encontrado");
-
 
         Usuario usuario = form.atualizacaoUsuarioForm(id, usuarioRepository);
 

@@ -26,7 +26,7 @@ public class EmpresaService {
 
     public Empresa cadastrar(EmpresaRequest form) {
         Empresa empresa = form.converter();
-        if(userRepository.existsByEmail(empresa.getEmail()))
+        if (userRepository.existsByEmail(empresa.getEmail()))
             throw new EmailJaCadastradoException("E-mail já cadastrado");
 
         return empresaRepository.save(empresa);
@@ -41,7 +41,7 @@ public class EmpresaService {
 
     public Empresa atualizar(Integer id, AtualizarEmpresaRequest form) {
         Optional<Empresa> optional = empresaRepository.findById(id);
-        if(optional.isEmpty())
+        if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, não pode ser atualizada");
 
         Empresa empresa = form.atualizacaoEmpresaForm(id, empresaRepository);
@@ -50,20 +50,21 @@ public class EmpresaService {
 
     public Empresa atualizarEmail(Integer id, AtualizarEmailEmpresaRequest form) {
         Optional<Empresa> optional = empresaRepository.findById(id);
-        if(optional.isEmpty())
+        if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, E-mail não pode ser atualizada");
 
         Empresa empresa = form.atualizarSenhaEmpresaRequest(id, empresaRepository);
 
-//        if (empresaRepository.existsByUserEmail(empresa.getEmail()))
-//            throw new EmailJaCadastradoException("E-mail já cadastrado");
+        if (userRepository.existsByEmail(empresa.getEmail()))
+            throw new EmailJaCadastradoException("E-mail já cadastrado");
 
         return empresaRepository.save(empresa);
     }
 
+
     public Empresa atualizarSenha(Integer id, AtualizarSenhaEmpresaRequest form) {
         Optional<Empresa> optional = empresaRepository.findById(id);
-        if(optional.isEmpty())
+        if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, senha não pode ser atualizada");
 
         Empresa empresa = form.atualizarSenhaEmpresaRequest(id, empresaRepository);

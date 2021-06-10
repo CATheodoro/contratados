@@ -1,16 +1,18 @@
 package br.com.projeto.contratados.config.security;
 
+import br.com.projeto.contratados.config.exception.excecoes.UserAuthException;
+import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.domain.entity.user.User;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class TokenService {
@@ -23,12 +25,12 @@ public class TokenService {
 
     public String gerarToken(Authentication authentication) {
         User logado = (User) authentication.getPrincipal();
-        Date hoje = new Date();
-        Date dataExpiracao = new Date((hoje.getTime() + expiration));
+        var hoje = new Date();
+        var dataExpiracao = new Date((hoje.getTime() + expiration));
 
         return Jwts.builder()
                 .setIssuer("API Contratados")
-                .setSubject(logado.getEmail()) //antes era getID
+                .setSubject(logado.getId().toString())
                 .setIssuedAt(hoje)
                 .setExpiration(dataExpiracao)
                 .signWith(SignatureAlgorithm.HS256, secret)
@@ -39,13 +41,47 @@ public class TokenService {
         try {
             Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public String getEmailUsuario(String token) {
-        Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
-        return claims.getSubject();
+    public Integer getIdUser(String token) {
+        var claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
+        return Integer.parseInt(claims.getSubject());
     }
+
+    public Integer getAuthenticatedUsuario() {
+
+        try {
+            Optional<Object> principal = (Optional<Object>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+
+            if (principal.isPresent() && principal.get() instanceof Usuario) {
+                return ((Usuario)principal.get()).getId();
+            }
+            throw new UserAuthException("Não foi possível recuperar id do usuário");
+
+        } catch (Exception e) {
+            throw new UserAuthException(e.getMessage());
+        }
+    }
+
+    public Integer getAuthenticatedEmpresa() {
+
+        try {
+            Optional<Object> principal = (Optional<Object>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+
+            if (principal.isPresent() && principal.get() instanceof Empresa) {
+                return ((Empresa)principal.get()).getId();
+            }
+            throw new UserAuthException("Não foi possível recuperar id do empresa");
+
+        } catch (Exception e) {
+            throw new UserAuthException(e.getMessage());
+        }
+    }
+
+
 }
