@@ -25,7 +25,7 @@ public class FormacaoService {
     private UsuarioRepository usuarioRepository;
 
     public Formacao cadastrar(FormacaoRequest form) {
-        Formacao formacao = form.converte();
+        var formacao = form.converte();
 
         Optional<Usuario> optional = usuarioRepository.findById(formacao.getUsuario().getId());
         if (optional.isEmpty())
@@ -51,7 +51,7 @@ public class FormacaoService {
         if (optional.isEmpty())
             throw new FormacaoNaoEncontradaException("Formação não encontrada");
 
-        Formacao formacao = form.atualizacaoFormacaoForm(id, formacaoRepository);
+        var formacao = form.atualizacaoFormacaoForm(id, formacaoRepository);
         return formacaoRepository.save(formacao);
     }
 
@@ -61,7 +61,7 @@ public class FormacaoService {
         if (optional.isEmpty())
             throw new FormacaoNaoEncontradaException("Formação não encontrada");
 
-        Formacao formacao = formacaoRepository.getOne(id);
+        var formacao = formacaoRepository.getOne(id);
         formacaoRepository.deleteById(id);
         return formacao;
     }

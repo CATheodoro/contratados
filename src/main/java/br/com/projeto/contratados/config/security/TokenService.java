@@ -56,7 +56,6 @@ public class TokenService {
         try {
             Optional<Object> principal = (Optional<Object>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-
             if (principal.isPresent() && principal.get() instanceof Usuario) {
                 return ((Usuario)principal.get()).getId();
             }
@@ -71,7 +70,6 @@ public class TokenService {
 
         try {
             Optional<Object> principal = (Optional<Object>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
 
             if (principal.isPresent() && principal.get() instanceof Empresa) {
                 return ((Empresa)principal.get()).getId();

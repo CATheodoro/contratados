@@ -4,7 +4,6 @@ import br.com.projeto.contratados.domain.entity.Endereco;
 import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import com.github.gilbertotorrezan.viacep.se.ViaCEPClient;
-import com.github.gilbertotorrezan.viacep.shared.ViaCEPEndereco;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,10 +33,10 @@ public class AnuncioVagaRequest {
     public AnuncioVaga converter() throws IOException {
 
         //Buscar Cep
-        ViaCEPClient viaCEPClient = new ViaCEPClient();
-        ViaCEPEndereco viaCEPEndereco = viaCEPClient.getEndereco(enderecoCep);
+        var viaCEPClient = new ViaCEPClient();
+        var viaCEPEndereco = viaCEPClient.getEndereco(enderecoCep);
 
-        Endereco endereco = Endereco.builder()
+        var endereco = Endereco.builder()
                 .cep(viaCEPEndereco.getCep())
                 .logradouro(viaCEPEndereco.getLogradouro())
                 .complemento(viaCEPEndereco.getComplemento())

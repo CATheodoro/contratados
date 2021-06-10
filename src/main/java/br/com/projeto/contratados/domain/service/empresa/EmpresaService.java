@@ -25,7 +25,7 @@ public class EmpresaService {
     private UserRepository userRepository;
 
     public Empresa cadastrar(EmpresaRequest form) {
-        Empresa empresa = form.converter();
+        var empresa = form.converter();
         if (userRepository.existsByEmail(empresa.getEmail()))
             throw new EmailJaCadastradoException("E-mail já cadastrado");
 
@@ -44,7 +44,7 @@ public class EmpresaService {
         if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, não pode ser atualizada");
 
-        Empresa empresa = form.atualizacaoEmpresaForm(id, empresaRepository);
+        var empresa = form.atualizacaoEmpresaForm(id, empresaRepository);
         return empresaRepository.save(empresa);
     }
 
@@ -53,7 +53,7 @@ public class EmpresaService {
         if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, E-mail não pode ser atualizada");
 
-        Empresa empresa = form.atualizarSenhaEmpresaRequest(id, empresaRepository);
+        var empresa = form.atualizarSenhaEmpresaRequest(id, empresaRepository);
 
         if (userRepository.existsByEmail(empresa.getEmail()))
             throw new EmailJaCadastradoException("E-mail já cadastrado");
@@ -67,7 +67,7 @@ public class EmpresaService {
         if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, senha não pode ser atualizada");
 
-        Empresa empresa = form.atualizarSenhaEmpresaRequest(id, empresaRepository);
+        var empresa = form.atualizarSenhaEmpresaRequest(id, empresaRepository);
         return empresaRepository.save(empresa);
     }
 }

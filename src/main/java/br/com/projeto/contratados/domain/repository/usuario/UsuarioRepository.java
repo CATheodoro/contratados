@@ -15,4 +15,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Page<Usuario> findByNome(String nome, Pageable pageable);
 
+    boolean existsByEmail(String email);
 }

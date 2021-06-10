@@ -4,13 +4,10 @@ import br.com.projeto.contratados.domain.entity.Endereco;
 import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.domain.repository.empresa.AnuncioVagaRepository;
 import com.github.gilbertotorrezan.viacep.se.ViaCEPClient;
-import com.github.gilbertotorrezan.viacep.shared.ViaCEPEndereco;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.sql.Time;
 
@@ -26,11 +23,11 @@ public class AnuncioVagaAtualizarRequest {
 
 
     public AnuncioVaga converter(Integer id,AnuncioVagaRepository anuncioVagaRepository) throws IOException {
-        AnuncioVaga anuncioVaga = anuncioVagaRepository.getOne(id);
+        var anuncioVaga = anuncioVagaRepository.getOne(id);
 
         if (enderecoCep != null){
-            ViaCEPClient viaCEPClient = new ViaCEPClient();
-            ViaCEPEndereco viaCEPEndereco = viaCEPClient.getEndereco(enderecoCep);
+            var viaCEPClient = new ViaCEPClient();
+            var viaCEPEndereco = viaCEPClient.getEndereco(enderecoCep);
 
             anuncioVaga.setEndereco(Endereco.builder()
                     .cep(viaCEPEndereco.getCep())

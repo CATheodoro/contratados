@@ -16,7 +16,7 @@ public class SolicitacaoUsuarioRequest {
     private SolicitacaoUsuarioStatus solicitacaoUsuarioStatus;
 
     public Solicitacao solicitacaoUsuarioRequest(Integer id, SolicitacaoRepository solicitacaoRepository){
-        Solicitacao solicitacao = solicitacaoRepository.getOne(id);
+        var solicitacao = solicitacaoRepository.getOne(id);
 
         solicitacao.setSolicitacaoUsuarioStatus(this.solicitacaoUsuarioStatus);
 

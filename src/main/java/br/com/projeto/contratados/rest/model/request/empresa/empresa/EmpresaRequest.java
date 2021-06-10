@@ -3,7 +3,6 @@ package br.com.projeto.contratados.rest.model.request.empresa.empresa;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.domain.entity.empresa.EmpresaBuilder;
 import br.com.projeto.contratados.domain.entity.user.Perfil;
-import br.com.projeto.contratados.domain.entity.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

@@ -5,15 +5,13 @@ import br.com.projeto.contratados.domain.repository.empresa.AnuncioVagaRepositor
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.IOException;
-
 @Getter
 @Setter
 public class AnuncioVagaAtualizarStatusRequest {
     private boolean statusAnuncio;
 
     public AnuncioVaga converter(Integer id, AnuncioVagaRepository anuncioVagaRepository) {
-        AnuncioVaga anuncioVaga = anuncioVagaRepository.getOne(id);
+        var anuncioVaga = anuncioVagaRepository.getOne(id);
 
         if (!statusAnuncio)
             anuncioVaga.setStatusAnuncio(false);

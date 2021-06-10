@@ -25,7 +25,7 @@ public class ExperienciaService {
 
     public Experiencia cadastrar(ExperienciaRequest form) {
 
-        Experiencia experiencia = form.converte();
+        var experiencia = form.converte();
 
         Optional<Usuario> optional = usuarioRepository.findById(experiencia.getUsuario().getId());
         if (optional.isEmpty())
@@ -48,7 +48,7 @@ public class ExperienciaService {
         if (optional.isEmpty())
             throw new ExperienciaNaoEncontradaException("Experiência não encontrada, não pode ser atualizada");
 
-        Experiencia experiencia = form.atualizacaoExperienciaForm(id, experienciaRepository);
+        var experiencia = form.atualizacaoExperienciaForm(id, experienciaRepository);
         return experienciaRepository.save(experiencia);
     }
 
@@ -57,7 +57,7 @@ public class ExperienciaService {
         if(optional.isEmpty())
             throw new ExperienciaNaoEncontradaException("Experiência não encontrada, não pode ser deletada");
 
-        Experiencia experiencia = experienciaRepository.getOne(id);
+        var experiencia = experienciaRepository.getOne(id);
         experienciaRepository.deleteById(id);
         return experiencia;
 

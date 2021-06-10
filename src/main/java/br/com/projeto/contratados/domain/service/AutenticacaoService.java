@@ -7,7 +7,6 @@ import br.com.projeto.contratados.rest.model.request.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ public class AutenticacaoService {
         UsernamePasswordAuthenticationToken dadosLogin = form.converter();
 
         try {
-            Authentication authentication = authenticationManager.authenticate(dadosLogin);
+            var authentication = authenticationManager.authenticate(dadosLogin);
             return tokenService.gerarToken(authentication);
 
         } catch (AuthenticationException e){

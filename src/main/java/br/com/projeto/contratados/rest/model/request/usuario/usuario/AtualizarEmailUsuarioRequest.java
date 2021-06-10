@@ -2,7 +2,6 @@ package br.com.projeto.contratados.rest.model.request.usuario.usuario;
 
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +16,7 @@ public class AtualizarEmailUsuarioRequest {
     private String email;
 
     public Usuario atualizarEmailUsuario(Integer id, UsuarioRepository usuarioRepository){
-        Usuario usuario = usuarioRepository.getOne(id);
+        var usuario = usuarioRepository.getOne(id);
         usuario.setEmail(this.email);
 
         return usuario;

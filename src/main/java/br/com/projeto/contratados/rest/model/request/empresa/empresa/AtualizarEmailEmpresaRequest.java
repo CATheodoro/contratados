@@ -2,7 +2,6 @@ package br.com.projeto.contratados.rest.model.request.empresa.empresa;
 
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +16,7 @@ public class AtualizarEmailEmpresaRequest {
     private String email;
 
     public Empresa atualizarSenhaEmpresaRequest(Integer id, EmpresaRepository empresaRepository){
-        Empresa empresa = empresaRepository.getOne(id);
+        var empresa = empresaRepository.getOne(id);
 
         empresa.setEmail(this.email);
 

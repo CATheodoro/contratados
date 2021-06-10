@@ -17,7 +17,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/anunciovaga")
@@ -27,9 +26,9 @@ public class AnuncioVagaController {
 
     @PostMapping
     public ResponseEntity<AnuncioVagaResponse> cadastrar(@RequestBody @Valid AnuncioVagaRequest form, UriComponentsBuilder uriComponentsBuilder) throws IOException {
-        AnuncioVaga anuncioVaga = anuncioVagaService.cadastrar(form);
+        var anuncioVaga = anuncioVagaService.cadastrar(form);
 
-        URI uri = uriComponentsBuilder.path("/anunciovaga/{id}").buildAndExpand(anuncioVaga.getId()).toUri();
+        var uri = uriComponentsBuilder.path("/anunciovaga/{id}").buildAndExpand(anuncioVaga.getId()).toUri();
         return ResponseEntity.created(uri).body(new AnuncioVagaResponse(anuncioVaga));
     }
 
@@ -43,14 +42,14 @@ public class AnuncioVagaController {
     @PutMapping("/{id}")
     public ResponseEntity<AnuncioVagaResponse> atualizar(@PathVariable Integer id, @RequestBody @Valid AnuncioVagaAtualizarRequest form) throws IOException {
 
-        AnuncioVaga anuncioVaga = anuncioVagaService.atualizar(id, form);
+        var anuncioVaga = anuncioVagaService.atualizar(id, form);
         return ResponseEntity.ok(new AnuncioVagaResponse(anuncioVaga));
 
     }
 
     @PutMapping("/status/{id}")
     public ResponseEntity<AnuncioVagaResponse> atualizarStatus(@PathVariable Integer id, @RequestBody @Valid AnuncioVagaAtualizarStatusRequest form){
-        AnuncioVaga anuncioVaga = anuncioVagaService.atualizarStatus(id, form);
+        var anuncioVaga = anuncioVagaService.atualizarStatus(id, form);
         return ResponseEntity.ok(new AnuncioVagaResponse(anuncioVaga));
     }
 
