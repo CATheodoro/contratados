@@ -14,18 +14,14 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Usuario {
+@Table(name = "usuario")
+@PrimaryKeyJoinColumn(name = "id_user")
+public class Usuario extends User {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    //Chaves Estrangeiras
     @OneToMany(mappedBy = "usuario")
     private List<Formacao> formacao = new ArrayList<>();
     @OneToMany(mappedBy = "usuario")
@@ -49,6 +45,5 @@ public class Usuario {
     private StatusUsuario status;
     private LocalDateTime dataCriacaoPerfil;
 
-    @Embedded
-    private User user;
+
 }

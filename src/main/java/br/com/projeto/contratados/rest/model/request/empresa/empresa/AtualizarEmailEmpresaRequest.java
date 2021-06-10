@@ -19,7 +19,7 @@ public class AtualizarEmailEmpresaRequest {
     public Empresa atualizarSenhaEmpresaRequest(Integer id, EmpresaRepository empresaRepository){
         Empresa empresa = empresaRepository.getOne(id);
 
-        empresa.getUser().setEmail(this.email);
+        empresa.setEmail(this.email);
 
         return empresa;
     }

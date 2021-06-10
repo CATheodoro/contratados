@@ -7,14 +7,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.*;
 
-@Embeddable
+@Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor(access =AccessLevel.PRIVATE)
+@AllArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(length = 50, nullable = false, unique = true)
     private String email;
@@ -28,6 +31,16 @@ public class User implements UserDetails {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enable;
+
+    public User(String email, String password, Perfil perfil, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enable) {
+        this.email = email;
+        this.password = password;
+        this.perfil = perfil;
+        this.accountNonExpired = accountNonExpired;
+        this.accountNonLocked = accountNonLocked;
+        this.credentialsNonExpired = credentialsNonExpired;
+        this.enable = enable;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

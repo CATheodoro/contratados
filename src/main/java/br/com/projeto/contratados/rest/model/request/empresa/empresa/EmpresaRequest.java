@@ -1,6 +1,7 @@
 package br.com.projeto.contratados.rest.model.request.empresa.empresa;
 
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
+import br.com.projeto.contratados.domain.entity.empresa.EmpresaBuilder;
 import br.com.projeto.contratados.domain.entity.user.Perfil;
 import br.com.projeto.contratados.domain.entity.user.User;
 import lombok.Builder;
@@ -36,7 +37,8 @@ public class EmpresaRequest {
 
     public Empresa converter() {
 
-        User user = User.builder()
+
+        return EmpresaBuilder.builder()
                 .email(this.email)
                 .password(new BCryptPasswordEncoder().encode(this.senha))
                 .perfil(Perfil.EMPRESA)
@@ -44,10 +46,6 @@ public class EmpresaRequest {
                 .accountNonLocked(true)
                 .credentialsNonExpired(true)
                 .enable(true)
-                .build();
-
-        return Empresa.builder()
-                .user(user)
                 .nomeFantasia(this.nomeFantasia)
                 .descricao(this.descricao)
                 .celular(this.celular)

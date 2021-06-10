@@ -13,7 +13,5 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
 
     Page<Empresa> findByNomeFantasia(String nomeFantasia, Pageable paginacao);
 
-    boolean existsByUserEmail(String email);
 
-    Optional<Empresa> findByUserEmail(String email);
 }

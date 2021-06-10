@@ -4,6 +4,7 @@ import br.com.projeto.contratados.config.exception.excecoes.EmailJaCadastradoExc
 import br.com.projeto.contratados.config.exception.excecoes.EmpresaNaoEncontradaException;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
+import br.com.projeto.contratados.domain.repository.user.UserRepository;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarEmailEmpresaRequest;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarSenhaEmpresaRequest;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarEmpresaRequest;
@@ -20,9 +21,12 @@ public class EmpresaService {
     @Autowired
     private EmpresaRepository empresaRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public Empresa cadastrar(EmpresaRequest form) {
         Empresa empresa = form.converter();
-        if(empresaRepository.existsByUserEmail(empresa.getUser().getEmail()))
+        if(userRepository.existsByEmail(empresa.getEmail()))
             throw new EmailJaCadastradoException("E-mail já cadastrado");
 
         return empresaRepository.save(empresa);
@@ -51,8 +55,8 @@ public class EmpresaService {
 
         Empresa empresa = form.atualizarSenhaEmpresaRequest(id, empresaRepository);
 
-        if (empresaRepository.existsByUserEmail(empresa.getUser().getEmail()))
-            throw new EmailJaCadastradoException("E-mail já cadastrado");
+//        if (empresaRepository.existsByUserEmail(empresa.getEmail()))
+//            throw new EmailJaCadastradoException("E-mail já cadastrado");
 
         return empresaRepository.save(empresa);
     }

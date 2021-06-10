@@ -37,7 +37,7 @@ public class UsuarioResponse {
     public UsuarioResponse(Usuario usuario){
         this.id = usuario.getId();
         this.nome = usuario.getNome();
-        this.email = usuario.getUser().getEmail();
+        this.email = usuario.getEmail();
         this.dataNascimento = usuario.getDataNascimento();
         this.celular = usuario.getCelular();
         this.telefone = usuario.getTelefone();
@@ -57,10 +57,10 @@ public class UsuarioResponse {
         this.status = usuario.getStatus();
         this.dataCriacaoPerfil = usuario.getDataCriacaoPerfil();
 
-        this.accountNonExpired = usuario.getUser().isAccountNonExpired();
-        this.accountNonLocked = usuario.getUser().isAccountNonLocked();
-        this.credentialsNonExpired = usuario.getUser().isCredentialsNonExpired();
-        this.enable = usuario.getUser().isEnabled();
+        this.accountNonExpired = usuario.isAccountNonExpired();
+        this.accountNonLocked = usuario.isAccountNonLocked();
+        this.credentialsNonExpired = usuario.isCredentialsNonExpired();
+        this.enable = usuario.isEnabled();
         //this.formacao = usuario.getFormacao();
         //this.experiencia = usuario.getExperiencia();
         //this.solicitacao = usuario.getSolicitacao();

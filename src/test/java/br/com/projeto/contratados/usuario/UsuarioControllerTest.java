@@ -126,6 +126,7 @@ public class UsuarioControllerTest {
     public void deveRetornarCreatedQuandoCadastrarUsuario() throws Exception {
 
 
+
         UsuarioRequest usuarioRequest = UsuarioRequest.builder()
                 .enderecoCep("19804310")
                 .email("carlosatheodorodamasceno@gmail.com")

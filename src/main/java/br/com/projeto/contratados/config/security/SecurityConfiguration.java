@@ -2,6 +2,7 @@ package br.com.projeto.contratados.config.security;
 
 
 import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
+import br.com.projeto.contratados.domain.repository.user.UserRepository;
 import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,10 +32,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private TokenService tokenService;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UserRepository userRepository;
 
-    @Autowired
-    private EmpresaRepository empresaRepository;
 
     private static final String[] PUBLIC_MATCHERS_GET = {
             "/usuario",
@@ -84,7 +83,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository,empresaRepository), UsernamePasswordAuthenticationFilter.class);
+                .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
     }
 
 }

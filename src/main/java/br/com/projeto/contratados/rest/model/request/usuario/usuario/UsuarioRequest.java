@@ -2,9 +2,9 @@ package br.com.projeto.contratados.rest.model.request.usuario.usuario;
 
 import br.com.projeto.contratados.domain.entity.*;
 import br.com.projeto.contratados.domain.entity.user.Perfil;
-import br.com.projeto.contratados.domain.entity.user.User;
 import br.com.projeto.contratados.domain.entity.usuario.StatusUsuario;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
+import br.com.projeto.contratados.domain.entity.usuario.UsuarioBuilder;
 import com.github.gilbertotorrezan.viacep.se.ViaCEPClient;
 import com.github.gilbertotorrezan.viacep.shared.ViaCEPEndereco;
 import lombok.Builder;
@@ -63,7 +63,8 @@ public class UsuarioRequest {
                     .build();
         }
 
-        User user = User.builder()
+
+        return UsuarioBuilder.builder()
                 .email(this.email)
                 .password(new BCryptPasswordEncoder().encode(this.senha))
                 .perfil(Perfil.USUARIO)
@@ -71,12 +72,7 @@ public class UsuarioRequest {
                 .accountNonLocked(true)
                 .credentialsNonExpired(true)
                 .enable(true)
-                .build();
-
-
-        return Usuario.builder()
                 .endereco(endereco)
-                .user(user)
                 .nome(nome)
                 .dataNascimento(dataNascimento)
                 .celular(celular)
@@ -85,4 +81,5 @@ public class UsuarioRequest {
                 .dataCriacaoPerfil(LocalDateTime.now())
                 .build();
     }
+
 }

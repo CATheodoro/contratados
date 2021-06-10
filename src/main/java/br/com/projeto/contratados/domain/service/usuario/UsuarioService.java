@@ -2,7 +2,10 @@ package br.com.projeto.contratados.domain.service.usuario;
 
 import br.com.projeto.contratados.config.exception.excecoes.EmailJaCadastradoException;
 import br.com.projeto.contratados.config.exception.excecoes.UsuarioNaoEncontradoException;
+import br.com.projeto.contratados.domain.entity.user.Perfil;
+import br.com.projeto.contratados.domain.entity.user.User;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
+import br.com.projeto.contratados.domain.repository.user.UserRepository;
 import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
 import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizacaoUsuarioRequest;
 import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizarEmailUsuarioRequest;
@@ -21,16 +24,19 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     public Usuario cadastrar(UsuarioRequest request) throws IOException {
         Usuario usuario = request.converter();
 
-        if (usuarioRepository.existsByUserEmail(usuario.getUser().getEmail()))
+        if (userRepository.existsByEmail(usuario.getEmail()))
             throw new EmailJaCadastradoException("Email já cadastrado");
-
 
         return usuarioRepository.save(usuario);
     }
+
 
 
     public Page<Usuario> listar(String nome, Pageable paginacao) {
@@ -75,8 +81,8 @@ public class UsuarioService {
 
         Usuario usuario = form.atualizarEmailUsuario(id, usuarioRepository);
 
-        if (usuarioRepository.existsByUserEmail(usuario.getUser().getEmail()))
-            throw new EmailJaCadastradoException("Email já cadastrado");
+//        if (usuarioRepository.existsByUserEmail(usuario.getEmail()))
+//            throw new EmailJaCadastradoException("Email já cadastrado");
 
 
         return usuarioRepository.save(usuario);

@@ -1,9 +1,7 @@
 package br.com.projeto.contratados.config.security;
 
-import br.com.projeto.contratados.domain.entity.empresa.Empresa;
-import br.com.projeto.contratados.domain.entity.usuario.Usuario;
-import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
-import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
+import br.com.projeto.contratados.domain.entity.user.User;
+import br.com.projeto.contratados.domain.repository.user.UserRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,13 +16,11 @@ import java.util.Optional;
 public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 
     private TokenService tokenService;
-    private UsuarioRepository usuarioRepository;
-    private EmpresaRepository empresaRepository;
+    private UserRepository userRepository;
 
-    public AutenticacaoViaTokenFilter(TokenService tokenService, UsuarioRepository usuarioRepository,EmpresaRepository empresaRepository) {
+    public AutenticacaoViaTokenFilter(TokenService tokenService, UserRepository userRepository) {
         this.tokenService = tokenService;
-        this.usuarioRepository = usuarioRepository;
-        this.empresaRepository = empresaRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -32,7 +28,7 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 
         String token = recuperarToken(httpServletRequest);
         Boolean valido = tokenService.tokenIsValid(token);
-        if(valido){
+        if (valido) {
             autenticarUsuario(token);
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
@@ -40,17 +36,9 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 
     private void autenticarUsuario(String token) {
         String emailUsuario = tokenService.getEmailUsuario(token); //Antes era findById
-        Optional<Usuario> usuario = usuarioRepository.findByUserEmail(emailUsuario);
-        Optional<Empresa> empresa = empresaRepository.findByUserEmail(emailUsuario);
-        UsernamePasswordAuthenticationToken authentication = null;
-        if(usuario.isPresent()){
-            var user = usuario.get();
-            authentication = new UsernamePasswordAuthenticationToken(usuario, null, user.getUser().getAuthorities());
-        }
-        if(empresa.isPresent()){
-            var emp = empresa.get();
-           authentication = new UsernamePasswordAuthenticationToken(usuario, null, emp.getUser().getAuthorities());
-        }
+        Optional<User> user = userRepository.findByEmail(emailUsuario);
+
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.get().getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
@@ -58,7 +46,7 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
     private String recuperarToken(HttpServletRequest httpServletRequest) {
 
         String token = httpServletRequest.getHeader("Authorization");
-        if (token == null || token.isEmpty() || !token.startsWith("Bearer")){
+        if (token == null || token.isEmpty() || !token.startsWith("Bearer")) {
             return null;
         }
         return token.substring(7, token.length());

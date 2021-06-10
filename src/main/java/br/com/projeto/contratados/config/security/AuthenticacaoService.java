@@ -1,9 +1,7 @@
 package br.com.projeto.contratados.config.security;
 
-import br.com.projeto.contratados.domain.entity.empresa.Empresa;
-import br.com.projeto.contratados.domain.entity.usuario.Usuario;
-import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
-import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
+import br.com.projeto.contratados.domain.entity.user.User;
+import br.com.projeto.contratados.domain.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,23 +14,16 @@ import java.util.Optional;
 public class AuthenticacaoService implements UserDetailsService {
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    UserRepository userRepository;
 
-    @Autowired
-    EmpresaRepository empresaRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Optional<Usuario> usuario = usuarioRepository.findByUserEmail(email);
-        Optional<Empresa> empresa = empresaRepository.findByUserEmail(email);
+        Optional<User> user = userRepository.findByEmail(email);
 
-        if(usuario.isPresent()) {
-            return usuario.get().getUser();
-        }
-
-        if(empresa.isPresent()) {
-            return empresa.get().getUser();
+        if(user.isPresent()) {
+            return user.get();
         }
 
         throw new UsernameNotFoundException("O email ou a senha inválida");
