@@ -1,5 +1,6 @@
 package br.com.projeto.contratados.rest.controller.empresa;
 
+import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.domain.service.empresa.EmpresaService;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarEmailEmpresaRequest;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarSenhaEmpresaRequest;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/empresa")
@@ -27,18 +27,21 @@ public class EmpresaController {
     @Autowired
     private EmpresaService empresaService;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping
     @Transactional
-    private ResponseEntity<EmpresaResponse> cadastrar(@RequestBody @Valid EmpresaRequest form, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<EmpresaResponse> cadastrar(@RequestBody @Valid EmpresaRequest form, UriComponentsBuilder uriComponentsBuilder) {
 
-        Empresa empresa = empresaService.cadastrar(form);
+        var empresa = empresaService.cadastrar(form);
 
-        URI uri = uriComponentsBuilder.path("/empresa/{id}").buildAndExpand(empresa.getId()).toUri();
+        var uri = uriComponentsBuilder.path("/empresa/{id}").buildAndExpand(empresa.getId()).toUri();
         return ResponseEntity.created(uri).body(new EmpresaResponse(empresa));
     }
 
     @GetMapping
-    private ResponseEntity<Page<EmpresaResponse>> listar(@RequestParam(required = false) String nomeFantasia,
+    public ResponseEntity<Page<EmpresaResponse>> listar(@RequestParam(required = false) String nomeFantasia,
                                                                 @PageableDefault(page = 0, size = 10, sort = "nomeFantasia", direction = Sort.Direction.ASC) Pageable paginacao) {
         Page<Empresa> empresa = empresaService.listar(nomeFantasia, paginacao);
         return ResponseEntity.ok(EmpresaResponse.converterEmpresaDto(empresa));
@@ -46,20 +49,23 @@ public class EmpresaController {
 
     @PutMapping("/{id}")
     @Transactional
-    private ResponseEntity<EmpresaResponse> atualizar(@PathVariable Integer id, @RequestBody @Valid AtualizarEmpresaRequest form){
-        Empresa empresa = empresaService.atualizar(id, form);
+    public ResponseEntity<EmpresaResponse> atualizar(@PathVariable Integer id, @RequestBody @Valid AtualizarEmpresaRequest form){
+        Integer idUser = tokenService.getAuthenticatedEmpresa();
+        var empresa = empresaService.atualizar(idUser, form);
         return ResponseEntity.ok(new EmpresaResponse(empresa));
     }
 
     @PutMapping("/email/{id}")
-    private ResponseEntity<EmpresaResponse> atualizarEmail(@PathVariable Integer id, @RequestBody @Valid AtualizarEmailEmpresaRequest form){
-        Empresa empresa = empresaService.atualizarEmail(id, form);
+    public ResponseEntity<EmpresaResponse> atualizarEmail(@PathVariable Integer id, @RequestBody @Valid AtualizarEmailEmpresaRequest form){
+        Integer idUser = tokenService.getAuthenticatedEmpresa();
+        var empresa = empresaService.atualizarEmail(idUser, form);
         return ResponseEntity.ok().body(new EmpresaResponse(empresa));
     }
 
     @PutMapping("/senha/{id}")
-    private ResponseEntity<EmpresaResponse> atualizarSenha(@PathVariable Integer id, @RequestBody @Valid AtualizarSenhaEmpresaRequest form){
-        Empresa empresa = empresaService.atualizarSenha(id, form);
+    public ResponseEntity<EmpresaResponse> atualizarSenha(@PathVariable Integer id, @RequestBody @Valid AtualizarSenhaEmpresaRequest form){
+        Integer idUser = tokenService.getAuthenticatedEmpresa();
+        var empresa = empresaService.atualizarSenha(idUser, form);
         return ResponseEntity.ok().body(new  EmpresaResponse(empresa));
     }
 }

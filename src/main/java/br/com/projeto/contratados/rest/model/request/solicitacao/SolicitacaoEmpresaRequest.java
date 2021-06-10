@@ -5,7 +5,6 @@ import br.com.projeto.contratados.domain.entity.solicitacao.Solicitacao;
 import br.com.projeto.contratados.domain.entity.solicitacao.SolicitacaoEmpresaStatus;
 import br.com.projeto.contratados.domain.repository.SolicitacaoRepository;
 import com.github.gilbertotorrezan.viacep.se.ViaCEPClient;
-import com.github.gilbertotorrezan.viacep.shared.ViaCEPEndereco;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,15 +28,15 @@ public class SolicitacaoEmpresaRequest {
 
     public Solicitacao solicitacaoEmpresaRequest(Integer id, SolicitacaoRepository solicitacaoRepository) throws IOException {
 
-        Solicitacao solicitacao = solicitacaoRepository.getOne(id);
+        var solicitacao = solicitacaoRepository.getOne(id);
 
         solicitacao.setSolicitacaoEmpresaStatus(this.solicitacaoEmpresaStatus);
 
         if (this.solicitacaoEmpresaStatus == SolicitacaoEmpresaStatus.ACEITO){
-            ViaCEPClient viaCEPClient = new ViaCEPClient();
-            ViaCEPEndereco viaCEPEndereco = viaCEPClient.getEndereco(enderecoCep);
+            var viaCEPClient = new ViaCEPClient();
+            var viaCEPEndereco = viaCEPClient.getEndereco(enderecoCep);
 
-            Endereco endereco = Endereco.builder()
+            var endereco = Endereco.builder()
                     .cep(viaCEPEndereco.getCep())
                     .logradouro(viaCEPEndereco.getLogradouro())
                     .complemento(viaCEPEndereco.getComplemento())

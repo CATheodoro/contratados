@@ -1,5 +1,6 @@
 package br.com.projeto.contratados.rest.controller.usuario;
 
+import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.service.usuario.UsuarioService;
 import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizacaoUsuarioRequest;
@@ -19,7 +20,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/usuario")
@@ -28,17 +28,20 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping
     @Transactional
-    private ResponseEntity<UsuarioResponse> cadastrar (@RequestBody @Valid UsuarioRequest form, UriComponentsBuilder uriComponentsBuilder) throws IOException {
-        Usuario usuario = usuarioService.cadastrar(form);
+    public ResponseEntity<UsuarioResponse> cadastrar (@RequestBody @Valid UsuarioRequest form, UriComponentsBuilder uriComponentsBuilder) throws IOException {
+        var usuario = usuarioService.cadastrar(form);
 
-        URI uri = uriComponentsBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+        var uri = uriComponentsBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
         return ResponseEntity.created(uri).body(new UsuarioResponse(usuario));
     }
 
     @GetMapping
-    private ResponseEntity<Page<UsuarioResponse>> listar (@RequestParam (required = false) String nome,
+    public ResponseEntity<Page<UsuarioResponse>> listar (@RequestParam (required = false) String nome,
                                                           @PageableDefault(page = 0, size = 10, sort = "nome", direction = Sort.Direction.ASC) Pageable paginacao){
 
         Page<Usuario> usuario = usuarioService.listar(nome, paginacao);
@@ -48,22 +51,26 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     @Transactional
-    private ResponseEntity<UsuarioResponse> atualizar (@PathVariable Integer id, @RequestBody @Valid AtualizacaoUsuarioRequest form) throws IOException {
-        Usuario usuario = usuarioService.atualizar(id, form);
+    public ResponseEntity<UsuarioResponse> atualizar (@PathVariable Integer id, @RequestBody @Valid AtualizacaoUsuarioRequest form) throws IOException {
+        Integer idUsuario = tokenService.getAuthenticatedUsuario();
+        var usuario = usuarioService.atualizar(idUsuario, form);
+
         return ResponseEntity.ok(new UsuarioResponse(usuario));
     }
 
     @PutMapping("/senha/{id}")
     @Transactional
-    private ResponseEntity<UsuarioResponse> atualizarSenha (@PathVariable Integer id, @RequestBody @Valid AtualizarSenhaUsuarioRequest form) throws IOException {
-        Usuario usuario = usuarioService.atualizarSenha(id, form);
+    public ResponseEntity<UsuarioResponse> atualizarSenha (@PathVariable Integer id, @RequestBody @Valid AtualizarSenhaUsuarioRequest form) {
+        Integer idUsuario = tokenService.getAuthenticatedUsuario();
+        var usuario = usuarioService.atualizarSenha(idUsuario, form);
         return ResponseEntity.ok(new UsuarioResponse(usuario));
     }
 
     @PutMapping("/email/{id}")
     @Transactional
-    private ResponseEntity<UsuarioResponse> atualizarEmail (@PathVariable Integer id, @RequestBody @Valid AtualizarEmailUsuarioRequest form) throws IOException {
-        Usuario usuario = usuarioService.atualizarEmail(id, form);
+    public ResponseEntity<UsuarioResponse> atualizarEmail (@PathVariable Integer id, @RequestBody @Valid AtualizarEmailUsuarioRequest form) {
+        Integer idUsuario = tokenService.getAuthenticatedUsuario();
+        var usuario = usuarioService.atualizarEmail(idUsuario, form);
         return ResponseEntity.ok(new UsuarioResponse(usuario));
     }
 }

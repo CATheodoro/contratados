@@ -60,7 +60,7 @@ public class UsuarioResponse {
         this.accountNonExpired = usuario.isAccountNonExpired();
         this.accountNonLocked = usuario.isAccountNonLocked();
         this.credentialsNonExpired = usuario.isCredentialsNonExpired();
-        this.enable = usuario.isEnable();
+        this.enable = usuario.isEnabled();
         //this.formacao = usuario.getFormacao();
         //this.experiencia = usuario.getExperiencia();
         //this.solicitacao = usuario.getSolicitacao();

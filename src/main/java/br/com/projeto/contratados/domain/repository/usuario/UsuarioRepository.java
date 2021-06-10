@@ -10,11 +10,10 @@ import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+
     Usuario findByEnderecoCep(String cep);
 
     Page<Usuario> findByNome(String nome, Pageable pageable);
-
-    Optional<Usuario> findByEmail(String email);
 
     boolean existsByEmail(String email);
 }

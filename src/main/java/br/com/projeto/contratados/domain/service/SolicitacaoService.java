@@ -1,6 +1,6 @@
 package br.com.projeto.contratados.domain.service;
 
-import br.com.projeto.contratados.config.exception.*;
+import br.com.projeto.contratados.config.exception.excecoes.*;
 import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.domain.entity.solicitacao.Solicitacao;
 import br.com.projeto.contratados.domain.entity.solicitacao.SolicitacaoEmpresaStatus;
@@ -35,7 +35,7 @@ public class SolicitacaoService {
 
     public Solicitacao cadastrar(SolicitacaoRequest form){
 
-        Solicitacao solicitacao = form.converter();
+        var solicitacao = form.converter();
 
         Optional<AnuncioVaga> anuncioVagaOptional = anuncioVagaRepository.findById(solicitacao.getAnuncioVaga().getId());
         if (anuncioVagaOptional.isEmpty())
@@ -65,7 +65,7 @@ public class SolicitacaoService {
         if (optional.isEmpty())
             throw new SolicitacaoNaoEncontradaException("Solicitação não encontrada, não foi possível alterar");
 
-        Solicitacao solicitacao = form.atualizar(id, solicitacaoRepository);
+        var solicitacao = form.atualizar(id, solicitacaoRepository);
 
         if (solicitacao.getSolicitacaoEmpresaStatus() == SolicitacaoEmpresaStatus.RECUSADO)
             throw new NaoFoiPossivelAtualizarSolicitacaoEmpresaException("Não é possível alterar dados, solicitação recusada anteriormente");
@@ -85,12 +85,12 @@ public class SolicitacaoService {
         if (optional.isEmpty())
             throw new SolicitacaoNaoEncontradaException("Solicitação não encontrada, não foi possível enviar sua confirmação");
 
-        Solicitacao confirmarStatus = solicitacaoRepository.getOne(id);
+        var confirmarStatus = solicitacaoRepository.getOne(id);
 
         if (confirmarStatus.getSolicitacaoEmpresaStatus() != SolicitacaoEmpresaStatus.PENDENTE)
             throw new NaoFoiPossivelAtualizarSolicitacaoEmpresaException("Não é possível alterar dados já cadastrado");
 
-        Solicitacao solicitacao = form.solicitacaoEmpresaRequest(id, solicitacaoRepository);
+        var solicitacao = form.solicitacaoEmpresaRequest(id, solicitacaoRepository);
 
         return solicitacaoRepository.save(solicitacao);
     }
@@ -102,7 +102,7 @@ public class SolicitacaoService {
         if (optional.isEmpty())
             throw new SolicitacaoNaoEncontradaException("Solicitação não encontrada, não foi possível confirmar sua solicitação");
 
-        Solicitacao confirmarStatus = solicitacaoRepository.getOne(id);
+        var confirmarStatus = solicitacaoRepository.getOne(id);
 
         if (confirmarStatus.getSolicitacaoUsuarioStatus() == SolicitacaoUsuarioStatus.CANCELADO)
             throw new NaoFoiPossivelAtualizarConfirmacaoUsuarioException("Não foi possível confirmar solicitação, proposta cancelada anteriormenente");
@@ -113,7 +113,7 @@ public class SolicitacaoService {
         if (confirmarStatus.getSolicitacaoEmpresaStatus() == SolicitacaoEmpresaStatus.PENDENTE)
             throw new NaoFoiPossivelAtualizarConfirmacaoUsuarioException("Não foi possível confirmar solicitação, empresa ainda não checou sua solicitação");
 
-        Solicitacao solicitacao = form.solicitacaoUsuarioRequest(id, solicitacaoRepository);
+        var solicitacao = form.solicitacaoUsuarioRequest(id, solicitacaoRepository);
 
         return solicitacaoRepository.save(solicitacao);
 

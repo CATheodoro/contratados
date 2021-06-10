@@ -1,14 +1,22 @@
 package br.com.projeto.contratados;
 
-import br.com.projeto.contratados.usuario.UsuarioControllerTest;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
-class ContratadosApplicationTests {
+@ActiveProfiles("test")
+@EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
+@AutoConfigureMockMvc
+public class ContratadosApplicationTests {
 
 	@Test
 	void contextLoads() {
 	}
 
+
 }
+

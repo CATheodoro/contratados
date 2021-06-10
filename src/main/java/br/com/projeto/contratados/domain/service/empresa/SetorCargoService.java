@@ -1,7 +1,7 @@
 package br.com.projeto.contratados.domain.service.empresa;
 
-import br.com.projeto.contratados.config.exception.AnuncioVagaNaoEncontradoException;
-import br.com.projeto.contratados.config.exception.SetorCargoNaoEncontradoException;
+import br.com.projeto.contratados.config.exception.excecoes.AnuncioVagaNaoEncontradoException;
+import br.com.projeto.contratados.config.exception.excecoes.SetorCargoNaoEncontradoException;
 import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.domain.entity.empresa.SetorCargo;
 import br.com.projeto.contratados.domain.repository.empresa.AnuncioVagaRepository;

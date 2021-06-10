@@ -1,8 +1,9 @@
 package br.com.projeto.contratados.domain.service.usuario;
 
-import br.com.projeto.contratados.config.exception.EmailJaCadastradoException;
-import br.com.projeto.contratados.config.exception.UsuarioNaoEncontradoException;
+import br.com.projeto.contratados.config.exception.excecoes.EmailJaCadastradoException;
+import br.com.projeto.contratados.config.exception.excecoes.UsuarioNaoEncontradoException;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
+import br.com.projeto.contratados.domain.repository.user.UserRepository;
 import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
 import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizacaoUsuarioRequest;
 import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizarEmailUsuarioRequest;
@@ -21,16 +22,19 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     public Usuario cadastrar(UsuarioRequest request) throws IOException {
-        Usuario usuario = request.converter();
+        var usuario = request.converter();
 
-        if (usuarioRepository.existsByEmail(usuario.getEmail()))
+        if (userRepository.existsByEmail(usuario.getEmail()))
             throw new EmailJaCadastradoException("Email já cadastrado");
-
 
         return usuarioRepository.save(usuario);
     }
+
 
 
     public Page<Usuario> listar(String nome, Pageable paginacao) {
@@ -48,8 +52,7 @@ public class UsuarioService {
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuario não encontrado");
 
-
-        Usuario usuario = form.atualizacaoUsuarioForm(id, usuarioRepository);
+        var usuario = form.atualizacaoUsuarioForm(id, usuarioRepository);
 
         return usuarioRepository.save(usuario);
 
@@ -62,7 +65,7 @@ public class UsuarioService {
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuario não encontrado, Senha não alterada");
 
-        Usuario usuario = form.atualizarSenhaUsuario(id, usuarioRepository);
+        var usuario = form.atualizarSenhaUsuario(id, usuarioRepository);
         return usuarioRepository.save(usuario);
     }
 
@@ -72,11 +75,10 @@ public class UsuarioService {
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuario não encontrado, E-mail não alterada");
 
+        var usuario = form.atualizarEmailUsuario(id, usuarioRepository);
 
-        Usuario usuario = form.atualizarEmailUsuario(id, usuarioRepository);
-
-        if (usuarioRepository.existsByEmail(usuario.getEmail()))
-            throw new EmailJaCadastradoException("Email já cadastrado");
+    //    if (usuarioRepository.existsByEmail(form.getEmail()))
+    //        throw new EmailJaCadastradoException("Email já cadastrado");
 
 
         return usuarioRepository.save(usuario);

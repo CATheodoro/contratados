@@ -1,10 +1,11 @@
 package br.com.projeto.contratados.rest.model.request.usuario.usuario;
 
-import br.com.projeto.contratados.domain.entity.*;
+import br.com.projeto.contratados.domain.entity.Endereco;
+import br.com.projeto.contratados.domain.entity.user.Perfil;
 import br.com.projeto.contratados.domain.entity.usuario.StatusUsuario;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
+import br.com.projeto.contratados.domain.entity.usuario.UsuarioBuilder;
 import com.github.gilbertotorrezan.viacep.se.ViaCEPClient;
-import com.github.gilbertotorrezan.viacep.shared.ViaCEPEndereco;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,8 +48,8 @@ public class UsuarioRequest {
     public Usuario converter() throws IOException {
         Endereco endereco = null;
         if (enderecoCep != null) {
-            ViaCEPClient viaCEPClient = new ViaCEPClient();
-            ViaCEPEndereco viaCEPEndereco = viaCEPClient.getEndereco(enderecoCep);
+            var viaCEPClient = new ViaCEPClient();
+            var viaCEPEndereco = viaCEPClient.getEndereco(enderecoCep);
 
             endereco = Endereco.builder()
                     .cep(viaCEPEndereco.getCep())
@@ -60,20 +61,24 @@ public class UsuarioRequest {
                     .ibge(viaCEPEndereco.getIbge())
                     .build();
         }
-        return Usuario.builder()
+
+
+        return UsuarioBuilder.builder()
+                .email(this.email)
+                .password(new BCryptPasswordEncoder().encode(this.senha))
+                .perfil(Perfil.USUARIO)
+                .accountNonExpired(true)
+                .accountNonLocked(true)
+                .credentialsNonExpired(true)
+                .enable(true)
                 .endereco(endereco)
-                .email(email)
-                .senha(new BCryptPasswordEncoder().encode(this.senha))
                 .nome(nome)
                 .dataNascimento(dataNascimento)
                 .celular(celular)
                 .telefone(telefone)
                 .status(status)
-                .accountNonExpired(true)
-                .accountNonLocked(true)
-                .credentialsNonExpired(true)
-                .enable(true)
                 .dataCriacaoPerfil(LocalDateTime.now())
                 .build();
     }
+
 }

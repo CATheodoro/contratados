@@ -6,9 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 @Getter
 @Setter
 @Builder
@@ -17,7 +14,7 @@ public class SetorCargoAtualizarRequest {
     private String cargo;
 
     public SetorCargo converter(Integer id, SetorCargoRepository setorCargoRepository) {
-        SetorCargo setorCargo = setorCargoRepository.getOne(id);
+        var setorCargo = setorCargoRepository.getOne(id);
 
         if (this.setor != null && !this.setor.isEmpty())
             setorCargo.setSetor(this.setor);

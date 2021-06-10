@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -20,7 +18,7 @@ public class AtualizacaoExperienciaRequest {
     private Date termino;
 
     public Experiencia atualizacaoExperienciaForm(Integer id, ExperienciaRepository experienciaRepository) {
-        Experiencia experiencia = experienciaRepository.getOne(id);
+        var experiencia = experienciaRepository.getOne(id);
 
         if (this.descricao != null && !this.descricao.isEmpty())
             experiencia.setDescricao(this.descricao);

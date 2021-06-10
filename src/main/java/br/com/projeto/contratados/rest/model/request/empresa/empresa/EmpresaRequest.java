@@ -1,9 +1,12 @@
 package br.com.projeto.contratados.rest.model.request.empresa.empresa;
 
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
+import br.com.projeto.contratados.domain.entity.empresa.EmpresaBuilder;
+import br.com.projeto.contratados.domain.entity.user.Perfil;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -32,19 +35,22 @@ public class EmpresaRequest {
 
 
     public Empresa converter() {
-        return Empresa.builder()
+
+
+        return EmpresaBuilder.builder()
                 .email(this.email)
-                .senha(this.senha)
+                .password(new BCryptPasswordEncoder().encode(this.senha))
+                .perfil(Perfil.EMPRESA)
+                .accountNonExpired(true)
+                .accountNonLocked(true)
+                .credentialsNonExpired(true)
+                .enable(true)
                 .nomeFantasia(this.nomeFantasia)
                 .descricao(this.descricao)
                 .celular(this.celular)
                 .telefone(this.telefone)
                 .cnpj(this.cnpj)
                 .dataFundacao(this.dataFundacao)
-                .accountNonExpired(true)
-                .accountNonLocked(true)
-                .credentialsNonExpired(true)
-                .enable(true)
                 .dataCriacaoPerfil(LocalDateTime.now())
                 .build();
     }

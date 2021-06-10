@@ -6,9 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -24,7 +21,7 @@ public class AtualizarEmpresaRequest {
     private Date dataFundacao;
 
     public Empresa atualizacaoEmpresaForm(Integer id, EmpresaRepository empresaRepository){
-        Empresa empresa = empresaRepository.getOne(id);
+        var empresa = empresaRepository.getOne(id);
 
         if(this.nomeFantasia != null && !this.nomeFantasia.isEmpty())
             empresa.setNomeFantasia(this.nomeFantasia);
