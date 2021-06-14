@@ -49,9 +49,11 @@ public class UsuarioControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].id").value(1))
                 .andExpect(jsonPath("$.content[0].email").value("carlos@email.com"))
+                .andExpect(jsonPath("$.content[0].nome").value("Carlos Alexandre"))
 
                 .andExpect(jsonPath("$.content[1].id").value(2))
-                .andExpect(jsonPath("$.content[1].email").value("ruan@email.com"));
+                .andExpect(jsonPath("$.content[1].email").value("ruan@email.com"))
+                .andExpect(jsonPath("$.content[1].nome").value("Ruan"));
     }
 
     @Test
