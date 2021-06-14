@@ -1,9 +1,7 @@
 package br.com.projeto.contratados.config.security;
 
 
-import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
 import br.com.projeto.contratados.domain.repository.user.UserRepository;
-import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 
 import java.util.Arrays;
 
@@ -59,9 +56,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(authenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
-    //Configuracoes de recursos estaticos (js, css, imagens, etc.)
+
     @Override
     public void configure(WebSecurity web) throws Exception {
+        //Configuracoes de recursos estaticos (js, css, imagens, etc.)
     }
 
 

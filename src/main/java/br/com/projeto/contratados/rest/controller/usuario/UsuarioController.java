@@ -28,9 +28,6 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @Autowired
-    private TokenService tokenService;
-
     @PostMapping
     @Transactional
     public ResponseEntity<UsuarioResponse> cadastrar (@RequestBody @Valid UsuarioRequest form, UriComponentsBuilder uriComponentsBuilder) throws IOException {
@@ -52,8 +49,7 @@ public class UsuarioController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<UsuarioResponse> atualizar (@PathVariable Integer id, @RequestBody @Valid AtualizacaoUsuarioRequest form) throws IOException {
-        Integer idUsuario = tokenService.getAuthenticatedUsuario();
-        var usuario = usuarioService.atualizar(idUsuario, form);
+        var usuario = usuarioService.atualizar(id, form);
 
         return ResponseEntity.ok(new UsuarioResponse(usuario));
     }
@@ -61,16 +57,14 @@ public class UsuarioController {
     @PutMapping("/senha/{id}")
     @Transactional
     public ResponseEntity<UsuarioResponse> atualizarSenha (@PathVariable Integer id, @RequestBody @Valid AtualizarSenhaUsuarioRequest form) {
-        Integer idUsuario = tokenService.getAuthenticatedUsuario();
-        var usuario = usuarioService.atualizarSenha(idUsuario, form);
+        var usuario = usuarioService.atualizarSenha(id, form);
         return ResponseEntity.ok(new UsuarioResponse(usuario));
     }
 
     @PutMapping("/email/{id}")
     @Transactional
     public ResponseEntity<UsuarioResponse> atualizarEmail (@PathVariable Integer id, @RequestBody @Valid AtualizarEmailUsuarioRequest form) {
-        Integer idUsuario = tokenService.getAuthenticatedUsuario();
-        var usuario = usuarioService.atualizarEmail(idUsuario, form);
+        var usuario = usuarioService.atualizarEmail(id, form);
         return ResponseEntity.ok(new UsuarioResponse(usuario));
     }
 }

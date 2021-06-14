@@ -27,9 +27,6 @@ public class EmpresaController {
     @Autowired
     private EmpresaService empresaService;
 
-    @Autowired
-    private TokenService tokenService;
-
     @PostMapping
     @Transactional
     public ResponseEntity<EmpresaResponse> cadastrar(@RequestBody @Valid EmpresaRequest form, UriComponentsBuilder uriComponentsBuilder) {
@@ -50,22 +47,19 @@ public class EmpresaController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<EmpresaResponse> atualizar(@PathVariable Integer id, @RequestBody @Valid AtualizarEmpresaRequest form){
-        Integer idUser = tokenService.getAuthenticatedEmpresa();
-        var empresa = empresaService.atualizar(idUser, form);
+        var empresa = empresaService.atualizar(id, form);
         return ResponseEntity.ok(new EmpresaResponse(empresa));
     }
 
     @PutMapping("/email/{id}")
     public ResponseEntity<EmpresaResponse> atualizarEmail(@PathVariable Integer id, @RequestBody @Valid AtualizarEmailEmpresaRequest form){
-        Integer idUser = tokenService.getAuthenticatedEmpresa();
-        var empresa = empresaService.atualizarEmail(idUser, form);
+        var empresa = empresaService.atualizarEmail(id, form);
         return ResponseEntity.ok().body(new EmpresaResponse(empresa));
     }
 
     @PutMapping("/senha/{id}")
     public ResponseEntity<EmpresaResponse> atualizarSenha(@PathVariable Integer id, @RequestBody @Valid AtualizarSenhaEmpresaRequest form){
-        Integer idUser = tokenService.getAuthenticatedEmpresa();
-        var empresa = empresaService.atualizarSenha(idUser, form);
+        var empresa = empresaService.atualizarSenha(id, form);
         return ResponseEntity.ok().body(new  EmpresaResponse(empresa));
     }
 }

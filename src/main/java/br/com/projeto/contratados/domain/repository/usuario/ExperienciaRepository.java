@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExperienciaRepository extends JpaRepository<Experiencia, Integer> {
-    Page<Experiencia> findByDescricao(String descricao, Pageable paginacao);
+    Page<Experiencia> findByUsuarioId(Integer idUsuario, Pageable paginacao);
+
+    Page<Experiencia> findByDescricaoAndUsuarioId(String descricao, Integer idUsuario, Pageable paginacao);
 }

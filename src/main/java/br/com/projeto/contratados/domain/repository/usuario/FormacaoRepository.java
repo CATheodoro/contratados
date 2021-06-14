@@ -9,7 +9,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FormacaoRepository extends JpaRepository<Formacao, Integer> {
-    Page<Formacao> findByDescricao(String descricao, Pageable paginacao);
+    
+    Page<Formacao> findByUsuarioId(Integer idUsuario, Pageable paginacao);
 
-    boolean existsByUsuario(Usuario usuario);
+    Page<Formacao> findByDescricaoAndUsuarioId(String descricao, Integer idUsuario, Pageable paginacao);
+
+    boolean existsByUsuarioId(Integer idUsuario);
 }

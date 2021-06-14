@@ -2,6 +2,7 @@ package br.com.projeto.contratados.domain.service.usuario;
 
 import br.com.projeto.contratados.config.exception.excecoes.EmailJaCadastradoException;
 import br.com.projeto.contratados.config.exception.excecoes.UsuarioNaoEncontradoException;
+import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.repository.user.UserRepository;
 import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
@@ -10,6 +11,7 @@ import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizarEm
 import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizarSenhaUsuarioRequest;
 import br.com.projeto.contratados.rest.model.request.usuario.usuario.UsuarioRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,18 @@ public class UsuarioService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TokenService tokenService;
+
+    @Value("${spring.profiles.active}")
+    String profile;
+
+    private Integer getIdUsuario(Integer id){
+        if (profile.equals("test"))
+            return id;
+
+        return tokenService.getAuthenticatedUsuario();
+    }
 
     public Usuario cadastrar(UsuarioRequest request) throws IOException {
         var usuario = request.converter();
@@ -47,12 +61,12 @@ public class UsuarioService {
 
     public Usuario atualizar(Integer id, AtualizacaoUsuarioRequest form) throws IOException {
 
-        Optional<Usuario> optional = usuarioRepository.findById(id);
+        Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario(id));
 
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuario não encontrado");
 
-        var usuario = form.atualizacaoUsuarioForm(id, usuarioRepository);
+        var usuario = form.atualizacaoUsuarioForm(getIdUsuario(id), usuarioRepository);
 
         return usuarioRepository.save(usuario);
 
@@ -60,25 +74,25 @@ public class UsuarioService {
 
     public Usuario atualizarSenha(Integer id, AtualizarSenhaUsuarioRequest form) {
 
-        Optional<Usuario> optional = usuarioRepository.findById(id);
+        Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario(id));
 
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuario não encontrado, Senha não alterada");
 
-        var usuario = form.atualizarSenhaUsuario(id, usuarioRepository);
+        var usuario = form.atualizarSenhaUsuario(getIdUsuario(id), usuarioRepository);
         return usuarioRepository.save(usuario);
     }
 
     public Usuario atualizarEmail(Integer id, AtualizarEmailUsuarioRequest form) {
-        Optional<Usuario> optional = usuarioRepository.findById(id);
+        Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario(id));
 
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuario não encontrado, E-mail não alterada");
 
-        var usuario = form.atualizarEmailUsuario(id, usuarioRepository);
+        if (usuarioRepository.existsByEmail(form.getEmail()))
+            throw new EmailJaCadastradoException("Email já cadastrado");
 
-    //    if (usuarioRepository.existsByEmail(form.getEmail()))
-    //        throw new EmailJaCadastradoException("Email já cadastrado");
+        var usuario = form.atualizarEmailUsuario(getIdUsuario(id), usuarioRepository);
 
 
         return usuarioRepository.save(usuario);

@@ -21,16 +21,14 @@ public class ExperienciaRequest {
     private Date inicio;
     @NotNull
     private Date termino;
-    @NotNull
-    private Usuario usuario;
 
-    public Experiencia converte() {
+    public Experiencia converte(Usuario usuario) {
 
         return Experiencia.builder()
                 .descricao(this.descricao)
                 .inicio(this.inicio)
                 .termino(this.termino)
-                .usuario(this.usuario)
+                .usuario(usuario)
                 .build();
     }
 

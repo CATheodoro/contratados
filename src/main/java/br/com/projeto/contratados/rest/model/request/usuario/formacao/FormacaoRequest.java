@@ -21,17 +21,15 @@ public class FormacaoRequest {
     private Date inicio;
     @NotNull
     private Date termino;
-    @NotNull
-    private Usuario usuario;
 
 
 
-    public Formacao converte(){
+    public Formacao converte(Usuario usuario){
         return Formacao.builder()
                 .descricao(this.descricao)
                 .inicio(this.inicio)
                 .termino(this.termino)
-                .usuario(this.usuario)
+                .usuario(usuario)
                 .build();
     }
 }
