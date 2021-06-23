@@ -35,7 +35,7 @@ public class FormacaoController {
     public ResponseEntity<Page<FormacaoResponse>> listar(@RequestParam (required = false) String descricao,
                                                           @PageableDefault(page = 0, size = 30, sort = "descricao", direction = Sort.Direction.ASC)Pageable paginacao){
         Page<Formacao> formacao = formacaoService.listar(descricao, paginacao);
-        return ResponseEntity.ok(FormacaoResponse.converterFormacaoDto(formacao));
+        return ResponseEntity.ok(FormacaoResponse.converter(formacao));
 
     }
 

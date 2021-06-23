@@ -53,7 +53,6 @@ public class UsuarioResponse {
                     .build();
         }
 
-
         this.status = usuario.getStatus();
         this.dataCriacaoPerfil = usuario.getDataCriacaoPerfil();
 
@@ -61,9 +60,10 @@ public class UsuarioResponse {
         this.accountNonLocked = usuario.isAccountNonLocked();
         this.credentialsNonExpired = usuario.isCredentialsNonExpired();
         this.enable = usuario.isEnabled();
-        //this.formacao = usuario.getFormacao();
-        //this.experiencia = usuario.getExperiencia();
-        //this.solicitacao = usuario.getSolicitacao();
+
+        this.formacao = FormacaoResponse.converterList(usuario.getFormacao());
+        this.experiencia = ExperienciaResponse.converterList(usuario.getExperiencia());
+        this.solicitacao = SolicitacaoResponse.converterList(usuario.getSolicitacao());
 
     }
 

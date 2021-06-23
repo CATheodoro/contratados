@@ -5,6 +5,9 @@ import lombok.Getter;
 import org.springframework.data.domain.Page;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 public class FormacaoResponse {
 
@@ -20,7 +23,11 @@ public class FormacaoResponse {
         this.inicio = formacao.getInicio();
         this.termino = formacao.getTermino();
     }
-    public static Page<FormacaoResponse> converterFormacaoDto(Page<Formacao> formacao) {
-        return formacao.map(FormacaoResponse::new);
+    public static Page<FormacaoResponse> converter(Page<Formacao> formacaos) {
+        return formacaos.map(FormacaoResponse::new);
+    }
+
+    public static List<FormacaoResponse> converterList(List<Formacao> formacaos){
+        return formacaos.stream().map(FormacaoResponse::new).collect(Collectors.toList());
     }
 }

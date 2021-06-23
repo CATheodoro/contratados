@@ -1,6 +1,7 @@
 package br.com.projeto.contratados.domain.service;
 
 import br.com.projeto.contratados.config.exception.excecoes.*;
+import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.domain.entity.solicitacao.Solicitacao;
 import br.com.projeto.contratados.domain.entity.solicitacao.SolicitacaoEmpresaStatus;
@@ -33,20 +34,31 @@ public class SolicitacaoService {
     @Autowired
     private AnuncioVagaRepository anuncioVagaRepository;
 
-    public Solicitacao cadastrar(SolicitacaoRequest form){
+    @Autowired
+    private TokenService tokenService;
 
-        var solicitacao = form.converter();
+    private Integer getIdUsuario() {
+        return tokenService.getAuthenticatedUsuario();
+    }
 
-        Optional<AnuncioVaga> anuncioVagaOptional = anuncioVagaRepository.findById(solicitacao.getAnuncioVaga().getId());
+    private Integer getIdEmpresa() {
+        return tokenService.getAuthenticatedEmpresa();
+    }
+
+    public Solicitacao cadastrar(SolicitacaoRequest form) {
+
+        Optional<AnuncioVaga> anuncioVagaOptional = anuncioVagaRepository.findById(form.getAnuncioVaga().getId());
         if (anuncioVagaOptional.isEmpty())
             throw new AnuncioVagaNaoEncontradoException("Anúncio de Vaga não encontrado, não foi possível enviar a solicitação");
 
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(solicitacao.getUsuario().getId());
+        if (solicitacaoRepository.existsByUsuarioId(getIdUsuario()) && solicitacaoRepository.existsByAnuncioVagaId(form.getAnuncioVaga().getId()))
+            throw new SolicitacaoJaEnviadaException("Usuário já enviou a solicitação");
+
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(getIdUsuario());
         if (usuarioOptional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuário não encontrado, não foi possível enviar a solicitação");
 
-        if (solicitacaoRepository.existsByUsuarioId(solicitacao.getUsuario().getId()) && solicitacaoRepository.existsByAnuncioVagaId(solicitacao.getAnuncioVaga().getId()))
-            throw new SolicitacaoJaEnviadaException("Usuário já enviou a solicitação");
+        var solicitacao = form.converter(usuarioOptional.get());
 
         return solicitacaoRepository.save(solicitacao);
     }
@@ -57,13 +69,14 @@ public class SolicitacaoService {
     }
 
 
-
     public Solicitacao atualizarSolicitacaoEmpresa(Integer id, SolicitacaoAtualizarEmpresaRequest form) throws IOException {
 
         Optional<Solicitacao> optional = solicitacaoRepository.findById(id);
-
         if (optional.isEmpty())
             throw new SolicitacaoNaoEncontradaException("Solicitação não encontrada, não foi possível alterar");
+
+        if (!optional.get().getAnuncioVaga().getEmpresa().getId().equals(getIdEmpresa()))
+            throw new EmpresaNaoEncontradaException("Solicitação não pode ser atualizada, entre com o perfil de empresa");
 
         var solicitacao = form.atualizar(id, solicitacaoRepository);
 
@@ -77,13 +90,15 @@ public class SolicitacaoService {
     }
 
 
-
     public Solicitacao solicitacaoEmpresa(Integer id, SolicitacaoEmpresaRequest form) throws IOException {
 
         Optional<Solicitacao> optional = solicitacaoRepository.findById(id);
 
         if (optional.isEmpty())
             throw new SolicitacaoNaoEncontradaException("Solicitação não encontrada, não foi possível enviar sua confirmação");
+
+        if (!optional.get().getAnuncioVaga().getEmpresa().getId().equals(getIdEmpresa()))
+            throw new EmpresaNaoEncontradaException("Solicitação não pode ser confirmada, entre com o perfil de empresa");
 
         var confirmarStatus = solicitacaoRepository.getOne(id);
 
@@ -101,6 +116,9 @@ public class SolicitacaoService {
 
         if (optional.isEmpty())
             throw new SolicitacaoNaoEncontradaException("Solicitação não encontrada, não foi possível confirmar sua solicitação");
+
+        if (!optional.get().getUsuario().getId().equals(getIdUsuario()))
+            throw new UsuarioNaoEncontradoException("Não foi possível confirmar solicitação, entre com uma conta de usuário");
 
         var confirmarStatus = solicitacaoRepository.getOne(id);
 

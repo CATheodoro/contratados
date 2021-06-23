@@ -1,17 +1,20 @@
 package br.com.projeto.contratados.rest.model.response;
 
 import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
+import br.com.projeto.contratados.domain.entity.solicitacao.Solicitacao;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class AnuncioVagaResponse {
     private final Integer id;
-    //private final List<SetorCargoResponse> setorCargoResponse;
-    //private final List<Solicitacao> solicitacaos;
+    private final List<SetorCargoResponse> setorCargoResponses;
+    private final List<SolicitacaoResponse> solicitacaos;
     private EnderecoResponse endereco;
 
     private final Time cargaHoraria;
@@ -23,8 +26,8 @@ public class AnuncioVagaResponse {
 
     public AnuncioVagaResponse(AnuncioVaga anuncioVaga){
         this.id = anuncioVaga.getId();
-        //this.setorCargoResponse = anuncioVaga.getSetorCargo();
-        //this.solicitacaos = anuncioVaga.getSolicitacao();
+        this.setorCargoResponses = SetorCargoResponse.converterList(anuncioVaga.getSetorCargo());
+        this.solicitacaos = SolicitacaoResponse.converterList(anuncioVaga.getSolicitacao());
 
         if (anuncioVaga.getEndereco() != null) {
             this.endereco = EnderecoResponse.builder()
@@ -47,5 +50,9 @@ public class AnuncioVagaResponse {
 
     public static Page<AnuncioVagaResponse> converter(Page<AnuncioVaga> anuncioVagas){
         return anuncioVagas.map(AnuncioVagaResponse::new);
+    }
+
+    public static List<AnuncioVagaResponse> converterList(List<AnuncioVaga> anuncioVaga) {
+        return anuncioVaga.stream().map(AnuncioVagaResponse::new).collect(Collectors.toList());
     }
 }

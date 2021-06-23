@@ -4,6 +4,9 @@ import br.com.projeto.contratados.domain.entity.empresa.SetorCargo;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 public class SetorCargoResponse {
     private final Integer id;
@@ -18,5 +21,9 @@ public class SetorCargoResponse {
 
     public static Page<SetorCargoResponse> converter(Page<SetorCargo> setorCargos) {
         return setorCargos.map(SetorCargoResponse::new);
+    }
+
+    public static List<SetorCargoResponse> converterList(List<SetorCargo> setorCargo) {
+        return setorCargo.stream().map(SetorCargoResponse::new).collect(Collectors.toList());
     }
 }

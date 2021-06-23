@@ -3,6 +3,8 @@ package br.com.projeto.contratados.domain.service.empresa;
 
 import br.com.projeto.contratados.config.exception.excecoes.AnuncioVagaNaoEncontradoException;
 import br.com.projeto.contratados.config.exception.excecoes.EmpresaNaoEncontradaException;
+import br.com.projeto.contratados.config.exception.excecoes.UsuarioNaoEncontradoException;
+import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.domain.repository.empresa.AnuncioVagaRepository;
@@ -26,19 +28,25 @@ public class AnuncioVagaService {
     @Autowired
     private EmpresaRepository empresaRepository;
 
+    @Autowired
+    private TokenService tokenService;
+
+    private Integer getIdEmpresa(){
+        return tokenService.getAuthenticatedEmpresa();
+    }
+
     public AnuncioVaga cadastrar(AnuncioVagaRequest form) throws IOException {
-
-        AnuncioVaga anuncioVaga = form.converter();
-
-        Optional<Empresa> optional = empresaRepository.findById(anuncioVaga.getEmpresa().getId());
+        Optional<Empresa> optional = empresaRepository.findById(getIdEmpresa());
         if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, não foi possível criar o anúncio");
+
+        var anuncioVaga = form.converter(optional.get());
 
         return anuncioVagaRepository.save(anuncioVaga);
     }
 
     public Page<AnuncioVaga> listar(Pageable paginacao) {
-        return anuncioVagaRepository.findAll(paginacao);
+        return anuncioVagaRepository.findByEmpresaId(getIdEmpresa(), paginacao);
     }
 
     public AnuncioVaga atualizar(Integer id, AnuncioVagaAtualizarRequest form) throws IOException {
@@ -47,7 +55,10 @@ public class AnuncioVagaService {
         if (optional.isEmpty())
             throw new AnuncioVagaNaoEncontradoException("Anúncio de Vagas não encontrado, não pode ser atualizado");
 
-        AnuncioVaga anuncioVaga = form.converter(id, anuncioVagaRepository);
+        if (!optional.get().getEmpresa().getId().equals(getIdEmpresa()))
+            throw new EmpresaNaoEncontradaException("Empresa não encontrado, o anúncio de vaga não pode ser atualizado");
+
+        var anuncioVaga = form.converter(id, anuncioVagaRepository);
         return anuncioVagaRepository.save(anuncioVaga);
     }
 
@@ -56,7 +67,10 @@ public class AnuncioVagaService {
         if (optional.isEmpty())
             throw new AnuncioVagaNaoEncontradoException("Anúncio de Vagas não encontrado, seu status não pode ser alterado");
 
-        AnuncioVaga anuncioVaga = form.converter(id, anuncioVagaRepository);
+        if (!optional.get().getEmpresa().getId().equals(getIdEmpresa()))
+            throw new EmpresaNaoEncontradaException("Empresa não encontrado, o status do anuúncio de vaga não pode atualizado");
+
+        var anuncioVaga = form.converter(id, anuncioVagaRepository);
         return anuncioVagaRepository.save(anuncioVaga);
     }
 }

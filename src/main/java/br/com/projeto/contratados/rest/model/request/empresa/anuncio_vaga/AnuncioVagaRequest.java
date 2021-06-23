@@ -19,8 +19,6 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 public class AnuncioVagaRequest {
-    @NotNull
-    private Empresa empresa;
 
     private String enderecoCep;
 
@@ -30,7 +28,7 @@ public class AnuncioVagaRequest {
     private String requisitos;
     private Float salario;
 
-    public AnuncioVaga converter() throws IOException {
+    public AnuncioVaga converter(Empresa empresa) throws IOException {
 
         //Buscar Cep
         var viaCEPClient = new ViaCEPClient();
@@ -47,7 +45,7 @@ public class AnuncioVagaRequest {
                 .build();
 
         return AnuncioVaga.builder()
-                .empresa(this.empresa)
+                .empresa(empresa)
                 .endereco(endereco)
                 .cargaHoraria(this.cargaHoraria)
                 .requisitos(this.requisitos)

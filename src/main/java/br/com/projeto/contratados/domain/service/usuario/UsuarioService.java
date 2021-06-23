@@ -41,10 +41,11 @@ public class UsuarioService {
     }
 
     public Usuario cadastrar(UsuarioRequest request) throws IOException {
-        var usuario = request.converter();
 
-        if (userRepository.existsByEmail(usuario.getEmail()))
+        if (userRepository.existsByEmail(request.getEmail()))
             throw new EmailJaCadastradoException("Email já cadastrado");
+
+        var usuario = request.converter();
 
         return usuarioRepository.save(usuario);
     }
@@ -59,14 +60,14 @@ public class UsuarioService {
 
     }
 
-    public Usuario atualizar(Integer id, AtualizacaoUsuarioRequest form) throws IOException {
+    public Usuario atualizar(Integer id, AtualizacaoUsuarioRequest request) throws IOException {
 
         Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario(id));
 
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuario não encontrado");
 
-        var usuario = form.atualizacaoUsuarioForm(getIdUsuario(id), usuarioRepository);
+        var usuario = request.atualizacaoUsuarioForm(getIdUsuario(id), usuarioRepository);
 
         return usuarioRepository.save(usuario);
 

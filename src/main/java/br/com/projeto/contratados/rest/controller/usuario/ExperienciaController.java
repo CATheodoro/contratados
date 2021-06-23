@@ -36,7 +36,7 @@ public class ExperienciaController {
     public ResponseEntity<Page<ExperienciaResponse>> listar(@PathVariable(required = false) String descricao ,
                                                                         @PageableDefault(page = 0, size = 30, sort = "descricao",direction = Sort.Direction.ASC)Pageable paginacao){
         Page<Experiencia> experiencia = experienciaService.listar(descricao, paginacao);
-        return ResponseEntity.ok(ExperienciaResponse.converterExperienciaDto(experiencia));
+        return ResponseEntity.ok(ExperienciaResponse.converter(experiencia));
 
     }
 

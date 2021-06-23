@@ -1,11 +1,14 @@
 package br.com.projeto.contratados.rest.model.response;
 
+import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 public class EmpresaResponse {
@@ -20,6 +23,7 @@ public class EmpresaResponse {
     //    private img fotoPerfil;
     private final Date dataFundacao;
     private final LocalDateTime dataCriacaoPerfil;
+    private List<AnuncioVagaResponse> anuncioVagaResponses;
 
     public EmpresaResponse(Empresa empresa) {
         this.id = empresa.getId();
@@ -31,6 +35,7 @@ public class EmpresaResponse {
         this.cnpj = empresa.getCnpj();
         this.dataFundacao = empresa.getDataFundacao();
         this.dataCriacaoPerfil = empresa.getDataCriacaoPerfil();
+        this.anuncioVagaResponses = AnuncioVagaResponse.converterList(empresa.getAnuncioVaga());
     }
 
 

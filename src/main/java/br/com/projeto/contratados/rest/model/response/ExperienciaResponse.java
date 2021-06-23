@@ -5,6 +5,8 @@ import lombok.Getter;
 import org.springframework.data.domain.Page;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class ExperienciaResponse {
@@ -22,7 +24,11 @@ public class ExperienciaResponse {
         this.termino = experiencia.getTermino();
     }
 
-    public static Page<ExperienciaResponse> converterExperienciaDto(Page<Experiencia> experiencia) {
+    public static Page<ExperienciaResponse> converter(Page<Experiencia> experiencia) {
         return experiencia.map(ExperienciaResponse::new);
+    }
+
+    public static List<ExperienciaResponse> converterList(List<Experiencia> experiencia) {
+        return experiencia.stream().map(ExperienciaResponse::new).collect(Collectors.toList());
     }
 }

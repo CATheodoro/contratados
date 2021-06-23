@@ -14,18 +14,15 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Builder
 public class SolicitacaoRequest {
 
     @NotNull
-    private Usuario usuario;
-    @NotNull
     private AnuncioVaga anuncioVaga;
 
-    public Solicitacao converter() {
+    public Solicitacao converter(Usuario usuario) {
 
         return Solicitacao.builder()
-                .usuario(this.usuario)
+                .usuario(usuario)
                 .anuncioVaga(this.anuncioVaga)
                 .solicitacaoEmpresaStatus(SolicitacaoEmpresaStatus.PENDENTE)
                 .solicitacaoUsuarioStatus(SolicitacaoUsuarioStatus.PENDENTE)
