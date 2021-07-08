@@ -26,8 +26,7 @@ public class SolicitacaoAtualizarEmpresaRequest {
     private Date dataEntrevista;
 
 
-    public Solicitacao atualizar(Integer id, SolicitacaoRepository solicitacaoRepository) throws IOException {
-        var solicitacao = solicitacaoRepository.getOne(id);
+    public Solicitacao atualizar(Solicitacao solicitacao) throws IOException {
 
         var viaCEPClient = new ViaCEPClient();
         var viaCEPEndereco = viaCEPClient.getEndereco(enderecoCep);

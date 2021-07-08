@@ -15,8 +15,7 @@ public class AtualizarEmailEmpresaRequest {
     @NotNull @NotEmpty @Email
     private String email;
 
-    public Empresa atualizarSenhaEmpresaRequest(Integer id, EmpresaRepository empresaRepository){
-        var empresa = empresaRepository.getOne(id);
+    public Empresa atualizarSenhaEmpresaRequest(Empresa empresa){
 
         empresa.setEmail(this.email);
 

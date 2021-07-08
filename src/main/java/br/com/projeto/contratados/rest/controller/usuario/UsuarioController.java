@@ -38,13 +38,19 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<UsuarioResponse>> listar (@RequestParam (required = false) String nome,
-                                                          @PageableDefault(page = 0, size = 10, sort = "nome", direction = Sort.Direction.ASC) Pageable paginacao){
+    public ResponseEntity<Page<UsuarioResponse>> listar (@RequestParam (name = "nome",required = false) String nome,
+                                                         @PageableDefault(page = 0, size = 10, sort = "nome", direction = Sort.Direction.ASC) Pageable paginacao){
 
-        Page<Usuario> usuario = usuarioService.listar(nome, paginacao);
+        Page<Usuario> usuario = usuarioService.listar(nome,paginacao);
         return ResponseEntity.ok(UsuarioResponse.converter(usuario));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioResponse> listar (@PathVariable Integer id){
+
+        Usuario usuario = usuarioService.perfilUsuario(id);
+        return ResponseEntity.ok(new UsuarioResponse(usuario));
+    }
 
     @PutMapping("/{id}")
     @Transactional

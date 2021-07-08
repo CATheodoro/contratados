@@ -15,8 +15,7 @@ public class AtualizarEmailUsuarioRequest {
     @NotNull @NotEmpty @Email
     private String email;
 
-    public Usuario atualizarEmailUsuario(Integer id, UsuarioRepository usuarioRepository){
-        var usuario = usuarioRepository.getOne(id);
+    public Usuario atualizarEmailUsuario(Usuario usuario){
         usuario.setEmail(this.email);
 
         return usuario;

@@ -65,7 +65,7 @@ public class FormacaoService {
         if (!optional.get().getUsuario().getId().equals(getIdUsuario()))
             throw new UsuarioNaoEncontradoException("Usuário não encontrado, a formação não pode ser atualizada");
 
-        var formacao = form.atualizacaoFormacaoForm(id, formacaoRepository);
+        var formacao = form.atualizacaoFormacaoForm(optional.get());
         return formacaoRepository.save(formacao);
     }
 

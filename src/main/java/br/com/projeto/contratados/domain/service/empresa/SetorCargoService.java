@@ -60,7 +60,7 @@ public class SetorCargoService {
         if (!optional.get().getAnuncioVaga().getEmpresa().getId().equals(getIdEmpresa()))
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, não foi possível atualizar os setores e os cargos");
 
-        var setorCargo = form.converter(id, setorCargoRepository);
+        var setorCargo = form.converter(optional.get());
         return setorCargoRepository.save(setorCargo);
     }
 

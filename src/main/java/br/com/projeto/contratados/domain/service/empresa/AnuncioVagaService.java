@@ -58,7 +58,7 @@ public class AnuncioVagaService {
         if (!optional.get().getEmpresa().getId().equals(getIdEmpresa()))
             throw new EmpresaNaoEncontradaException("Empresa não encontrado, o anúncio de vaga não pode ser atualizado");
 
-        var anuncioVaga = form.converter(id, anuncioVagaRepository);
+        var anuncioVaga = form.converter(optional.get());
         return anuncioVagaRepository.save(anuncioVaga);
     }
 

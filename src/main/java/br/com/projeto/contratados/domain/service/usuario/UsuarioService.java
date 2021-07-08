@@ -50,14 +50,17 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-
-
     public Page<Usuario> listar(String nome, Pageable paginacao) {
         if (nome == null)
             return usuarioRepository.findAll(paginacao);
-
         return usuarioRepository.findByNome(nome, paginacao);
+    }
 
+    public Usuario perfilUsuario(Integer id) {
+        Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario(id));
+        if(optional.isEmpty())
+            throw new UsuarioNaoEncontradoException("Ocorreu algum erro, Não foi possivel acessar seu perfil");
+        return optional.get();
     }
 
     public Usuario atualizar(Integer id, AtualizacaoUsuarioRequest request) throws IOException {
@@ -67,7 +70,7 @@ public class UsuarioService {
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuario não encontrado");
 
-        var usuario = request.atualizacaoUsuarioForm(getIdUsuario(id), usuarioRepository);
+        var usuario = request.atualizacaoUsuarioForm(optional.get());
 
         return usuarioRepository.save(usuario);
 
@@ -80,7 +83,7 @@ public class UsuarioService {
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuario não encontrado, Senha não alterada");
 
-        var usuario = form.atualizarSenhaUsuario(getIdUsuario(id), usuarioRepository);
+        var usuario = form.atualizarSenhaUsuario(optional.get());
         return usuarioRepository.save(usuario);
     }
 
@@ -93,9 +96,11 @@ public class UsuarioService {
         if (usuarioRepository.existsByEmail(form.getEmail()))
             throw new EmailJaCadastradoException("Email já cadastrado");
 
-        var usuario = form.atualizarEmailUsuario(getIdUsuario(id), usuarioRepository);
+        var usuario = form.atualizarEmailUsuario(optional.get());
 
 
         return usuarioRepository.save(usuario);
     }
+
+
 }

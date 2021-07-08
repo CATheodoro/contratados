@@ -14,11 +14,8 @@ public class AtualizarSenhaEmpresaRequest {
     @NotNull @NotEmpty
     private String senha;
 
-    public Empresa atualizarSenhaEmpresaRequest(Integer id, EmpresaRepository empresaRepository){
-        var empresa = empresaRepository.getOne(id);
-
+    public Empresa atualizarSenhaEmpresaRequest(Empresa empresa){
         empresa.setPassword(this.senha);
-
         return empresa;
     }
 }

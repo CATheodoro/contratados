@@ -17,8 +17,7 @@ public class AtualizacaoExperienciaRequest {
     private Date inicio;
     private Date termino;
 
-    public Experiencia atualizacaoExperienciaForm(Integer id, ExperienciaRepository experienciaRepository) {
-        var experiencia = experienciaRepository.getOne(id);
+    public Experiencia atualizacaoExperienciaForm(Experiencia experiencia) {
 
         if (this.descricao != null && !this.descricao.isEmpty())
             experiencia.setDescricao(this.descricao);

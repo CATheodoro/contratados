@@ -2,8 +2,10 @@ package br.com.projeto.contratados.domain.service.empresa;
 
 import br.com.projeto.contratados.config.exception.excecoes.EmailJaCadastradoException;
 import br.com.projeto.contratados.config.exception.excecoes.EmpresaNaoEncontradaException;
+import br.com.projeto.contratados.config.exception.excecoes.UsuarioNaoEncontradoException;
 import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
+import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
 import br.com.projeto.contratados.domain.repository.user.UserRepository;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarEmailEmpresaRequest;
@@ -47,12 +49,19 @@ public class EmpresaService {
         return empresaRepository.findByNomeFantasia(nomeFantasia, paginacao);
     }
 
+    public Empresa perfilEmpresa(Integer id) {
+        Optional<Empresa> optional = empresaRepository.findById(getIdEmpresa());
+        if(optional.isEmpty())
+            throw new EmpresaNaoEncontradaException("Ocorreu algum erro, Não foi possivel acessar seu perfil");
+        return optional.get();
+    }
+
     public Empresa atualizar(Integer id, AtualizarEmpresaRequest form) {
         Optional<Empresa> optional = empresaRepository.findById(getIdEmpresa());
         if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, não pode ser atualizada");
 
-        var empresa = form.atualizacaoEmpresaForm(getIdEmpresa(), empresaRepository);
+        var empresa = form.atualizacaoEmpresaForm(optional.get());
         return empresaRepository.save(empresa);
     }
 
@@ -61,7 +70,7 @@ public class EmpresaService {
         if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, E-mail não pode ser atualizada");
 
-        var empresa = form.atualizarSenhaEmpresaRequest(getIdEmpresa(), empresaRepository);
+        var empresa = form.atualizarSenhaEmpresaRequest(optional.get());
 
         if (userRepository.existsByEmail(empresa.getEmail()))
             throw new EmailJaCadastradoException("E-mail já cadastrado");
@@ -75,7 +84,7 @@ public class EmpresaService {
         if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, senha não pode ser atualizada");
 
-        var empresa = form.atualizarSenhaEmpresaRequest(getIdEmpresa(), empresaRepository);
+        var empresa = form.atualizarSenhaEmpresaRequest(optional.get());
         return empresaRepository.save(empresa);
     }
 }

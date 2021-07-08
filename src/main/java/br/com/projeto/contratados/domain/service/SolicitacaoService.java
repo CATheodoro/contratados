@@ -78,7 +78,7 @@ public class SolicitacaoService {
         if (!optional.get().getAnuncioVaga().getEmpresa().getId().equals(getIdEmpresa()))
             throw new EmpresaNaoEncontradaException("Solicitação não pode ser atualizada, entre com o perfil de empresa");
 
-        var solicitacao = form.atualizar(id, solicitacaoRepository);
+        var solicitacao = form.atualizar(optional.get());
 
         if (solicitacao.getSolicitacaoEmpresaStatus() == SolicitacaoEmpresaStatus.RECUSADO)
             throw new NaoFoiPossivelAtualizarSolicitacaoEmpresaException("Não é possível alterar dados, solicitação recusada anteriormente");
@@ -105,7 +105,7 @@ public class SolicitacaoService {
         if (confirmarStatus.getSolicitacaoEmpresaStatus() != SolicitacaoEmpresaStatus.PENDENTE)
             throw new NaoFoiPossivelAtualizarSolicitacaoEmpresaException("Não é possível alterar dados já cadastrado");
 
-        var solicitacao = form.solicitacaoEmpresaRequest(id, solicitacaoRepository);
+        var solicitacao = form.solicitacaoEmpresaRequest(optional.get());
 
         return solicitacaoRepository.save(solicitacao);
     }
@@ -131,7 +131,7 @@ public class SolicitacaoService {
         if (confirmarStatus.getSolicitacaoEmpresaStatus() == SolicitacaoEmpresaStatus.PENDENTE)
             throw new NaoFoiPossivelAtualizarConfirmacaoUsuarioException("Não foi possível confirmar solicitação, empresa ainda não checou sua solicitação");
 
-        var solicitacao = form.solicitacaoUsuarioRequest(id, solicitacaoRepository);
+        var solicitacao = form.solicitacaoUsuarioRequest(optional.get());
 
         return solicitacaoRepository.save(solicitacao);
 

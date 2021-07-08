@@ -18,9 +18,7 @@ public class AtualizacaoFormcaoRequest {
     private Date termino;
 
     //private Usuario usuario;
-    public Formacao atualizacaoFormacaoForm(Integer id, FormacaoRepository formacaoRepository) {
-        var formacao = formacaoRepository.getOne(id);
-
+    public Formacao atualizacaoFormacaoForm(Formacao formacao) {
         if (this.descricao != null && !this.descricao.isEmpty())
             formacao.setDescricao(this.descricao);
         if (this.inicio != null)

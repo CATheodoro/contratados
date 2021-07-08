@@ -20,8 +20,7 @@ public class AtualizarEmpresaRequest {
     private String cnpj;
     private Date dataFundacao;
 
-    public Empresa atualizacaoEmpresaForm(Integer id, EmpresaRepository empresaRepository){
-        var empresa = empresaRepository.getOne(id);
+    public Empresa atualizacaoEmpresaForm(Empresa empresa){
 
         if(this.nomeFantasia != null && !this.nomeFantasia.isEmpty())
             empresa.setNomeFantasia(this.nomeFantasia);

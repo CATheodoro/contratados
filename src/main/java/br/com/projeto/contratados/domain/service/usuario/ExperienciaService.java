@@ -60,7 +60,7 @@ public class ExperienciaService {
         if (!optional.get().getUsuario().getId().equals(getIdUsuario()))
             throw new UsuarioNaoEncontradoException("Usuário não encontrado, a experiência não pode ser atualizada");
 
-        var experiencia = form.atualizacaoExperienciaForm(id, experienciaRepository);
+        var experiencia = form.atualizacaoExperienciaForm(optional.get());
         return experienciaRepository.save(experiencia);
     }
 

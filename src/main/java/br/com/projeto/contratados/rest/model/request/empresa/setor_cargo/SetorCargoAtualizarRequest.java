@@ -13,13 +13,12 @@ public class SetorCargoAtualizarRequest {
     private String setor;
     private String cargo;
 
-    public SetorCargo converter(Integer id, SetorCargoRepository setorCargoRepository) {
-        var setorCargo = setorCargoRepository.getOne(id);
+    public SetorCargo converter(SetorCargo setorCargo) {
 
         if (this.setor != null && !this.setor.isEmpty())
             setorCargo.setSetor(this.setor);
         if (this.cargo != null && !this.cargo.isEmpty())
-        setorCargo.setCargo(this.cargo);
+            setorCargo.setCargo(this.cargo);
 
         return setorCargo;
     }

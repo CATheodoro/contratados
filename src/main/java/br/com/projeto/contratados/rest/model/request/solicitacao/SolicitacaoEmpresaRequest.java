@@ -26,9 +26,7 @@ public class SolicitacaoEmpresaRequest {
     private Time horaEntrevista;
     private Date dataEntrevista;
 
-    public Solicitacao solicitacaoEmpresaRequest(Integer id, SolicitacaoRepository solicitacaoRepository) throws IOException {
-
-        var solicitacao = solicitacaoRepository.getOne(id);
+    public Solicitacao solicitacaoEmpresaRequest(Solicitacao solicitacao) throws IOException {
 
         solicitacao.setSolicitacaoEmpresaStatus(this.solicitacaoEmpresaStatus);
 

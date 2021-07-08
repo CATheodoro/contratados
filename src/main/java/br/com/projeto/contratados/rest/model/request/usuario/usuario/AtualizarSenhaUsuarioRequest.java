@@ -15,10 +15,8 @@ public class AtualizarSenhaUsuarioRequest {
     @NotNull @NotEmpty
     private String senha;
 
-    public Usuario atualizarSenhaUsuario(Integer id, UsuarioRepository usuarioRepository){
-        var usuario = usuarioRepository.getOne(id);
+    public Usuario atualizarSenhaUsuario(Usuario usuario){
         usuario.setPassword(new BCryptPasswordEncoder().encode(this.senha));
-
         return usuario;
     }
 }

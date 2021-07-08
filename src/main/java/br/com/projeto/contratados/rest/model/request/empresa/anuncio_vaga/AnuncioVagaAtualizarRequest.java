@@ -22,8 +22,7 @@ public class AnuncioVagaAtualizarRequest {
     private Float salario;
 
 
-    public AnuncioVaga converter(Integer id,AnuncioVagaRepository anuncioVagaRepository) throws IOException {
-        var anuncioVaga = anuncioVagaRepository.getOne(id);
+    public AnuncioVaga converter(AnuncioVaga anuncioVaga) throws IOException {
 
         if (enderecoCep != null){
             var viaCEPClient = new ViaCEPClient();

@@ -44,6 +44,12 @@ public class EmpresaController {
         return ResponseEntity.ok(EmpresaResponse.converterEmpresaDto(empresa));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<EmpresaResponse> perfilEmpresa(@PathVariable Integer id) {
+        Empresa empresa = empresaService.perfilEmpresa(id);
+        return ResponseEntity.ok(new EmpresaResponse(empresa));
+    }
+
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<EmpresaResponse> atualizar(@PathVariable Integer id, @RequestBody @Valid AtualizarEmpresaRequest form){

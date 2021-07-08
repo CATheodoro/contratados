@@ -8,9 +8,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 @Setter
 public class LoginRequest {
     private String email;
-    private String senha;
+    private String password;
 
     public UsernamePasswordAuthenticationToken converter() {
-        return new UsernamePasswordAuthenticationToken(email,senha);
+        return new UsernamePasswordAuthenticationToken(this.email, this.password);
     }
 }

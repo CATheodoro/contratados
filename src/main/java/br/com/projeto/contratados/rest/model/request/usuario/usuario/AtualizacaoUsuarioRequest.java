@@ -28,8 +28,7 @@ public class AtualizacaoUsuarioRequest {
     private StatusUsuario status;
 
 
-    public Usuario atualizacaoUsuarioForm(Integer id, UsuarioRepository usuarioRepository) throws IOException {
-        var usuario = usuarioRepository.getOne(id);
+    public Usuario atualizacaoUsuarioForm(Usuario usuario) throws IOException {
 
         if (this.nome != null && !this.nome.isEmpty())
             usuario.setNome(this.nome);
