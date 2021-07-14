@@ -1,5 +1,6 @@
 package br.com.projeto.contratados.rest.controller;
 
+import br.com.projeto.contratados.domain.entity.user.User;
 import br.com.projeto.contratados.domain.service.AutenticacaoService;
 import br.com.projeto.contratados.rest.model.request.LoginRequest;
 import br.com.projeto.contratados.rest.model.response.TokenResponse;
@@ -23,6 +24,7 @@ public class AutenticacaoController {
     public ResponseEntity<TokenResponse> autenticar(@RequestBody @Valid LoginRequest form){
 
         String token = autenticacaoService.autenticar(form);
-        return ResponseEntity.ok(new TokenResponse(token, "Bearer"));
+        User user = autenticacaoService.getUser(form);
+        return ResponseEntity.ok(new TokenResponse(user, token, "Bearer"));
     }
 }

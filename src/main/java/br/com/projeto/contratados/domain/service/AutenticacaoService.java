@@ -3,6 +3,7 @@ package br.com.projeto.contratados.domain.service;
 
 import br.com.projeto.contratados.config.exception.excecoes.AutenticacaoInvalidaException;
 import br.com.projeto.contratados.config.security.TokenService;
+import br.com.projeto.contratados.domain.entity.user.User;
 import br.com.projeto.contratados.rest.model.request.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,5 +32,16 @@ public class AutenticacaoService {
            throw new AutenticacaoInvalidaException(e);
         }
 
+    }
+
+    public User getUser(LoginRequest form) {
+        UsernamePasswordAuthenticationToken dadosLogin = form.converter();
+        try {
+            var authentication = authenticationManager.authenticate(dadosLogin);
+            return tokenService.getUser(authentication);
+
+        } catch (AuthenticationException e){
+            throw new AutenticacaoInvalidaException(e);
+        }
     }
 }

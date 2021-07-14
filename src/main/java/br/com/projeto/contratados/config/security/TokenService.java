@@ -82,4 +82,7 @@ public class TokenService {
     }
 
 
+    public User getUser(Authentication authentication) {
+        return (User) authentication.getPrincipal();
+    }
 }

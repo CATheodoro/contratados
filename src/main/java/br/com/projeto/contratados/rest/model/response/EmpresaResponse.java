@@ -1,12 +1,11 @@
 package br.com.projeto.contratados.rest.model.response;
 
-import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
+import br.com.projeto.contratados.rest.model.response.anuncioVaga.AnuncioVagaResponse;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

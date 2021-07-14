@@ -2,15 +2,13 @@ package br.com.projeto.contratados.domain.service.empresa;
 
 import br.com.projeto.contratados.config.exception.excecoes.EmailJaCadastradoException;
 import br.com.projeto.contratados.config.exception.excecoes.EmpresaNaoEncontradaException;
-import br.com.projeto.contratados.config.exception.excecoes.UsuarioNaoEncontradoException;
 import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
-import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
 import br.com.projeto.contratados.domain.repository.user.UserRepository;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarEmailEmpresaRequest;
-import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarSenhaEmpresaRequest;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarEmpresaRequest;
+import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarSenhaEmpresaRequest;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.EmpresaRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -87,4 +85,5 @@ public class EmpresaService {
         var empresa = form.atualizarSenhaEmpresaRequest(optional.get());
         return empresaRepository.save(empresa);
     }
+
 }

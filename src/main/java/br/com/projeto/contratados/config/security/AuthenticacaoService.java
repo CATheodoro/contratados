@@ -26,6 +26,6 @@ public class AuthenticacaoService implements UserDetailsService {
             return user.get();
         }
 
-        throw new UsernameNotFoundException("O email ou a senha inválida");
+        throw new UsernameNotFoundException("E-mail ou senha inválida");
     }
 }

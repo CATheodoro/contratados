@@ -14,4 +14,5 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
     Page<Empresa> findByNomeFantasia(String nomeFantasia, Pageable paginacao);
 
 
+    Optional<Empresa> findByAnuncioVagaId(Integer id);
 }

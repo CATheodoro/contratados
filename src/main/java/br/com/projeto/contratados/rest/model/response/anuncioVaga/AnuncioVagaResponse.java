@@ -1,7 +1,9 @@
-package br.com.projeto.contratados.rest.model.response;
+package br.com.projeto.contratados.rest.model.response.anuncioVaga;
 
 import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
-import br.com.projeto.contratados.domain.entity.solicitacao.Solicitacao;
+import br.com.projeto.contratados.rest.model.response.EnderecoResponse;
+import br.com.projeto.contratados.rest.model.response.SetorCargoResponse;
+import br.com.projeto.contratados.rest.model.response.SolicitacaoResponse;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
@@ -13,8 +15,8 @@ import java.util.stream.Collectors;
 @Getter
 public class AnuncioVagaResponse {
     private final Integer id;
-    private final List<SetorCargoResponse> setorCargoResponses;
-    private final List<SolicitacaoResponse> solicitacaos;
+    private List<SetorCargoResponse> setorCargoResponses;
+    private List<SolicitacaoResponse> solicitacaos;
     private EnderecoResponse endereco;
 
     private final Time cargaHoraria;
@@ -26,8 +28,10 @@ public class AnuncioVagaResponse {
 
     public AnuncioVagaResponse(AnuncioVaga anuncioVaga){
         this.id = anuncioVaga.getId();
-        this.setorCargoResponses = SetorCargoResponse.converterList(anuncioVaga.getSetorCargo());
-        this.solicitacaos = SolicitacaoResponse.converterList(anuncioVaga.getSolicitacao());
+        if(anuncioVaga.getSetorCargo() != null)
+            this.setorCargoResponses = SetorCargoResponse.converterList(anuncioVaga.getSetorCargo());
+        if(anuncioVaga.getSolicitacao() !=null)
+            this.solicitacaos = SolicitacaoResponse.converterList(anuncioVaga.getSolicitacao());
 
         if (anuncioVaga.getEndereco() != null) {
             this.endereco = EnderecoResponse.builder()

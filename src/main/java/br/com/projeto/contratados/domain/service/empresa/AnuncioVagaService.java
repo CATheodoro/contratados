@@ -7,17 +7,21 @@ import br.com.projeto.contratados.config.exception.excecoes.UsuarioNaoEncontrado
 import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
+import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.repository.empresa.AnuncioVagaRepository;
 import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
+import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
 import br.com.projeto.contratados.rest.model.request.empresa.anuncio_vaga.AnuncioVagaAtualizarRequest;
 import br.com.projeto.contratados.rest.model.request.empresa.anuncio_vaga.AnuncioVagaAtualizarStatusRequest;
 import br.com.projeto.contratados.rest.model.request.empresa.anuncio_vaga.AnuncioVagaRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,6 +34,13 @@ public class AnuncioVagaService {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    private Integer getIdUsuario(){
+        return tokenService.getAuthenticatedUsuario();
+    }
 
     private Integer getIdEmpresa(){
         return tokenService.getAuthenticatedEmpresa();
@@ -47,6 +58,23 @@ public class AnuncioVagaService {
 
     public Page<AnuncioVaga> listar(Pageable paginacao) {
         return anuncioVagaRepository.findByEmpresaId(getIdEmpresa(), paginacao);
+    }
+
+    public Page<AnuncioVaga> listarResumida(Pageable paginacao, String localidade) {
+        Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario());
+        if(optional.isEmpty())
+            throw new UsuarioNaoEncontradoException("Usuario não encontrado");
+        if(localidade != "" && localidade != null)
+            return anuncioVagaRepository.findByEnderecoLocalidade(localidade, paginacao);
+
+        return anuncioVagaRepository.findAll(paginacao);
+    }
+
+    public AnuncioVaga detalhado(Integer id) {
+        Optional<AnuncioVaga> optional = anuncioVagaRepository.findById(id);
+        if (optional.isEmpty())
+            throw new AnuncioVagaNaoEncontradoException("Anúncio de Vagas não encontrado");
+        return optional.get();
     }
 
     public AnuncioVaga atualizar(Integer id, AnuncioVagaAtualizarRequest form) throws IOException {
@@ -72,5 +100,13 @@ public class AnuncioVagaService {
 
         var anuncioVaga = form.converter(id, anuncioVagaRepository);
         return anuncioVagaRepository.save(anuncioVaga);
+    }
+
+    public Empresa getEmpresa(Integer id) {
+        Optional<Empresa> empresa = empresaRepository.findByAnuncioVagaId(id);
+            if(empresa.isEmpty())
+                throw new AnuncioVagaNaoEncontradoException("Anúncio de Vaga não encontrado");
+
+        return empresa.get();
     }
 }
