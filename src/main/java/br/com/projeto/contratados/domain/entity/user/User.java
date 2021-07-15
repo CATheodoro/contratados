@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -31,6 +32,8 @@ public class User implements UserDetails {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enable;
+
+    private LocalDateTime dataCriacaoPerfil;
 
     public User(String email, String password, Perfil perfil, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enable) {
         this.email = email;

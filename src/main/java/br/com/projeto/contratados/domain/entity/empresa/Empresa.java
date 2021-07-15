@@ -27,5 +27,5 @@ public class Empresa extends User {
     private Integer telefone;
     private String cnpj;
     private Date dataFundacao;
-    private LocalDateTime dataCriacaoPerfil;
+
 }
