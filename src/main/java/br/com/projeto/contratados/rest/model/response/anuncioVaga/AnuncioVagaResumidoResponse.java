@@ -4,9 +4,11 @@ import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.rest.model.response.EnderecoResponse;
 import br.com.projeto.contratados.rest.model.response.SetorCargoResponse;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,10 +21,13 @@ public class AnuncioVagaResumidoResponse {
 
     private final String requisitos;
     private final boolean statusAnuncio;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private final LocalDateTime dataPostagem;
 
+    private final String nomeEmpresa;
 
-    public AnuncioVagaResumidoResponse(AnuncioVaga anuncioVaga){
+
+    public AnuncioVagaResumidoResponse(AnuncioVaga anuncioVaga, Empresa empresa){
         this.id = anuncioVaga.getId();
         if(anuncioVaga.getSetorCargo() != null)
             this.setorCargoResponses = SetorCargoResponse.converterList(anuncioVaga.getSetorCargo());
@@ -38,13 +43,10 @@ public class AnuncioVagaResumidoResponse {
         this.statusAnuncio = anuncioVaga.isStatusAnuncio();
         this.dataPostagem = anuncioVaga.getDataPostagem();
 
+        this.nomeEmpresa = empresa.getNomeFantasia();
     }
 
-    public static Page<AnuncioVagaResumidoResponse> converter(Page<AnuncioVaga> anuncioVagas){
-        return anuncioVagas.map(AnuncioVagaResumidoResponse::new);
-    }
-
-    public static List<AnuncioVagaResumidoResponse> converterList(List<AnuncioVaga> anuncioVaga) {
-        return anuncioVaga.stream().map(AnuncioVagaResumidoResponse::new).collect(Collectors.toList());
+    public static Page<AnuncioVagaResponse> converter(Page<AnuncioVaga> anuncioVagas){
+        return anuncioVagas.map(AnuncioVagaResponse::new);
     }
 }

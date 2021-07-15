@@ -2,6 +2,7 @@ package br.com.projeto.contratados.rest.model.response;
 
 import br.com.projeto.contratados.domain.entity.usuario.StatusUsuario;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
@@ -13,7 +14,6 @@ import java.util.List;
 public class UsuarioResponse {
     private final Integer id;
 
-    //Dados Usuario
     private final String nome;
     private final String email;
 
@@ -23,6 +23,7 @@ public class UsuarioResponse {
     private final String telefone;
     private EnderecoResponse endereco;
     private final StatusUsuario status;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private final LocalDateTime dataCriacaoPerfil;
 
     private final boolean accountNonExpired;
@@ -30,9 +31,9 @@ public class UsuarioResponse {
     private final boolean credentialsNonExpired;
     private final boolean enable;
 
-    private List<FormacaoResponse> formacao;
-    private List<ExperienciaResponse> experiencia;
-    private List<SolicitacaoResponse> solicitacao;
+    private final List<FormacaoResponse> formacao;
+    private final List<ExperienciaResponse> experiencia;
+    private final List<SolicitacaoResponse> solicitacao;
 
     public UsuarioResponse(Usuario usuario){
         this.id = usuario.getId();

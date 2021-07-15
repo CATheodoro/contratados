@@ -2,6 +2,7 @@ package br.com.projeto.contratados.domain.entity.empresa;
 
 import br.com.projeto.contratados.domain.entity.Endereco;
 import br.com.projeto.contratados.domain.entity.solicitacao.Solicitacao;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -39,6 +40,7 @@ public class AnuncioVaga {
     private String requisitos;
     private Float salario;
     private boolean statusAnuncio;
+
     private LocalDateTime dataPostagem;
 
 

@@ -4,8 +4,10 @@ import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.rest.model.response.EnderecoResponse;
 import br.com.projeto.contratados.rest.model.response.SetorCargoResponse;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class AnuncioVagaDetalhadoResponse {
 
     private final String requisitos;
     private final boolean statusAnuncio;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private final LocalDateTime dataPostagem;
 
     private final String nomeEmpresa;

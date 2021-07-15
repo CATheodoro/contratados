@@ -4,6 +4,7 @@ import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
 import br.com.projeto.contratados.rest.model.response.EnderecoResponse;
 import br.com.projeto.contratados.rest.model.response.SetorCargoResponse;
 import br.com.projeto.contratados.rest.model.response.SolicitacaoResponse;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
@@ -23,6 +24,7 @@ public class AnuncioVagaResponse {
     private final String requisitos;
     private final Float salario;
     private final boolean statusAnuncio;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private final LocalDateTime dataPostagem;
 
 

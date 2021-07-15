@@ -20,7 +20,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/anunciovaga")
@@ -44,7 +43,7 @@ public class AnuncioVagaController {
     }
 
     @GetMapping("/usuariovagas")
-    public ResponseEntity<Page<AnuncioVagaResumidoResponse>> listarResumida(
+    public ResponseEntity<Page<AnuncioVagaResponse>> listarResumida(
             @RequestParam (name = "localidade",required = false) String localidade,
             @PageableDefault(size = 10, page = 0, sort = "dataPostagem", direction = Sort.Direction.DESC) Pageable paginacao) {
 

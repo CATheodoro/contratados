@@ -1,13 +1,12 @@
 package br.com.projeto.contratados.rest.controller.empresa;
 
-import br.com.projeto.contratados.config.security.TokenService;
+import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.domain.service.empresa.EmpresaService;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarEmailEmpresaRequest;
-import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarSenhaEmpresaRequest;
-import br.com.projeto.contratados.rest.model.response.EmpresaResponse;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarEmpresaRequest;
+import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarSenhaEmpresaRequest;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.EmpresaRequest;
-import br.com.projeto.contratados.domain.entity.empresa.Empresa;
+import br.com.projeto.contratados.rest.model.response.EmpresaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,11 +15,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/empresa")
@@ -70,4 +67,5 @@ public class EmpresaController {
         var empresa = empresaService.atualizarSenha(id, form);
         return ResponseEntity.ok().body(new  EmpresaResponse(empresa));
     }
+
 }

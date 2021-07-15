@@ -46,7 +46,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponse> listar (@PathVariable Integer id){
+    public ResponseEntity<UsuarioResponse> perfilUsuario (@PathVariable Integer id){
 
         Usuario usuario = usuarioService.perfilUsuario(id);
         return ResponseEntity.ok(new UsuarioResponse(usuario));
