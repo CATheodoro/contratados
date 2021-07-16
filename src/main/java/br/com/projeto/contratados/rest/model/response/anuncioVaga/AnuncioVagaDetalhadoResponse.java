@@ -23,8 +23,10 @@ public class AnuncioVagaDetalhadoResponse {
     private final LocalDateTime dataPostagem;
 
     private final String nomeEmpresa;
-    private Integer celular;
-    private Integer telefone;
+    private final Integer celular;
+    private final Integer telefone;
+
+    private final byte[] image;
 
     public AnuncioVagaDetalhadoResponse(AnuncioVaga anuncioVaga, Empresa empresa) {
         this.id = anuncioVaga.getId();
@@ -45,5 +47,7 @@ public class AnuncioVagaDetalhadoResponse {
         this.nomeEmpresa = empresa.getNomeFantasia();
         this.celular = empresa.getCelular();
         this.telefone = empresa.getTelefone();
+
+        this.image = empresa.getImage();
     }
 }

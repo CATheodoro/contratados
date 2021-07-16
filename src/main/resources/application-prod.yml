@@ -22,6 +22,7 @@ spring:
     # url de conexão do banco de dados
     url: jdbc:mysql://localhost:3306/contratados?allowPublicKeyRetrieval=true&sslMode=DISABLED&useSSL=false&serverTimezone=UTC
 
+    #url: jdbc:mysql://localhost:3306/contratados?sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false
 
 # jwt
 contratados:

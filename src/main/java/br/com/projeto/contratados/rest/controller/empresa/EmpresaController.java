@@ -15,9 +15,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/empresa")
@@ -66,6 +68,12 @@ public class EmpresaController {
     public ResponseEntity<EmpresaResponse> atualizarSenha(@PathVariable Integer id, @RequestBody @Valid AtualizarSenhaEmpresaRequest form){
         var empresa = empresaService.atualizarSenha(id, form);
         return ResponseEntity.ok().body(new  EmpresaResponse(empresa));
+    }
+
+    @PutMapping("/uploadimage")
+    public ResponseEntity<EmpresaResponse> uploadImage(@RequestParam MultipartFile image) throws IOException {
+        Empresa empresa = empresaService.uploadImage(image);
+        return ResponseEntity.ok(new EmpresaResponse(empresa));
     }
 
 }

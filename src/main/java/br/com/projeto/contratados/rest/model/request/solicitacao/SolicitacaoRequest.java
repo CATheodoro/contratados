@@ -17,13 +17,15 @@ import java.time.LocalDateTime;
 public class SolicitacaoRequest {
 
     @NotNull
-    private AnuncioVaga anuncioVaga;
+    private Integer anuncioVagaId;
 
-    public Solicitacao converter(Usuario usuario) {
+    public Solicitacao converter(Usuario usuario, AnuncioVaga anuncioVaga) {
+
+
 
         return Solicitacao.builder()
                 .usuario(usuario)
-                .anuncioVaga(this.anuncioVaga)
+                .anuncioVaga(anuncioVaga)
                 .solicitacaoEmpresaStatus(SolicitacaoEmpresaStatus.PENDENTE)
                 .solicitacaoUsuarioStatus(SolicitacaoUsuarioStatus.PENDENTE)
                 .dataCriacaoSolicitacao(LocalDateTime.now())

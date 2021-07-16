@@ -26,6 +26,8 @@ public class AnuncioVagaResumidoResponse {
 
     private final String nomeEmpresa;
 
+    private final byte[] image;
+
 
     public AnuncioVagaResumidoResponse(AnuncioVaga anuncioVaga, Empresa empresa){
         this.id = anuncioVaga.getId();
@@ -44,6 +46,7 @@ public class AnuncioVagaResumidoResponse {
         this.dataPostagem = anuncioVaga.getDataPostagem();
 
         this.nomeEmpresa = empresa.getNomeFantasia();
+        this.image = empresa.getImage();
     }
 
     public static Page<AnuncioVagaResponse> converter(Page<AnuncioVaga> anuncioVagas){

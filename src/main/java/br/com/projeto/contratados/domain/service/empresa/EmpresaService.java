@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -84,6 +86,15 @@ public class EmpresaService {
 
         var empresa = form.atualizarSenhaEmpresaRequest(optional.get());
         return empresaRepository.save(empresa);
+    }
+
+    public Empresa uploadImage(MultipartFile image) throws IOException {
+        Optional<Empresa> optional = empresaRepository.findById(getIdEmpresa());
+        if (optional.isEmpty())
+            throw new EmpresaNaoEncontradaException("Empresa não encontrada, imagem não pode ser atualizada");
+
+        optional.get().setImage(image.getBytes());
+        return empresaRepository.save(optional.get());
     }
 
 }

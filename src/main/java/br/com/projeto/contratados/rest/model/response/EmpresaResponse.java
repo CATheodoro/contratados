@@ -26,6 +26,7 @@ public class EmpresaResponse {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private final LocalDateTime dataCriacaoPerfil;
     private final List<AnuncioVagaResponse> anuncioVagaResponses;
+    private final byte[] image;
 
     public EmpresaResponse(Empresa empresa) {
         this.id = empresa.getId();
@@ -38,6 +39,7 @@ public class EmpresaResponse {
         this.dataFundacao = empresa.getDataFundacao();
         this.dataCriacaoPerfil = empresa.getDataCriacaoPerfil();
         this.anuncioVagaResponses = AnuncioVagaResponse.converterList(empresa.getAnuncioVaga());
+        this.image = empresa.getImage();
     }
 
 

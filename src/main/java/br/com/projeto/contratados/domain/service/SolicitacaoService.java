@@ -47,18 +47,18 @@ public class SolicitacaoService {
 
     public Solicitacao cadastrar(SolicitacaoRequest form) {
 
-        Optional<AnuncioVaga> anuncioVagaOptional = anuncioVagaRepository.findById(form.getAnuncioVaga().getId());
+        Optional<AnuncioVaga> anuncioVagaOptional = anuncioVagaRepository.findById(form.getAnuncioVagaId());
         if (anuncioVagaOptional.isEmpty())
             throw new AnuncioVagaNaoEncontradoException("Anúncio de Vaga não encontrado, não foi possível enviar a solicitação");
 
-        if (solicitacaoRepository.existsByUsuarioId(getIdUsuario()) && solicitacaoRepository.existsByAnuncioVagaId(form.getAnuncioVaga().getId()))
+        if (solicitacaoRepository.existsByUsuarioId(getIdUsuario()) && solicitacaoRepository.existsByAnuncioVagaId(form.getAnuncioVagaId()))
             throw new SolicitacaoJaEnviadaException("Usuário já enviou a solicitação");
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(getIdUsuario());
         if (usuarioOptional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuário não encontrado, não foi possível enviar a solicitação");
 
-        var solicitacao = form.converter(usuarioOptional.get());
+        var solicitacao = form.converter(usuarioOptional.get(), anuncioVagaOptional.get());
 
         return solicitacaoRepository.save(solicitacao);
     }
