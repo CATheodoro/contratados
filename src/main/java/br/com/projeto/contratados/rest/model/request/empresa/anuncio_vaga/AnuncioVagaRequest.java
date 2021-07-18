@@ -28,6 +28,10 @@ public class AnuncioVagaRequest {
     private String requisitos;
     private Float salario;
 
+    private String complemento;
+    @NotNull
+    private Integer numero;
+
     public AnuncioVaga converter(Empresa empresa) throws IOException {
 
         //Buscar Cep
@@ -37,11 +41,12 @@ public class AnuncioVagaRequest {
         var endereco = Endereco.builder()
                 .cep(viaCEPEndereco.getCep())
                 .logradouro(viaCEPEndereco.getLogradouro())
-                .complemento(viaCEPEndereco.getComplemento())
+                .complemento(this.complemento)
                 .bairro(viaCEPEndereco.getBairro())
                 .localidade(viaCEPEndereco.getLocalidade())
                 .uf(viaCEPEndereco.getUf())
                 .ibge(viaCEPEndereco.getIbge())
+                .numero(this.numero)
                 .build();
 
         return AnuncioVaga.builder()

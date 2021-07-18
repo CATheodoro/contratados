@@ -50,10 +50,16 @@ public class EmpresaService {
     }
 
     public Empresa perfilEmpresa(Integer id) {
-        Optional<Empresa> optional = empresaRepository.findById(getIdEmpresa());
-        if(optional.isEmpty())
-            throw new EmpresaNaoEncontradaException("Ocorreu algum erro, Não foi possivel acessar seu perfil");
-        return optional.get();
+        if(id == null || id == 0) {
+            Optional<Empresa> optional = empresaRepository.findById(getIdEmpresa());
+            if (optional.isEmpty())
+                throw new EmpresaNaoEncontradaException("Ocorreu algum erro, Não foi possivel acessar seu perfil");
+            return optional.get();
+        }
+        Optional<Empresa> optional = empresaRepository.findById(id);
+        if (optional.isEmpty())
+            throw new EmpresaNaoEncontradaException("Ocorreu algum erro, Não foi possivel acessar o perfil da empresa");
+        return  optional.get();
     }
 
     public Empresa atualizar(Integer id, AtualizarEmpresaRequest form) {
@@ -86,15 +92,6 @@ public class EmpresaService {
 
         var empresa = form.atualizarSenhaEmpresaRequest(optional.get());
         return empresaRepository.save(empresa);
-    }
-
-    public Empresa uploadImage(MultipartFile image) throws IOException {
-        Optional<Empresa> optional = empresaRepository.findById(getIdEmpresa());
-        if (optional.isEmpty())
-            throw new EmpresaNaoEncontradaException("Empresa não encontrada, imagem não pode ser atualizada");
-
-        optional.get().setImage(image.getBytes());
-        return empresaRepository.save(optional.get());
     }
 
 }

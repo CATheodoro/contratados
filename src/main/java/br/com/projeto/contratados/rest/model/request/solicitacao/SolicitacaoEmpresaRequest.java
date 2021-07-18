@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.sql.Date;
@@ -21,10 +22,16 @@ public class SolicitacaoEmpresaRequest {
 
     @NotNull
     private SolicitacaoEmpresaStatus solicitacaoEmpresaStatus;
-
+    @NotNull
     private String  enderecoCep;
+    @NotNull
     private Time horaEntrevista;
+    @NotNull
     private Date dataEntrevista;
+
+    private String complemento;
+    @NotNull
+    private Integer numero;
 
     public Solicitacao solicitacaoEmpresaRequest(Solicitacao solicitacao) throws IOException {
 
@@ -37,11 +44,12 @@ public class SolicitacaoEmpresaRequest {
             var endereco = Endereco.builder()
                     .cep(viaCEPEndereco.getCep())
                     .logradouro(viaCEPEndereco.getLogradouro())
-                    .complemento(viaCEPEndereco.getComplemento())
+                    .complemento(this.complemento)
                     .bairro(viaCEPEndereco.getBairro())
                     .localidade(viaCEPEndereco.getLocalidade())
                     .uf(viaCEPEndereco.getUf())
                     .ibge(viaCEPEndereco.getIbge())
+                    .numero(this.numero)
                     .build();
 
             solicitacao.setEndereco(endereco);

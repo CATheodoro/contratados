@@ -19,7 +19,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
@@ -30,7 +30,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
@@ -42,7 +42,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
@@ -53,7 +53,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
@@ -64,7 +64,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
@@ -75,7 +75,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
@@ -86,7 +86,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
@@ -97,7 +97,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
@@ -108,7 +108,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
@@ -119,7 +119,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
@@ -130,7 +130,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
@@ -141,7 +141,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
@@ -152,7 +152,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
@@ -163,7 +163,7 @@ public class ApplicationExceptionHandler {
 
         StandardError err =  StandardError.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .message(e.getMessage())
+                .error(e.getMessage())
                 .timeStamp(System.currentTimeMillis())
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);

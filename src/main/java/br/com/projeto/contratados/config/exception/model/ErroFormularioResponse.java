@@ -8,6 +8,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ErroFormularioResponse {
     private final String campo;
-    private final String erro;
+    private final String error;
     private final int status;
 }

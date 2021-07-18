@@ -60,12 +60,19 @@ public class AnuncioVagaService {
         return anuncioVagaRepository.findByEmpresaId(getIdEmpresa(), paginacao);
     }
 
-    public Page<AnuncioVaga> listarResumida(Pageable paginacao, String localidade) {
+    public Page<AnuncioVaga> listarResumida(Pageable paginacao, String localidade, String cargo) {
         Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario());
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuario não encontrado");
-        if(localidade != "" && localidade != null)
-            return anuncioVagaRepository.findByEnderecoLocalidade(localidade, paginacao);
+
+        if(localidade != "" && localidade != null && cargo !="" && cargo != null)
+            return anuncioVagaRepository.findAllByEnderecoLocalidadeAndSetorCargoCargo(localidade, cargo, paginacao);
+
+        if(localidade !="" && localidade != null)
+            return anuncioVagaRepository.findAllByEnderecoLocalidade(localidade, paginacao);
+
+        if(cargo !="" && cargo != null)
+            return anuncioVagaRepository.findAllBySetorCargoCargo(cargo, paginacao);
 
         return anuncioVagaRepository.findAll(paginacao);
     }
@@ -102,11 +109,4 @@ public class AnuncioVagaService {
         return anuncioVagaRepository.save(anuncioVaga);
     }
 
-    public Empresa getEmpresa(Integer id) {
-        Optional<Empresa> empresa = empresaRepository.findByAnuncioVagaId(id);
-            if(empresa.isEmpty())
-                throw new AnuncioVagaNaoEncontradoException("Anúncio de Vaga não encontrado");
-
-        return empresa.get();
-    }
 }

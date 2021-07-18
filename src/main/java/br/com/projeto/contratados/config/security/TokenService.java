@@ -74,7 +74,7 @@ public class TokenService {
             if (principal.isPresent() && principal.get() instanceof Empresa) {
                 return ((Empresa)principal.get()).getId();
             }
-            throw new UserAuthException("Não foi possível recuperar id do empresa");
+            throw new UserAuthException("Não foi possível recuperar id da empresa");
 
         } catch (Exception e) {
             throw new UserAuthException(e.getMessage());

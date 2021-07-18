@@ -43,11 +43,12 @@ public class AnuncioVagaController {
     }
 
     @GetMapping("/usuariovagas")
-    public ResponseEntity<Page<AnuncioVagaResponse>> listarResumida(
-            @RequestParam (name = "localidade",required = false) String localidade,
+    public ResponseEntity<Page<AnuncioVagaResumidoResponse>> listarResumida(
+            @RequestParam (name = "localidade", required = false) String localidade,
+            @RequestParam (name = "cargo", required = false) String cargo,
             @PageableDefault(size = 10, page = 0, sort = "dataPostagem", direction = Sort.Direction.DESC) Pageable paginacao) {
 
-        Page<AnuncioVaga> anuncioVaga = anuncioVagaService.listarResumida(paginacao,localidade);
+        Page<AnuncioVaga> anuncioVaga = anuncioVagaService.listarResumida(paginacao, localidade, cargo);
         return ResponseEntity.ok(AnuncioVagaResumidoResponse.converter(anuncioVaga));
     }
 
@@ -55,8 +56,7 @@ public class AnuncioVagaController {
     public ResponseEntity<AnuncioVagaDetalhadoResponse> detalhado(@PathVariable Integer id) {
 
         AnuncioVaga anuncioVaga = anuncioVagaService.detalhado(id);
-        Empresa empresa = anuncioVagaService.getEmpresa(id);
-        return ResponseEntity.ok(new AnuncioVagaDetalhadoResponse(anuncioVaga, empresa));
+        return ResponseEntity.ok(new AnuncioVagaDetalhadoResponse(anuncioVaga));
     }
 
     @PutMapping("/{id}")

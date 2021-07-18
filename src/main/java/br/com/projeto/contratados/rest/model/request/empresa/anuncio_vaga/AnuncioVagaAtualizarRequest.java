@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.sql.Time;
 
@@ -21,6 +23,9 @@ public class AnuncioVagaAtualizarRequest {
     private String requisitos;
     private Float salario;
 
+    private String complemento;
+    @NotNull
+    private Integer numero;
 
     public AnuncioVaga converter(AnuncioVaga anuncioVaga) throws IOException {
 
@@ -31,11 +36,12 @@ public class AnuncioVagaAtualizarRequest {
             anuncioVaga.setEndereco(Endereco.builder()
                     .cep(viaCEPEndereco.getCep())
                     .logradouro(viaCEPEndereco.getLogradouro())
-                    .complemento(viaCEPEndereco.getComplemento())
+                    .complemento(this.complemento)
                     .bairro(viaCEPEndereco.getBairro())
                     .localidade(viaCEPEndereco.getLocalidade())
                     .uf(viaCEPEndereco.getUf())
                     .ibge(viaCEPEndereco.getIbge())
+                    .numero(this.numero)
                     .build());
         }
 

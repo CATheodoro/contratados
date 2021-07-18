@@ -44,6 +44,9 @@ public class UsuarioRequest {
 
     private StatusUsuario status;
 
+    private String complemento;
+
+    private Integer numero;
 
     public Usuario converter() throws IOException {
         Endereco endereco = null;
@@ -54,11 +57,12 @@ public class UsuarioRequest {
             endereco = Endereco.builder()
                     .cep(viaCEPEndereco.getCep())
                     .logradouro(viaCEPEndereco.getLogradouro())
-                    .complemento(viaCEPEndereco.getComplemento())
+                    .complemento(this.complemento)
                     .bairro(viaCEPEndereco.getBairro())
                     .localidade(viaCEPEndereco.getLocalidade())
                     .uf(viaCEPEndereco.getUf())
                     .ibge(viaCEPEndereco.getIbge())
+                    .numero(this.numero)
                     .build();
         }
 

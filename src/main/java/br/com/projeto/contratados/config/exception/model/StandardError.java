@@ -16,7 +16,7 @@ public class StandardError implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer status;
-    private String message;
+    private String error;
     private Long timeStamp;
 
 }

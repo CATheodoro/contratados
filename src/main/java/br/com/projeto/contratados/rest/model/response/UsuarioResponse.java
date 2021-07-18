@@ -21,7 +21,7 @@ public class UsuarioResponse {
 
     private final String celular;
     private final String telefone;
-    private EnderecoResponse endereco;
+
     private final StatusUsuario status;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private final LocalDateTime dataCriacaoPerfil;
@@ -35,6 +35,14 @@ public class UsuarioResponse {
     private final List<ExperienciaResponse> experiencia;
     private final List<SolicitacaoResponse> solicitacao;
 
+    private String cep;
+    private String logradouro;
+    private String complemento;
+    private String bairro;
+    private String localidade;
+    private String uf;
+    private Integer numero;
+
     public UsuarioResponse(Usuario usuario){
         this.id = usuario.getId();
         this.nome = usuario.getNome();
@@ -42,17 +50,6 @@ public class UsuarioResponse {
         this.dataNascimento = usuario.getDataNascimento();
         this.celular = usuario.getCelular();
         this.telefone = usuario.getTelefone();
-
-        if (usuario.getEndereco() != null) {
-            this.endereco = EnderecoResponse.builder()
-                    .cep(usuario.getEndereco().getCep())
-                    .logradouro(usuario.getEndereco().getLogradouro())
-                    .complemento(usuario.getEndereco().getComplemento())
-                    .bairro(usuario.getEndereco().getBairro())
-                    .localidade(usuario.getEndereco().getLocalidade())
-                    .uf(usuario.getEndereco().getUf())
-                    .build();
-        }
 
         this.status = usuario.getStatus();
         this.dataCriacaoPerfil = usuario.getDataCriacaoPerfil();
@@ -65,6 +62,16 @@ public class UsuarioResponse {
         this.formacao = FormacaoResponse.converterList(usuario.getFormacao());
         this.experiencia = ExperienciaResponse.converterList(usuario.getExperiencia());
         this.solicitacao = SolicitacaoResponse.converterList(usuario.getSolicitacao());
+
+        if (usuario.getEndereco() != null) {
+            this.cep = usuario.getEndereco().getCep();
+            this.logradouro = usuario.getEndereco().getLogradouro();
+            this.complemento = usuario.getEndereco().getComplemento();
+            this.bairro = usuario.getEndereco().getBairro();
+            this.localidade = usuario.getEndereco().getLocalidade();
+            this.uf = usuario.getEndereco().getUf();
+            this.numero = usuario.getEndereco().getNumero();
+        }
 
     }
 

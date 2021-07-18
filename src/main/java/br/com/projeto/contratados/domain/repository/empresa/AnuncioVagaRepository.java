@@ -10,6 +10,10 @@ import org.springframework.stereotype.Repository;
 public interface AnuncioVagaRepository extends JpaRepository<AnuncioVaga, Integer> {
 
     Page<AnuncioVaga> findByEmpresaId(Integer idEmpresa, Pageable paginacao);
+    
+    Page<AnuncioVaga> findAllByEnderecoLocalidadeAndSetorCargoCargo(String localidade, String cargo, Pageable paginacao);
 
-    Page<AnuncioVaga> findByEnderecoLocalidade(String localidade, Pageable paginacao);
+    Page<AnuncioVaga> findAllByEnderecoLocalidade(String localidade, Pageable paginacao);
+
+    Page<AnuncioVaga> findAllBySetorCargoCargo(String cargo, Pageable paginacao);
 }

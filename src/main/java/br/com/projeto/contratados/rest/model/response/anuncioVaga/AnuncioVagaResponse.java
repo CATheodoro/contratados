@@ -1,7 +1,6 @@
 package br.com.projeto.contratados.rest.model.response.anuncioVaga;
 
 import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
-import br.com.projeto.contratados.rest.model.response.EnderecoResponse;
 import br.com.projeto.contratados.rest.model.response.SetorCargoResponse;
 import br.com.projeto.contratados.rest.model.response.SolicitacaoResponse;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -18,7 +17,6 @@ public class AnuncioVagaResponse {
     private final Integer id;
     private List<SetorCargoResponse> setorCargoResponses;
     private List<SolicitacaoResponse> solicitacaos;
-    private EnderecoResponse endereco;
 
     private final Time cargaHoraria;
     private final String requisitos;
@@ -26,6 +24,14 @@ public class AnuncioVagaResponse {
     private final boolean statusAnuncio;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private final LocalDateTime dataPostagem;
+
+    private String cep;
+    private String logradouro;
+    private String complemento;
+    private String bairro;
+    private String localidade;
+    private String uf;
+    private Integer numero;
 
 
     public AnuncioVagaResponse(AnuncioVaga anuncioVaga){
@@ -35,22 +41,21 @@ public class AnuncioVagaResponse {
         if(anuncioVaga.getSolicitacao() !=null)
             this.solicitacaos = SolicitacaoResponse.converterList(anuncioVaga.getSolicitacao());
 
-        if (anuncioVaga.getEndereco() != null) {
-            this.endereco = EnderecoResponse.builder()
-                    .cep(anuncioVaga.getEndereco().getCep())
-                    .logradouro(anuncioVaga.getEndereco().getLogradouro())
-                    .complemento(anuncioVaga.getEndereco().getComplemento())
-                    .bairro(anuncioVaga.getEndereco().getBairro())
-                    .localidade(anuncioVaga.getEndereco().getLocalidade())
-                    .uf(anuncioVaga.getEndereco().getUf())
-                    .build();
-        }
-
         this.cargaHoraria = anuncioVaga.getCargaHoraria();
         this.requisitos = anuncioVaga.getRequisitos();
         this.salario = anuncioVaga.getSalario();
         this.statusAnuncio = anuncioVaga.isStatusAnuncio();
         this.dataPostagem = anuncioVaga.getDataPostagem();
+
+        if (anuncioVaga.getEndereco() != null) {
+            this.cep = anuncioVaga.getEndereco().getCep();
+            this.logradouro = anuncioVaga.getEndereco().getLogradouro();
+            this.complemento = anuncioVaga.getEndereco().getComplemento();
+            this.bairro = anuncioVaga.getEndereco().getBairro();
+            this.localidade = anuncioVaga.getEndereco().getLocalidade();
+            this.uf = anuncioVaga.getEndereco().getUf();
+            this.numero = anuncioVaga.getEndereco().getNumero();
+        }
 
     }
 

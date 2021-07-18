@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.Date;
 
@@ -27,6 +29,9 @@ public class AtualizacaoUsuarioRequest {
     //private Image curriculo;
     private StatusUsuario status;
 
+    private String complemento;
+    @NotNull
+    private Integer numero;
 
     public Usuario atualizacaoUsuarioForm(Usuario usuario) throws IOException {
 
@@ -44,11 +49,12 @@ public class AtualizacaoUsuarioRequest {
             usuario.setEndereco(Endereco.builder()
                     .cep(viaCEPEndereco.getCep())
                     .logradouro(viaCEPEndereco.getLogradouro())
-                    .complemento(viaCEPEndereco.getComplemento())
+                    .complemento(this.complemento)
                     .bairro(viaCEPEndereco.getBairro())
                     .localidade(viaCEPEndereco.getLocalidade())
                     .uf(viaCEPEndereco.getUf())
                     .ibge(viaCEPEndereco.getIbge())
+                    .numero(this.numero)
                     .build()
             );
         }
