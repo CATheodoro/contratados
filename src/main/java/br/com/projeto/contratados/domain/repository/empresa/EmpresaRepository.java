@@ -9,10 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface EmpresaRepository extends JpaRepository<Empresa, Integer> {
+public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
 
-    Page<Empresa> findByNomeFantasia(String nomeFantasia, Pageable paginacao);
-
-
-    Optional<Empresa> findByAnuncioVagaId(Integer id);
+    Page<Empresa> findByNome(String nome, Pageable paginacao);
 }

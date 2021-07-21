@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class SolicitacaoRequest {
 
     @NotNull
-    private Integer anuncioVagaId;
+    private Long anuncioVagaId;
 
     public Solicitacao converter(Usuario usuario, AnuncioVaga anuncioVaga) {
 

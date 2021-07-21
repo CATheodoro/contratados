@@ -29,7 +29,7 @@ public class SetorCargoService {
     @Autowired
     private TokenService tokenService;
 
-    private Integer getIdEmpresa(){
+    private Long getIdEmpresa(){
         return tokenService.getAuthenticatedEmpresa();
     }
 
@@ -52,7 +52,7 @@ public class SetorCargoService {
     }
 
 
-    public SetorCargo atualizar(Integer id, SetorCargoAtualizarRequest form) {
+    public SetorCargo atualizar(Long id, SetorCargoAtualizarRequest form) {
         Optional<SetorCargo> optional = setorCargoRepository.findById(id);
         if (optional.isEmpty())
             throw new SetorCargoNaoEncontradoException("Setor Cargo não encontrado, ele não pode ser atualizado");
@@ -64,7 +64,7 @@ public class SetorCargoService {
         return setorCargoRepository.save(setorCargo);
     }
 
-    public SetorCargo deletar(Integer id) {
+    public SetorCargo deletar(Long id) {
         Optional<SetorCargo> optional = setorCargoRepository.findById(id);
         if (optional.isEmpty())
             throw new SetorCargoNaoEncontradoException("Setor Cargo não encontrado, ele não pode ser deletado");

@@ -8,11 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FormacaoRepository extends JpaRepository<Formacao, Integer> {
+public interface FormacaoRepository extends JpaRepository<Formacao, Long> {
     
-    Page<Formacao> findByUsuarioId(Integer idUsuario, Pageable paginacao);
+    Page<Formacao> findByUsuarioId(Long idUsuario, Pageable paginacao);
 
-    Page<Formacao> findByDescricaoAndUsuarioId(String descricao, Integer idUsuario, Pageable paginacao);
+    Page<Formacao> findByDescricaoAndUsuarioId(String descricao, Long idUsuario, Pageable paginacao);
 
-    boolean existsByUsuarioId(Integer idUsuario);
+    boolean existsByUsuarioId(Long idUsuario);
 }

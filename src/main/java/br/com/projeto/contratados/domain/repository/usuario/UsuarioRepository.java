@@ -9,9 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-
-    Usuario findByEnderecoCep(String cep);
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Page<Usuario> findByNome(String nome, Pageable pageable);
 

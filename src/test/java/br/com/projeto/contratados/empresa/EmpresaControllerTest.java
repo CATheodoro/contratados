@@ -1,6 +1,5 @@
 package br.com.projeto.contratados.empresa;
 
-import br.com.projeto.contratados.ContratadosApplicationTests;
 import br.com.projeto.contratados.helper.MockMvcHelper;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarEmailEmpresaRequest;
 import br.com.projeto.contratados.rest.model.request.empresa.empresa.AtualizarEmpresaRequest;
@@ -12,7 +11,6 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.sql.Date;
@@ -40,18 +38,18 @@ public class EmpresaControllerTest {
         mockMvcHelper.get(PATH)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[1].id").value(2))
-                .andExpect(jsonPath("$.content[1].nomeFantasia").value("empresa"))
+                .andExpect(jsonPath("$.content[1].nome").value("empresa"))
 
                 .andExpect(jsonPath("$.content[0].id").value(1))
-                .andExpect(jsonPath("$.content[0].nomeFantasia").value("TotTV"));
+                .andExpect(jsonPath("$.content[0].nome").value("TotTV"));
     }
 
     @Test
-    public void deveRetornarOkQuandoBuscarPorNomeFantasiaDeEmpresa() throws Exception{
-        mockMvcHelper.get(PATH + "?nomeFantasia=empresa")
+    public void deveRetornarOkQuandoBuscarPorNomeDeEmpresa() throws Exception{
+        mockMvcHelper.get(PATH + "?nome=empresa")
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].id").value(2))
-                .andExpect(jsonPath("$.content[0].nomeFantasia").value("empresa"));
+                .andExpect(jsonPath("$.content[0].nome").value("empresa"));
     }
 
     //####################################### LISTAR - CAMINHO TRISTE #######################################################
@@ -61,13 +59,13 @@ public class EmpresaControllerTest {
     //---------------------------------------ATUALIZAR - CAMINHO FELIZ------------------------------------------------------
     @Test
     public void deveRetornarOkQuandoAtualizarEmpresa() throws Exception{
-        Long id = 1l;
+        Long id = 1L;
 
         AtualizarEmpresaRequest atualizarEmpresaRequest = AtualizarEmpresaRequest.builder()
-                .nomeFantasia("Yamaha")
+                .nome("Yamaha")
                 .descricao("Confia que é a melhor")
-                .celular(123456)
-                .telefone(7891011)
+                .celular("123456")
+                .telefone("7891011")
                 .cnpj("12343523")
                 .dataFundacao(Date.valueOf("2001-05-15"))
                 .build();
@@ -75,12 +73,12 @@ public class EmpresaControllerTest {
         mockMvcHelper.put(PATH, id, atualizarEmpresaRequest)
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.nomeFantasia").value("Yamaha"));
+                .andExpect(jsonPath("$.nome").value("Yamaha"));
     }
 
     @Test
     public void deveRetornarOkQuandoAtualizarEmailEmpresaa() throws Exception{
-        Long id = 1l;
+        Long id = 1L;
 
         AtualizarEmailEmpresaRequest atualizarEmailEmpresaRequest = new AtualizarEmailEmpresaRequest();
         atualizarEmailEmpresaRequest.setEmail("um@emai.com");
@@ -95,13 +93,13 @@ public class EmpresaControllerTest {
 
     @Test
     public void deveRetornarNotFoundQuandoAtualizarUmIdInexistentedeEmpresa() throws Exception{
-        Long id = -1l;
+        Long id = -1L;
 
         AtualizarEmpresaRequest atualizarEmpresaRequest = AtualizarEmpresaRequest.builder()
-                .nomeFantasia("Yamaha")
+                .nome("Yamaha")
                 .descricao("Confia que é a melhor")
-                .celular(123456)
-                .telefone(7891011)
+                .celular("123456")
+                .telefone("7891011")
                 .cnpj("12343523")
                 .dataFundacao(Date.valueOf("2001-05-15"))
                 .build();
@@ -112,7 +110,7 @@ public class EmpresaControllerTest {
 
     @Test
     public void deveRetornarBadRequestQuandoAtualizarUmEmailJaExistenteEmpresaa() throws Exception{
-        Long id = 1l;
+        Long id = 1L;
 
         AtualizarEmailEmpresaRequest atualizarEmailEmpresaRequest = new AtualizarEmailEmpresaRequest();
         atualizarEmailEmpresaRequest.setEmail("empresa@ouatlook.com");
@@ -127,12 +125,12 @@ public class EmpresaControllerTest {
     public void deveRetornarCreatedQuandoCadastrarEmpresa() throws Exception{
 
         EmpresaRequest empresaRequest = EmpresaRequest.builder()
-                .nomeFantasia("Yamaha")
+                .nome("Yamaha")
                 .email("um@email.com")
                 .senha("123")
                 .descricao("Confia que é a melhor")
-                .celular(123456)
-                .telefone(7891011)
+                .celular("123456")
+                .telefone("7891011")
                 .cnpj("12343523")
                 .dataFundacao(Date.valueOf("2001-05-15"))
                 .build();
@@ -140,19 +138,19 @@ public class EmpresaControllerTest {
         mockMvcHelper.save(PATH, empresaRequest)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(3))
-                .andExpect(jsonPath("$.nomeFantasia").value("Yamaha"));
+                .andExpect(jsonPath("$.nome").value("Yamaha"));
     }
 
     //####################################### CADASTRAR - CAMINHO TRISTE #######################################################
 
     @Test
-    public void deveRetornarBadRequestQuandoNaoInserirNomeFantasiaDescricaoOuSenha() throws Exception{
+    public void deveRetornarBadRequestQuandoNaoInserirNomeDescricaoOuSenha() throws Exception{
 
         EmpresaRequest empresaRequest = EmpresaRequest.builder()
-                .nomeFantasia("Yamaha")
+                .nome("Yamaha")
                 .descricao("Confia que é a melhor")
-                .celular(123456)
-                .telefone(7891011)
+                .celular("123456")
+                .telefone("7891011")
                 .cnpj("12343523")
                 .dataFundacao(Date.valueOf("2001-05-15"))
                 .build();

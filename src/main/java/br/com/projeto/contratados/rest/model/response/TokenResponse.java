@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class TokenResponse {
-    private final Integer id;
+    private final Long id;
     private final String email;
     private final Perfil perfil;
 

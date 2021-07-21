@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AnuncioVagaRepository extends JpaRepository<AnuncioVaga, Integer> {
+public interface AnuncioVagaRepository extends JpaRepository<AnuncioVaga, Long> {
 
-    Page<AnuncioVaga> findByEmpresaId(Integer idEmpresa, Pageable paginacao);
+    Page<AnuncioVaga> findByEmpresaId(Long idEmpresa, Pageable paginacao);
     
     Page<AnuncioVaga> findAllByEnderecoLocalidadeAndSetorCargoCargo(String localidade, String cargo, Pageable paginacao);
 

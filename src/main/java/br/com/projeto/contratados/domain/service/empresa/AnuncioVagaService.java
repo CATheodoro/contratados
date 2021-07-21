@@ -38,11 +38,11 @@ public class AnuncioVagaService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    private Integer getIdUsuario(){
+    private Long getIdUsuario(){
         return tokenService.getAuthenticatedUsuario();
     }
 
-    private Integer getIdEmpresa(){
+    private Long getIdEmpresa(){
         return tokenService.getAuthenticatedEmpresa();
     }
 
@@ -77,14 +77,14 @@ public class AnuncioVagaService {
         return anuncioVagaRepository.findAll(paginacao);
     }
 
-    public AnuncioVaga detalhado(Integer id) {
+    public AnuncioVaga detalhado(Long id) {
         Optional<AnuncioVaga> optional = anuncioVagaRepository.findById(id);
         if (optional.isEmpty())
             throw new AnuncioVagaNaoEncontradoException("Anúncio de Vagas não encontrado");
         return optional.get();
     }
 
-    public AnuncioVaga atualizar(Integer id, AnuncioVagaAtualizarRequest form) throws IOException {
+    public AnuncioVaga atualizar(Long id, AnuncioVagaAtualizarRequest form) throws IOException {
 
         Optional<AnuncioVaga> optional = anuncioVagaRepository.findById(id);
         if (optional.isEmpty())
@@ -97,7 +97,7 @@ public class AnuncioVagaService {
         return anuncioVagaRepository.save(anuncioVaga);
     }
 
-    public AnuncioVaga atualizarStatus(Integer id, AnuncioVagaAtualizarStatusRequest form) {
+    public AnuncioVaga atualizarStatus(Long id, AnuncioVagaAtualizarStatusRequest form) {
         Optional<AnuncioVaga> optional = anuncioVagaRepository.findById(id);
         if (optional.isEmpty())
             throw new AnuncioVagaNaoEncontradoException("Anúncio de Vagas não encontrado, seu status não pode ser alterado");

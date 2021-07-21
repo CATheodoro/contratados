@@ -41,21 +41,21 @@ public class SolicitacaoController {
     }
 
     @PutMapping("/empresaatualizar/{id}")
-    public ResponseEntity<SolicitacaoResponse> atualizarSolicitacaoEmpresa(@PathVariable Integer id, @RequestBody @Valid SolicitacaoAtualizarEmpresaRequest form) throws IOException {
+    public ResponseEntity<SolicitacaoResponse> atualizarSolicitacaoEmpresa(@PathVariable Long id, @RequestBody @Valid SolicitacaoAtualizarEmpresaRequest form) throws IOException {
 
         var solicitacao = solicitacaoService.atualizarSolicitacaoEmpresa(id, form);
         return ResponseEntity.ok().body(new SolicitacaoResponse(solicitacao));
     }
 
     @PutMapping("/empresa/{id}")
-    public ResponseEntity<SolicitacaoResponse> solicitacaoEmpresa(@PathVariable Integer id, @RequestBody @Valid SolicitacaoEmpresaRequest form) throws IOException {
+    public ResponseEntity<SolicitacaoResponse> solicitacaoEmpresa(@PathVariable Long id, @RequestBody @Valid SolicitacaoEmpresaRequest form) throws IOException {
         var solicitacao = solicitacaoService.solicitacaoEmpresa(id ,form);
 
         return ResponseEntity.ok().body(new SolicitacaoResponse(solicitacao));
     }
 
     @PutMapping("/usuario/{id}")
-    public ResponseEntity<SolicitacaoResponse> solicitacaoUsuario(@PathVariable Integer id, @RequestBody @Valid SolicitacaoUsuarioRequest form) {
+    public ResponseEntity<SolicitacaoResponse> solicitacaoUsuario(@PathVariable Long id, @RequestBody @Valid SolicitacaoUsuarioRequest form) {
         var solicitacao = solicitacaoService.solicitacaoUsuario(id ,form);
 
         return ResponseEntity.ok().body(new SolicitacaoResponse(solicitacao));

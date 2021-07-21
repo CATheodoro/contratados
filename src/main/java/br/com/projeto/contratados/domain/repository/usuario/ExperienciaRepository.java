@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ExperienciaRepository extends JpaRepository<Experiencia, Integer> {
-    Page<Experiencia> findByUsuarioId(Integer idUsuario, Pageable paginacao);
+public interface ExperienciaRepository extends JpaRepository<Experiencia, Long> {
+    Page<Experiencia> findByUsuarioId(Long idUsuario, Pageable paginacao);
 
-    Page<Experiencia> findByDescricaoAndUsuarioId(String descricao, Integer idUsuario, Pageable paginacao);
+    Page<Experiencia> findByDescricaoAndUsuarioId(String descricao, Long idUsuario, Pageable paginacao);
 }

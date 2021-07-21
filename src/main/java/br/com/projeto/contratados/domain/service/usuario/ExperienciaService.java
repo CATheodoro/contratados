@@ -27,8 +27,7 @@ public class ExperienciaService {
     @Autowired
     private TokenService tokenService;
 
-    private Integer getIdUsuario(){
-
+    private Long getIdUsuario(){
         return tokenService.getAuthenticatedUsuario();
     }
 
@@ -51,7 +50,7 @@ public class ExperienciaService {
         return experienciaRepository.findByDescricaoAndUsuarioId(descricao, getIdUsuario(), paginacao);
     }
 
-    public Experiencia atualizar(Integer id, AtualizacaoExperienciaRequest form) {
+    public Experiencia atualizar(Long id, AtualizacaoExperienciaRequest form) {
 
         Optional<Experiencia> optional = experienciaRepository.findById(id);
         if (optional.isEmpty())
@@ -64,7 +63,7 @@ public class ExperienciaService {
         return experienciaRepository.save(experiencia);
     }
 
-    public Experiencia deletar(Integer id) {
+    public Experiencia deletar(Long id) {
         Optional<Experiencia> optional = experienciaRepository.findById(id);
         if(optional.isEmpty())
             throw new ExperienciaNaoEncontradaException("Experiência não encontrada, não pode ser deletada");

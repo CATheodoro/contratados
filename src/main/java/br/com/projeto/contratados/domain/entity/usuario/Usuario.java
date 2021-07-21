@@ -32,14 +32,7 @@ public class Usuario extends User {
     @Embedded
     private Endereco endereco;
 
-    @Column(length = 50, nullable = false)
-    private String nome;
     private Date dataNascimento;
-
-    @Column(length = 20)
-    private String celular;
-    @Column(length = 20)
-    private String telefone;
 
     @Enumerated(EnumType.STRING)
     private StatusUsuario status;

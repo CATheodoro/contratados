@@ -69,7 +69,7 @@ public class MockMvcHelper {
 //                .contentType(MediaType.APPLICATION_JSON));
 //    }
 
-    public ResultActions delete(String path, Integer id) throws Exception {
+    public ResultActions delete(String path, Long id) throws Exception {
         return mockMvc.perform(MockMvcRequestBuilders.delete(path + "/" + id.toString())
                 .locale(Constantes.PT_BR)
                 .characterEncoding(Constantes.DEFAULT_ENCODING)

@@ -20,13 +20,14 @@ import java.util.List;
 public class AnuncioVaga {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    //Chaves Estrangeiras
+    private Long id;
     @OneToMany(mappedBy = "anuncioVaga")
     private List<SetorCargo> setorCargo = new ArrayList<>();
-
     @OneToMany(mappedBy = "anuncioVaga")
     private List<Solicitacao> solicitacao = new ArrayList<>();
+
+    @Column(length = 50, nullable = false)
+    private String titulo;
 
     @ManyToOne
     private Empresa empresa;

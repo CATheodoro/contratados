@@ -12,6 +12,9 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class AtualizarEmailUsuarioRequest {
+
+    @NotNull @NotEmpty
+    private String oldPassword;
     @NotNull @NotEmpty @Email
     private String email;
 

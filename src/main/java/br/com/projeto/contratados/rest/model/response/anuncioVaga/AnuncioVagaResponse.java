@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Getter
 public class AnuncioVagaResponse {
-    private final Integer id;
+    private final Long id;
     private List<SetorCargoResponse> setorCargoResponses;
     private List<SolicitacaoResponse> solicitacaos;
 

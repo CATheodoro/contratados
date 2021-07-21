@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter
 public class UsuarioResponse {
-    private final Integer id;
+    private final Long id;
 
     private final String nome;
     private final String email;
@@ -23,7 +23,7 @@ public class UsuarioResponse {
     private final String telefone;
 
     private final StatusUsuario status;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private final LocalDateTime dataCriacaoPerfil;
 
     private final boolean accountNonExpired;
@@ -41,7 +41,7 @@ public class UsuarioResponse {
     private String bairro;
     private String localidade;
     private String uf;
-    private Integer numero;
+    private String numero;
 
     public UsuarioResponse(Usuario usuario){
         this.id = usuario.getId();
@@ -70,7 +70,7 @@ public class UsuarioResponse {
             this.bairro = usuario.getEndereco().getBairro();
             this.localidade = usuario.getEndereco().getLocalidade();
             this.uf = usuario.getEndereco().getUf();
-            this.numero = usuario.getEndereco().getNumero();
+            this.numero = usuario.getEndereco().getNumero().toString();
         }
 
     }

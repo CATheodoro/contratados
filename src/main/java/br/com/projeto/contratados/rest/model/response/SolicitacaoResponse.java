@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 
 @Getter
 public class SolicitacaoResponse {
-    private final Integer id;
+    private final Long id;
     private final String usuario;
 
-    private final Integer anuncioVagaId;
+    private final Long anuncioVagaId;
     private final SolicitacaoEmpresaStatus solicitacaoEmpresaStatus;
     private final SolicitacaoUsuarioStatus solicitacaoUsuarioStatus;
     private final Time horaEntrevista;

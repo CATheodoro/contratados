@@ -53,14 +53,14 @@ public class AnuncioVagaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AnuncioVagaDetalhadoResponse> detalhado(@PathVariable Integer id) {
+    public ResponseEntity<AnuncioVagaDetalhadoResponse> detalhado(@PathVariable Long id) {
 
         AnuncioVaga anuncioVaga = anuncioVagaService.detalhado(id);
         return ResponseEntity.ok(new AnuncioVagaDetalhadoResponse(anuncioVaga));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AnuncioVagaResponse> atualizar(@PathVariable Integer id, @RequestBody @Valid AnuncioVagaAtualizarRequest form) throws IOException {
+    public ResponseEntity<AnuncioVagaResponse> atualizar(@PathVariable Long id, @RequestBody @Valid AnuncioVagaAtualizarRequest form) throws IOException {
 
         var anuncioVaga = anuncioVagaService.atualizar(id, form);
         return ResponseEntity.ok(new AnuncioVagaResponse(anuncioVaga));
@@ -68,7 +68,7 @@ public class AnuncioVagaController {
     }
 
     @PutMapping("/status/{id}")
-    public ResponseEntity<AnuncioVagaResponse> atualizarStatus(@PathVariable Integer id, @RequestBody @Valid AnuncioVagaAtualizarStatusRequest form){
+    public ResponseEntity<AnuncioVagaResponse> atualizarStatus(@PathVariable Long id, @RequestBody @Valid AnuncioVagaAtualizarStatusRequest form){
         var anuncioVaga = anuncioVagaService.atualizarStatus(id, form);
         return ResponseEntity.ok(new AnuncioVagaResponse(anuncioVaga));
     }

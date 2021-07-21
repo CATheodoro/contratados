@@ -46,7 +46,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponse> perfilUsuario (@PathVariable Integer id){
+    public ResponseEntity<UsuarioResponse> perfilUsuario (@PathVariable Long id){
 
         Usuario usuario = usuarioService.perfilUsuario(id);
         return ResponseEntity.ok(new UsuarioResponse(usuario));
@@ -54,7 +54,7 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<UsuarioResponse> atualizar (@PathVariable Integer id, @RequestBody @Valid AtualizacaoUsuarioRequest form) throws IOException {
+    public ResponseEntity<UsuarioResponse> atualizar (@PathVariable Long id, @RequestBody @Valid AtualizacaoUsuarioRequest form) throws IOException {
         var usuario = usuarioService.atualizar(id, form);
 
         return ResponseEntity.ok(new UsuarioResponse(usuario));
@@ -62,14 +62,14 @@ public class UsuarioController {
 
     @PutMapping("/senha/{id}")
     @Transactional
-    public ResponseEntity<UsuarioResponse> atualizarSenha (@PathVariable Integer id, @RequestBody @Valid AtualizarSenhaUsuarioRequest form) {
+    public ResponseEntity<UsuarioResponse> atualizarSenha (@PathVariable Long id, @RequestBody @Valid AtualizarSenhaUsuarioRequest form) {
         var usuario = usuarioService.atualizarSenha(id, form);
         return ResponseEntity.ok(new UsuarioResponse(usuario));
     }
 
     @PutMapping("/email/{id}")
     @Transactional
-    public ResponseEntity<UsuarioResponse> atualizarEmail (@PathVariable Integer id, @RequestBody @Valid AtualizarEmailUsuarioRequest form) {
+    public ResponseEntity<UsuarioResponse> atualizarEmail (@PathVariable Long id, @RequestBody @Valid AtualizarEmailUsuarioRequest form) {
         var usuario = usuarioService.atualizarEmail(id, form);
         return ResponseEntity.ok(new UsuarioResponse(usuario));
     }

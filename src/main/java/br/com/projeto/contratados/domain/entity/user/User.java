@@ -18,7 +18,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(length = 50, nullable = false, unique = true)
     private String email;
@@ -34,6 +34,14 @@ public class User implements UserDetails {
     private boolean enable;
 
     private LocalDateTime dataCriacaoPerfil;
+
+    @Column(length = 50, nullable = false)
+    private String nome;
+
+    @Column(length = 20)
+    private String celular;
+    @Column(length = 20)
+    private String telefone;
 
     public User(String email, String password, Perfil perfil, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, boolean enable) {
         this.email = email;

@@ -19,6 +19,7 @@ import java.sql.Time;
 public class AnuncioVagaAtualizarRequest {
 
     private String enderecoCep;
+    private String titulo;
     private Time cargaHoraria;
     private String requisitos;
     private Float salario;
@@ -45,7 +46,8 @@ public class AnuncioVagaAtualizarRequest {
                     .build());
         }
 
-
+        if(this.titulo != null)
+            anuncioVaga.setTitulo(this.titulo);
         if (this.cargaHoraria != null)
             anuncioVaga.setCargaHoraria(this.cargaHoraria);
         if (this.requisitos !=null && !this.requisitos.isEmpty())

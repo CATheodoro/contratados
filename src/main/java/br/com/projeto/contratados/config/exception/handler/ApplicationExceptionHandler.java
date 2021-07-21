@@ -168,4 +168,16 @@ public class ApplicationExceptionHandler {
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
+
+
+    @ExceptionHandler(SenhaIncorretaException.class)
+    public ResponseEntity<StandardError> senhaIncorretaException(SenhaIncorretaException e){
+
+        StandardError err =  StandardError.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(e.getMessage())
+                .timeStamp(System.currentTimeMillis())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
 }

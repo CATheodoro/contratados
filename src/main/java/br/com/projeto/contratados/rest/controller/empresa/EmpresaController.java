@@ -38,33 +38,33 @@ public class EmpresaController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<EmpresaResponse>> listar(@RequestParam(required = false) String nomeFantasia,
-                                                                @PageableDefault(page = 0, size = 10, sort = "nomeFantasia", direction = Sort.Direction.ASC) Pageable paginacao) {
-        Page<Empresa> empresa = empresaService.listar(nomeFantasia, paginacao);
+    public ResponseEntity<Page<EmpresaResponse>> listar(@RequestParam(required = false) String nome,
+                                                                @PageableDefault(page = 0, size = 10, sort = "nome", direction = Sort.Direction.ASC) Pageable paginacao) {
+        Page<Empresa> empresa = empresaService.listar(nome, paginacao);
         return ResponseEntity.ok(EmpresaResponse.converterEmpresaDto(empresa));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmpresaResumidoResponse> perfilEmpresa(@PathVariable Integer id) {
+    public ResponseEntity<EmpresaResumidoResponse> perfilEmpresa(@PathVariable Long id) {
         Empresa empresa = empresaService.perfilEmpresa(id);
         return ResponseEntity.ok(new EmpresaResumidoResponse(empresa));
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<EmpresaResponse> atualizar(@PathVariable Integer id, @RequestBody @Valid AtualizarEmpresaRequest form){
+    public ResponseEntity<EmpresaResponse> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizarEmpresaRequest form){
         var empresa = empresaService.atualizar(id, form);
         return ResponseEntity.ok(new EmpresaResponse(empresa));
     }
 
     @PutMapping("/email/{id}")
-    public ResponseEntity<EmpresaResponse> atualizarEmail(@PathVariable Integer id, @RequestBody @Valid AtualizarEmailEmpresaRequest form){
+    public ResponseEntity<EmpresaResponse> atualizarEmail(@PathVariable Long id, @RequestBody @Valid AtualizarEmailEmpresaRequest form){
         var empresa = empresaService.atualizarEmail(id, form);
         return ResponseEntity.ok().body(new EmpresaResponse(empresa));
     }
 
     @PutMapping("/senha/{id}")
-    public ResponseEntity<EmpresaResponse> atualizarSenha(@PathVariable Integer id, @RequestBody @Valid AtualizarSenhaEmpresaRequest form){
+    public ResponseEntity<EmpresaResponse> atualizarSenha(@PathVariable Long id, @RequestBody @Valid AtualizarSenhaEmpresaRequest form){
         var empresa = empresaService.atualizarSenha(id, form);
         return ResponseEntity.ok().body(new  EmpresaResponse(empresa));
     }

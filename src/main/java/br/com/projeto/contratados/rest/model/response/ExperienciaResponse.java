@@ -1,6 +1,7 @@
 package br.com.projeto.contratados.rest.model.response;
 
 import br.com.projeto.contratados.domain.entity.usuario.Experiencia;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
@@ -10,9 +11,11 @@ import java.util.stream.Collectors;
 
 @Getter
 public class ExperienciaResponse {
-    private final Integer id;
+    private final Long id;
     private final String descricao;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private final Date inicio;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private final Date termino;
 
     //private Usuario usuario;

@@ -19,18 +19,19 @@ import java.util.Date;
 @Builder
 public class AtualizacaoUsuarioRequest {
 
-    private String enderecoCep;
-
     private String nome;
+
     private Date dataNascimento;
+
     private String celular;
     private String telefone;
-    //private Image fotoPerfil;
-    //private Image curriculo;
+
     private StatusUsuario status;
 
+    private String enderecoCep;
+
     private String complemento;
-    @NotNull
+
     private Integer numero;
 
     public Usuario atualizacaoUsuarioForm(Usuario usuario) throws IOException {

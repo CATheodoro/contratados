@@ -39,7 +39,7 @@ public class SetorCargoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SetorCargoResponse> atualizar (@PathVariable Integer id, @RequestBody @Valid SetorCargoAtualizarRequest form){
+    public ResponseEntity<SetorCargoResponse> atualizar (@PathVariable Long id, @RequestBody @Valid SetorCargoAtualizarRequest form){
         var setorCargo = setorCargoService.atualizar(id, form);
 
         return ResponseEntity.ok().body(new SetorCargoResponse(setorCargo));
@@ -47,7 +47,7 @@ public class SetorCargoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<SetorCargoResponse> deletar (@PathVariable Integer id){
+    public ResponseEntity<SetorCargoResponse> deletar (@PathVariable Long id){
 
         var setorCargo = setorCargoService.deletar(id);
         return ResponseEntity.ok().body(new SetorCargoResponse(setorCargo));

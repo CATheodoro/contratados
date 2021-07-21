@@ -41,14 +41,14 @@ public class ExperienciaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ExperienciaResponse> atualizar(@PathVariable Integer id, @RequestBody AtualizacaoExperienciaRequest form){
+    public ResponseEntity<ExperienciaResponse> atualizar(@PathVariable Long id, @RequestBody AtualizacaoExperienciaRequest form){
         var experiencia = experienciaService.atualizar(id, form);
 
         return ResponseEntity.ok(new ExperienciaResponse(experiencia));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ExperienciaResponse> deletar(@PathVariable Integer id) {
+    public ResponseEntity<ExperienciaResponse> deletar(@PathVariable Long id) {
 
         var experiencia = experienciaService.deletar(id);
         return ResponseEntity.ok(new ExperienciaResponse(experiencia));

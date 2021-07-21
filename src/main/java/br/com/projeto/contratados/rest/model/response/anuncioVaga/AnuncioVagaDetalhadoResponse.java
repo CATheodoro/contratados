@@ -10,19 +10,19 @@ import java.util.List;
 
 @Getter
 public class AnuncioVagaDetalhadoResponse {
-    private final Integer id;
+    private final Long id;
     private List<SetorCargoResponse> setorCargoResponses;
-
+    private final String titulo;
     private final String requisitos;
     private final boolean statusAnuncio;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private final LocalDateTime dataPostagem;
 
-    private final Integer empresaId;
+    private final Long empresaId;
     private final String nomeEmpresa;
     private final String email;
-    private final Integer celular;
-    private final Integer telefone;
+    private final String celular;
+    private final String telefone;
 
     private String cep;
     private String logradouro;
@@ -38,13 +38,14 @@ public class AnuncioVagaDetalhadoResponse {
         this.id = anuncioVaga.getId();
         if (anuncioVaga.getSetorCargo() != null)
             this.setorCargoResponses = SetorCargoResponse.converterList(anuncioVaga.getSetorCargo());
+        this.titulo = anuncioVaga.getTitulo();
 
         this.requisitos = anuncioVaga.getRequisitos();
         this.statusAnuncio = anuncioVaga.isStatusAnuncio();
         this.dataPostagem = anuncioVaga.getDataPostagem();
 
         this.empresaId = anuncioVaga.getEmpresa().getId();
-        this.nomeEmpresa = anuncioVaga.getEmpresa().getNomeFantasia();
+        this.nomeEmpresa = anuncioVaga.getEmpresa().getNome();
         this.email = anuncioVaga.getEmpresa().getEmail();
         this.celular = anuncioVaga.getEmpresa().getCelular();
         this.telefone = anuncioVaga.getEmpresa().getTelefone();

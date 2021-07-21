@@ -76,11 +76,11 @@ public class UsuarioRequest {
                 .credentialsNonExpired(true)
                 .enable(true)
                 .endereco(endereco)
-                .nome(nome)
-                .dataNascimento(dataNascimento)
-                .celular(celular)
-                .telefone(telefone)
-                .status(status)
+                .nome(this.nome)
+                .dataNascimento(this.dataNascimento)
+                .celular(this.celular)
+                .telefone(this.telefone)
+                .status(StatusUsuario.DISPONIVEL)
                 .dataCriacaoPerfil(LocalDateTime.now())
                 .build();
     }

@@ -24,11 +24,11 @@ public class EmpresaRequest {
     @NotNull @NotEmpty
     private String senha;
     @NotNull @NotEmpty
-    private String nomeFantasia;
+    private String nome;
 
     private String descricao;
-    private Integer celular;
-    private Integer telefone;
+    private String celular;
+    private String telefone;
     private String cnpj;
     //    private img fotoPerfil;
     private Date dataFundacao;
@@ -45,7 +45,7 @@ public class EmpresaRequest {
                 .accountNonLocked(true)
                 .credentialsNonExpired(true)
                 .enable(true)
-                .nomeFantasia(this.nomeFantasia)
+                .nome(this.nome)
                 .descricao(this.descricao)
                 .celular(this.celular)
                 .telefone(this.telefone)

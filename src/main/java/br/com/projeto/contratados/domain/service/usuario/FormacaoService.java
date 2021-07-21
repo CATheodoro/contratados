@@ -29,7 +29,7 @@ public class FormacaoService {
     @Autowired
     private TokenService tokenService;
 
-    private Integer getIdUsuario(){
+    private Long getIdUsuario(){
 
         return tokenService.getAuthenticatedUsuario();
     }
@@ -56,7 +56,7 @@ public class FormacaoService {
     }
 
 
-    public Formacao atualizar(Integer id, AtualizacaoFormcaoRequest form) {
+    public Formacao atualizar(Long id, AtualizacaoFormcaoRequest form) {
 
         Optional<Formacao> optional = formacaoRepository.findById(id);
         if (optional.isEmpty())
@@ -69,7 +69,7 @@ public class FormacaoService {
         return formacaoRepository.save(formacao);
     }
 
-    public Formacao deletar(Integer id) {
+    public Formacao deletar(Long id) {
 
         Optional<Formacao> optional = formacaoRepository.findById(id);
         if (optional.isEmpty())

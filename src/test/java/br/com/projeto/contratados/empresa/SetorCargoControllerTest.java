@@ -83,7 +83,7 @@ public class SetorCargoControllerTest {
     @Test
     public void deveRetornarCreatedQuandoCriarSetorCargo() throws  Exception{
         SetorCargoRequest setorCargoRequest = SetorCargoRequest.builder()
-                .anuncioVaga(AnuncioVaga.builder().id(1).build())
+                .anuncioVaga(AnuncioVaga.builder().id(1L).build())
                 .cargo("Pedreiro")
                 .setor("Industrial")
                 .build();
@@ -99,7 +99,7 @@ public class SetorCargoControllerTest {
     @Test
     public void deveRetornarBadRequestQuandoCriarSemCargoSetorOuAnuncioVagaIDSetorCargo() throws  Exception{
         SetorCargoRequest setorCargoRequest = SetorCargoRequest.builder()
-                .anuncioVaga(AnuncioVaga.builder().id(1).build())
+                .anuncioVaga(AnuncioVaga.builder().id(1L).build())
                 .cargo("Pedreiro")
 
                 .build();
@@ -112,7 +112,7 @@ public class SetorCargoControllerTest {
     //---------------------------------------DELETAR - CAMINHO FELIZ------------------------------------------------------
     @Test
     public void deveRetornarOkQuandoDeletarSetorCargo() throws Exception{
-        Integer id = 1;
+        Long id = 1L;
         mockMvcHelper.delete(PATH, id)
                 .andExpect(status().isOk());
     }
@@ -120,7 +120,7 @@ public class SetorCargoControllerTest {
     //####################################### DELETAR - CAMINHO TRISTE #######################################################
     @Test
     public void deveRetornarNotFoundQuandoDeletarIdInexistenteSetorCargo() throws Exception{
-        Integer id = -1;
+        Long id = -1L;
         mockMvcHelper.delete(PATH, id)
                 .andExpect(status().isNotFound());
     }

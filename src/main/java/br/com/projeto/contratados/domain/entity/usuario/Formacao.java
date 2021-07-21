@@ -14,7 +14,7 @@ import java.util.Date;
 public class Formacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     //Chaves Estrangeiras
     @ManyToOne
     private Usuario usuario;

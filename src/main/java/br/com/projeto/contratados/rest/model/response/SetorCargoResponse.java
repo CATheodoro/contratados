@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @Getter
 public class SetorCargoResponse {
-    private final Integer id;
+    private final Long id;
     private final String setor;
     private final String cargo;
 

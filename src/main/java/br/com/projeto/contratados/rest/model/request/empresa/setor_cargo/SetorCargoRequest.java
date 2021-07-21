@@ -16,7 +16,6 @@ public class SetorCargoRequest {
 
     @NotNull
     private AnuncioVaga anuncioVaga;
-    @NotNull @NotEmpty
     private String setor;
     @NotNull @NotEmpty
     private String cargo;

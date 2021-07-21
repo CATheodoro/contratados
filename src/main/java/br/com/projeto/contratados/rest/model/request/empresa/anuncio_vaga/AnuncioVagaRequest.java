@@ -22,6 +22,8 @@ public class AnuncioVagaRequest {
 
     private String enderecoCep;
 
+    @NotNull @NotEmpty
+    private String titulo;
     @NotNull
     private Time cargaHoraria;
     @NotNull @NotEmpty
@@ -52,6 +54,7 @@ public class AnuncioVagaRequest {
         return AnuncioVaga.builder()
                 .empresa(empresa)
                 .endereco(endereco)
+                .titulo(this.titulo)
                 .cargaHoraria(this.cargaHoraria)
                 .requisitos(this.requisitos)
                 .salario(this.salario)

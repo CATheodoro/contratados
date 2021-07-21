@@ -13,8 +13,9 @@ import java.util.List;
 
 @Getter
 public class AnuncioVagaResumidoResponse {
-    private final Integer id;
+    private final Long id;
     private List<SetorCargoResponse> setorCargoResponses;
+    private final String titulo;
 
     private final String requisitos;
     private final boolean statusAnuncio;
@@ -36,12 +37,12 @@ public class AnuncioVagaResumidoResponse {
             this.localidade = anuncioVaga.getEndereco().getLocalidade();
             this.uf = anuncioVaga.getEndereco().getUf();
         }
-
+        this.titulo = anuncioVaga.getTitulo();
         this.requisitos = anuncioVaga.getRequisitos();
         this.statusAnuncio = anuncioVaga.isStatusAnuncio();
         this.dataPostagem = anuncioVaga.getDataPostagem();
 
-        this.nomeEmpresa = anuncioVaga.getEmpresa().getNomeFantasia();
+        this.nomeEmpresa = anuncioVaga.getEmpresa().getNome();
     }
 
     public static Page<AnuncioVagaResumidoResponse> converter(Page<AnuncioVaga> anuncioVagas){

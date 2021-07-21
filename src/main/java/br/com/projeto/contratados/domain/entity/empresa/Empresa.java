@@ -20,11 +20,8 @@ public class Empresa extends User {
 
     @OneToMany(mappedBy = "empresa")
     private List<AnuncioVaga> anuncioVaga = new ArrayList<>();
-    @Column(length = 50, nullable = false)
-    private String nomeFantasia;
+    @Column(length = 100)
     private String descricao;
-    private Integer celular;
-    private Integer telefone;
     private String cnpj;
     private Date dataFundacao;
 

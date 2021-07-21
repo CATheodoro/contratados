@@ -30,7 +30,7 @@ public class EmpresaService {
     @Autowired
     private TokenService tokenService;
 
-    private Integer getIdEmpresa(){
+    private Long getIdEmpresa(){
         return tokenService.getAuthenticatedEmpresa();
     }
 
@@ -42,14 +42,14 @@ public class EmpresaService {
         return empresaRepository.save(empresa);
     }
 
-    public Page<Empresa> listar(String nomeFantasia, Pageable paginacao) {
-        if (nomeFantasia == null)
+    public Page<Empresa> listar(String nome, Pageable paginacao) {
+        if (nome == null)
             return empresaRepository.findAll(paginacao);
 
-        return empresaRepository.findByNomeFantasia(nomeFantasia, paginacao);
+        return empresaRepository.findByNome(nome, paginacao);
     }
 
-    public Empresa perfilEmpresa(Integer id) {
+    public Empresa perfilEmpresa(Long id) {
         if(id == null || id == 0) {
             Optional<Empresa> optional = empresaRepository.findById(getIdEmpresa());
             if (optional.isEmpty())
@@ -62,7 +62,7 @@ public class EmpresaService {
         return  optional.get();
     }
 
-    public Empresa atualizar(Integer id, AtualizarEmpresaRequest form) {
+    public Empresa atualizar(Long id, AtualizarEmpresaRequest form) {
         Optional<Empresa> optional = empresaRepository.findById(getIdEmpresa());
         if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, não pode ser atualizada");
@@ -71,7 +71,7 @@ public class EmpresaService {
         return empresaRepository.save(empresa);
     }
 
-    public Empresa atualizarEmail(Integer id, AtualizarEmailEmpresaRequest form) {
+    public Empresa atualizarEmail(Long id, AtualizarEmailEmpresaRequest form) {
         Optional<Empresa> optional = empresaRepository.findById(getIdEmpresa());
         if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, E-mail não pode ser atualizada");
@@ -85,7 +85,7 @@ public class EmpresaService {
     }
 
 
-    public Empresa atualizarSenha(Integer id, AtualizarSenhaEmpresaRequest form) {
+    public Empresa atualizarSenha(Long id, AtualizarSenhaEmpresaRequest form) {
         Optional<Empresa> optional = empresaRepository.findById(getIdEmpresa());
         if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, senha não pode ser atualizada");

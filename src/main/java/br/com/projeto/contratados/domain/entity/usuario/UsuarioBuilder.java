@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 public final class UsuarioBuilder {
-    private Integer id;
+    private Long id;
     private String email;
     private String password;
     private Perfil perfil;
@@ -18,16 +18,16 @@ public final class UsuarioBuilder {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enable;
+    private LocalDateTime dataCriacaoPerfil;
+    private String nome;
+    private String celular;
+    private String telefone;
     private List<Formacao> formacao = new ArrayList<>();
     private List<Experiencia> experiencia = new ArrayList<>();
     private List<Solicitacao> solicitacao = new ArrayList<>();
     private Endereco endereco;
-    private String nome;
     private Date dataNascimento;
-    private String celular;
-    private String telefone;
     private StatusUsuario status;
-    private LocalDateTime dataCriacaoPerfil;
 
     private UsuarioBuilder() {
     }
@@ -36,7 +36,7 @@ public final class UsuarioBuilder {
         return new UsuarioBuilder();
     }
 
-    public UsuarioBuilder id(Integer id) {
+    public UsuarioBuilder id(Long id) {
         this.id = id;
         return this;
     }
@@ -76,6 +76,26 @@ public final class UsuarioBuilder {
         return this;
     }
 
+    public UsuarioBuilder dataCriacaoPerfil(LocalDateTime dataCriacaoPerfil) {
+        this.dataCriacaoPerfil = dataCriacaoPerfil;
+        return this;
+    }
+
+    public UsuarioBuilder nome(String nome) {
+        this.nome = nome;
+        return this;
+    }
+
+    public UsuarioBuilder celular(String celular) {
+        this.celular = celular;
+        return this;
+    }
+
+    public UsuarioBuilder telefone(String telefone) {
+        this.telefone = telefone;
+        return this;
+    }
+
     public UsuarioBuilder formacao(List<Formacao> formacao) {
         this.formacao = formacao;
         return this;
@@ -96,33 +116,13 @@ public final class UsuarioBuilder {
         return this;
     }
 
-    public UsuarioBuilder nome(String nome) {
-        this.nome = nome;
-        return this;
-    }
-
     public UsuarioBuilder dataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
         return this;
     }
 
-    public UsuarioBuilder celular(String celular) {
-        this.celular = celular;
-        return this;
-    }
-
-    public UsuarioBuilder telefone(String telefone) {
-        this.telefone = telefone;
-        return this;
-    }
-
     public UsuarioBuilder status(StatusUsuario status) {
         this.status = status;
-        return this;
-    }
-
-    public UsuarioBuilder dataCriacaoPerfil(LocalDateTime dataCriacaoPerfil) {
-        this.dataCriacaoPerfil = dataCriacaoPerfil;
         return this;
     }
 
@@ -136,16 +136,16 @@ public final class UsuarioBuilder {
         usuario.setAccountNonLocked(accountNonLocked);
         usuario.setCredentialsNonExpired(credentialsNonExpired);
         usuario.setEnable(enable);
+        usuario.setDataCriacaoPerfil(dataCriacaoPerfil);
+        usuario.setNome(nome);
+        usuario.setCelular(celular);
+        usuario.setTelefone(telefone);
         usuario.setFormacao(formacao);
         usuario.setExperiencia(experiencia);
         usuario.setSolicitacao(solicitacao);
         usuario.setEndereco(endereco);
-        usuario.setNome(nome);
         usuario.setDataNascimento(dataNascimento);
-        usuario.setCelular(celular);
-        usuario.setTelefone(telefone);
         usuario.setStatus(status);
-        usuario.setDataCriacaoPerfil(dataCriacaoPerfil);
         return usuario;
     }
 }

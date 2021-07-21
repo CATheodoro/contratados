@@ -46,12 +46,12 @@ public class TokenService {
         }
     }
 
-    public Integer getIdUser(String token) {
+    public Long getIdUser(String token) {
         var claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
-        return Integer.parseInt(claims.getSubject());
+        return Long.parseLong(claims.getSubject());
     }
 
-    public Integer getAuthenticatedUsuario() {
+    public Long getAuthenticatedUsuario() {
 
         try {
             Optional<Object> principal = (Optional<Object>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -66,7 +66,7 @@ public class TokenService {
         }
     }
 
-    public Integer getAuthenticatedEmpresa() {
+    public Long getAuthenticatedEmpresa() {
 
         try {
             Optional<Object> principal = (Optional<Object>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

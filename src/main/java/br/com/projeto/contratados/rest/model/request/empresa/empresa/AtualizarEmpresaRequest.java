@@ -13,17 +13,17 @@ import java.util.Date;
 @Builder
 public class AtualizarEmpresaRequest {
 
-    private String nomeFantasia;
+    private String nome;
     private String descricao;
-    private Integer celular;
-    private Integer telefone;
+    private String celular;
+    private String telefone;
     private String cnpj;
     private Date dataFundacao;
 
     public Empresa atualizacaoEmpresaForm(Empresa empresa){
 
-        if(this.nomeFantasia != null && !this.nomeFantasia.isEmpty())
-            empresa.setNomeFantasia(this.nomeFantasia);
+        if(this.nome != null && !this.nome.isEmpty())
+            empresa.setNome(this.nome);
         empresa.setDescricao(this.descricao);
         empresa.setCelular(this.celular);
         empresa.setTelefone(this.telefone);

@@ -9,14 +9,10 @@ import java.util.List;
 
 public final class EmpresaBuilder {
     private List<AnuncioVaga> anuncioVaga = new ArrayList<>();
-    private String nomeFantasia;
     private String descricao;
-    private Integer celular;
-    private Integer telefone;
     private String cnpj;
     private Date dataFundacao;
-    private LocalDateTime dataCriacaoPerfil;
-    private Integer id;
+    private Long id;
     private String email;
     private String password;
     private Perfil perfil;
@@ -24,6 +20,10 @@ public final class EmpresaBuilder {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enable;
+    private LocalDateTime dataCriacaoPerfil;
+    private String nome;
+    private String celular;
+    private String telefone;
 
     private EmpresaBuilder() {
     }
@@ -37,23 +37,8 @@ public final class EmpresaBuilder {
         return this;
     }
 
-    public EmpresaBuilder nomeFantasia(String nomeFantasia) {
-        this.nomeFantasia = nomeFantasia;
-        return this;
-    }
-
     public EmpresaBuilder descricao(String descricao) {
         this.descricao = descricao;
-        return this;
-    }
-
-    public EmpresaBuilder celular(Integer celular) {
-        this.celular = celular;
-        return this;
-    }
-
-    public EmpresaBuilder telefone(Integer telefone) {
-        this.telefone = telefone;
         return this;
     }
 
@@ -67,12 +52,7 @@ public final class EmpresaBuilder {
         return this;
     }
 
-    public EmpresaBuilder dataCriacaoPerfil(LocalDateTime dataCriacaoPerfil) {
-        this.dataCriacaoPerfil = dataCriacaoPerfil;
-        return this;
-    }
-
-    public EmpresaBuilder id(Integer id) {
+    public EmpresaBuilder id(Long id) {
         this.id = id;
         return this;
     }
@@ -112,16 +92,32 @@ public final class EmpresaBuilder {
         return this;
     }
 
+    public EmpresaBuilder dataCriacaoPerfil(LocalDateTime dataCriacaoPerfil) {
+        this.dataCriacaoPerfil = dataCriacaoPerfil;
+        return this;
+    }
+
+    public EmpresaBuilder nome(String nome) {
+        this.nome = nome;
+        return this;
+    }
+
+    public EmpresaBuilder celular(String celular) {
+        this.celular = celular;
+        return this;
+    }
+
+    public EmpresaBuilder telefone(String telefone) {
+        this.telefone = telefone;
+        return this;
+    }
+
     public Empresa build() {
         Empresa empresa = new Empresa();
         empresa.setAnuncioVaga(anuncioVaga);
-        empresa.setNomeFantasia(nomeFantasia);
         empresa.setDescricao(descricao);
-        empresa.setCelular(celular);
-        empresa.setTelefone(telefone);
         empresa.setCnpj(cnpj);
         empresa.setDataFundacao(dataFundacao);
-        empresa.setDataCriacaoPerfil(dataCriacaoPerfil);
         empresa.setId(id);
         empresa.setEmail(email);
         empresa.setPassword(password);
@@ -130,6 +126,10 @@ public final class EmpresaBuilder {
         empresa.setAccountNonLocked(accountNonLocked);
         empresa.setCredentialsNonExpired(credentialsNonExpired);
         empresa.setEnable(enable);
+        empresa.setDataCriacaoPerfil(dataCriacaoPerfil);
+        empresa.setNome(nome);
+        empresa.setCelular(celular);
+        empresa.setTelefone(telefone);
         return empresa;
     }
 }

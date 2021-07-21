@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SetorCargoRepository extends JpaRepository<SetorCargo, Integer> {
+public interface SetorCargoRepository extends JpaRepository<SetorCargo, Long> {
 }

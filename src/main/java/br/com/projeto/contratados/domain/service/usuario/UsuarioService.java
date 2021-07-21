@@ -1,6 +1,7 @@
 package br.com.projeto.contratados.domain.service.usuario;
 
 import br.com.projeto.contratados.config.exception.excecoes.EmailJaCadastradoException;
+import br.com.projeto.contratados.config.exception.excecoes.SenhaIncorretaException;
 import br.com.projeto.contratados.config.exception.excecoes.UsuarioNaoEncontradoException;
 import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -33,7 +36,7 @@ public class UsuarioService {
     @Value("${spring.profiles.active}")
     String profile;
 
-    private Integer getIdUsuario(Integer id){
+    private Long getIdUsuario(Long id){
         if (profile.equals("test"))
             return id;
 
@@ -56,14 +59,14 @@ public class UsuarioService {
         return usuarioRepository.findByNome(nome, paginacao);
     }
 
-    public Usuario perfilUsuario(Integer id) {
+    public Usuario perfilUsuario(Long id) {
         Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario(id));
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Ocorreu algum erro, Não foi possivel acessar seu perfil");
         return optional.get();
     }
 
-    public Usuario atualizar(Integer id, AtualizacaoUsuarioRequest request) throws IOException {
+    public Usuario atualizar(Long id, AtualizacaoUsuarioRequest request) throws IOException {
 
         Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario(id));
 
@@ -76,22 +79,27 @@ public class UsuarioService {
 
     }
 
-    public Usuario atualizarSenha(Integer id, AtualizarSenhaUsuarioRequest form) {
+    public Usuario atualizarSenha(Long id, AtualizarSenhaUsuarioRequest form) {
 
         Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario(id));
-
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuario não encontrado, Senha não alterada");
+
+        if(!new BCryptPasswordEncoder().matches(form.getOldPassword(), optional.get().getPassword()))
+            throw new SenhaIncorretaException("Senha Incorreta");
 
         var usuario = form.atualizarSenhaUsuario(optional.get());
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario atualizarEmail(Integer id, AtualizarEmailUsuarioRequest form) {
+    public Usuario atualizarEmail(Long id, AtualizarEmailUsuarioRequest form) {
         Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario(id));
 
         if(optional.isEmpty())
             throw new UsuarioNaoEncontradoException("Usuario não encontrado, E-mail não alterada");
+
+        if(!new BCryptPasswordEncoder().matches(form.getOldPassword(), optional.get().getPassword()))
+            throw new SenhaIncorretaException("Senha Incorreta");
 
         if (usuarioRepository.existsByEmail(form.getEmail()))
             throw new EmailJaCadastradoException("Email já cadastrado");

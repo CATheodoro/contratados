@@ -13,10 +13,13 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class AtualizarSenhaUsuarioRequest {
     @NotNull @NotEmpty
-    private String senha;
+    private String oldPassword;
+
+    @NotNull @NotEmpty
+    private String password;
 
     public Usuario atualizarSenhaUsuario(Usuario usuario){
-        usuario.setPassword(new BCryptPasswordEncoder().encode(this.senha));
+        usuario.setPassword(new BCryptPasswordEncoder().encode(this.password));
         return usuario;
     }
 }

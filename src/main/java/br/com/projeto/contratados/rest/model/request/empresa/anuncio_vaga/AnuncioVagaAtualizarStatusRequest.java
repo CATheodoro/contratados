@@ -10,7 +10,7 @@ import lombok.Setter;
 public class AnuncioVagaAtualizarStatusRequest {
     private boolean statusAnuncio;
 
-    public AnuncioVaga converter(Integer id, AnuncioVagaRepository anuncioVagaRepository) {
+    public AnuncioVaga converter(Long id, AnuncioVagaRepository anuncioVagaRepository) {
         var anuncioVaga = anuncioVagaRepository.getOne(id);
 
         if (!statusAnuncio)

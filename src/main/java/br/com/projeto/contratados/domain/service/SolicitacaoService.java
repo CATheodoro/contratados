@@ -37,11 +37,11 @@ public class SolicitacaoService {
     @Autowired
     private TokenService tokenService;
 
-    private Integer getIdUsuario() {
+    private Long getIdUsuario() {
         return tokenService.getAuthenticatedUsuario();
     }
 
-    private Integer getIdEmpresa() {
+    private Long getIdEmpresa() {
         return tokenService.getAuthenticatedEmpresa();
     }
 
@@ -69,7 +69,7 @@ public class SolicitacaoService {
     }
 
 
-    public Solicitacao atualizarSolicitacaoEmpresa(Integer id, SolicitacaoAtualizarEmpresaRequest form) throws IOException {
+    public Solicitacao atualizarSolicitacaoEmpresa(Long id, SolicitacaoAtualizarEmpresaRequest form) throws IOException {
 
         Optional<Solicitacao> optional = solicitacaoRepository.findById(id);
         if (optional.isEmpty())
@@ -90,7 +90,7 @@ public class SolicitacaoService {
     }
 
 
-    public Solicitacao solicitacaoEmpresa(Integer id, SolicitacaoEmpresaRequest form) throws IOException {
+    public Solicitacao solicitacaoEmpresa(Long id, SolicitacaoEmpresaRequest form) throws IOException {
 
         Optional<Solicitacao> optional = solicitacaoRepository.findById(id);
 
@@ -110,7 +110,7 @@ public class SolicitacaoService {
         return solicitacaoRepository.save(solicitacao);
     }
 
-    public Solicitacao solicitacaoUsuario(Integer id, SolicitacaoUsuarioRequest form) {
+    public Solicitacao solicitacaoUsuario(Long id, SolicitacaoUsuarioRequest form) {
 
         Optional<Solicitacao> optional = solicitacaoRepository.findById(id);
 

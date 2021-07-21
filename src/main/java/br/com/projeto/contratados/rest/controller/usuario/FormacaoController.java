@@ -40,14 +40,14 @@ public class FormacaoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FormacaoResponse> atualizar(@PathVariable Integer id, @RequestBody @Valid AtualizacaoFormcaoRequest form){
+    public ResponseEntity<FormacaoResponse> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoFormcaoRequest form){
 
         var formacao = formacaoService.atualizar(id, form);
         return ResponseEntity.ok(new FormacaoResponse(formacao));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<FormacaoResponse> deletar(@PathVariable Integer id){
+    public ResponseEntity<FormacaoResponse> deletar(@PathVariable Long id){
 
         var formacao = formacaoService.deletar(id);
         return ResponseEntity.ok(new FormacaoResponse(formacao));

@@ -11,12 +11,12 @@ import java.util.List;
 
 @Getter
 public class EmpresaResumidoResponse {
-    private final Integer id;
+    private final Long id;
     private final String email;
-    private final String nomeFantasia;
+    private final String nome;
     private final String descricao;
-    private final Integer celular;
-    private final Integer telefone;
+    private final String celular;
+    private final String telefone;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private final Date dataFundacao;
     @JsonFormat(pattern = "dd-MM-yyyy")
@@ -25,7 +25,7 @@ public class EmpresaResumidoResponse {
     public EmpresaResumidoResponse(Empresa empresa) {
         this.id = empresa.getId();
         this.email = empresa.getEmail();
-        this.nomeFantasia = empresa.getNomeFantasia();
+        this.nome = empresa.getNome();
         this.descricao = empresa.getDescricao();
         this.celular = empresa.getCelular();
         this.telefone = empresa.getTelefone();
