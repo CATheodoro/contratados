@@ -23,7 +23,7 @@ public class UsuarioResponse {
     private final String telefone;
 
     private final StatusUsuario status;
-    @JsonFormat(pattern = "dd-MM-yyyy")
+
     private final LocalDateTime dataCriacaoPerfil;
 
     private final boolean accountNonExpired;

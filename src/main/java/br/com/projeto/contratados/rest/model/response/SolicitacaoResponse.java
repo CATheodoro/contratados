@@ -18,12 +18,12 @@ public class SolicitacaoResponse {
     private final Long id;
     private final String usuario;
 
-    private final Long anuncioVagaId;
     private final SolicitacaoEmpresaStatus solicitacaoEmpresaStatus;
     private final SolicitacaoUsuarioStatus solicitacaoUsuarioStatus;
     private final Time horaEntrevista;
-    @JsonFormat(pattern = "dd-MM-yyyy")
+
     private final Date dataEntrevista;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
     private final LocalDateTime dataCriacaoSolicitacao;
 
@@ -35,10 +35,17 @@ public class SolicitacaoResponse {
     private String uf;
     private Integer numero;
 
+    private final Long anuncioVagaId;
+    private final Long empresaId;
+    private final String titulo;
+    private List<SetorCargoResponse> setorCargoResponses;
+    private final boolean statusAnuncio;
+    private final String nomeEmpresa;
+
+
     public SolicitacaoResponse(Solicitacao solicitacao){
         this.id = solicitacao.getId();
         this.usuario = solicitacao.getUsuario().getNome();
-        this.anuncioVagaId = solicitacao.getAnuncioVaga().getId();
 
         this.solicitacaoEmpresaStatus = solicitacao.getSolicitacaoEmpresaStatus();
         this.solicitacaoUsuarioStatus = solicitacao.getSolicitacaoUsuarioStatus();
@@ -54,7 +61,17 @@ public class SolicitacaoResponse {
             this.localidade = solicitacao.getEndereco().getLocalidade();
             this.uf = solicitacao.getEndereco().getUf();
             this.numero = solicitacao.getEndereco().getNumero();
+        } else {
+            this.uf = solicitacao.getAnuncioVaga().getEndereco().getUf();
+            this.localidade = solicitacao.getAnuncioVaga().getEndereco().getLocalidade();
         }
+        this.anuncioVagaId = solicitacao.getAnuncioVaga().getId();
+        this.empresaId = solicitacao.getAnuncioVaga().getEmpresa().getId();
+        this.titulo = solicitacao.getAnuncioVaga().getTitulo();
+        this.setorCargoResponses = SetorCargoResponse.converterList(solicitacao.getAnuncioVaga().getSetorCargo());
+        this.statusAnuncio = solicitacao.getAnuncioVaga().isStatusAnuncio();
+        this.nomeEmpresa = solicitacao.getAnuncioVaga().getEmpresa().getNome();
+
     }
 
     public static Page<SolicitacaoResponse> converter(Page<Solicitacao> solicitacao){

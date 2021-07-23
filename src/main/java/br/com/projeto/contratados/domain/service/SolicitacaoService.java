@@ -64,8 +64,18 @@ public class SolicitacaoService {
     }
 
 
-    public Page<Solicitacao> listar(Pageable paginacao) {
+    public Page<Solicitacao> listar(SolicitacaoEmpresaStatus status, Pageable paginacao) {
+        if(status !=null)
+            return solicitacaoRepository.findBySolicitacaoEmpresaStatus(status, paginacao);
         return solicitacaoRepository.findAll(paginacao);
+    }
+
+    public Solicitacao getSolicitacao(Long id) {
+        Optional<Solicitacao> optional = solicitacaoRepository.findById(id);
+        if (optional.isEmpty())
+            throw new SolicitacaoNaoEncontradaException("Solicitação não encontrada");
+
+        return optional.get();
     }
 
 
@@ -128,7 +138,7 @@ public class SolicitacaoService {
         if (confirmarStatus.getSolicitacaoEmpresaStatus() == SolicitacaoEmpresaStatus.RECUSADO)
             throw new NaoFoiPossivelAtualizarConfirmacaoUsuarioException("Não foi possível confirmar solicitação, empresa não aceitou sua solicitação");
 
-        if (confirmarStatus.getSolicitacaoEmpresaStatus() == SolicitacaoEmpresaStatus.PENDENTE)
+        if (confirmarStatus.getSolicitacaoEmpresaStatus() == SolicitacaoEmpresaStatus.PENDENTE && confirmarStatus.getSolicitacaoUsuarioStatus() != SolicitacaoUsuarioStatus.PENDENTE)
             throw new NaoFoiPossivelAtualizarConfirmacaoUsuarioException("Não foi possível confirmar solicitação, empresa ainda não checou sua solicitação");
 
         var solicitacao = form.solicitacaoUsuarioRequest(optional.get());

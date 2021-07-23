@@ -17,7 +17,6 @@ public class AnuncioVagaResumidoResponse {
     private List<SetorCargoResponse> setorCargoResponses;
     private final String titulo;
 
-    private final String requisitos;
     private final boolean statusAnuncio;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private final LocalDateTime dataPostagem;
@@ -38,7 +37,6 @@ public class AnuncioVagaResumidoResponse {
             this.uf = anuncioVaga.getEndereco().getUf();
         }
         this.titulo = anuncioVaga.getTitulo();
-        this.requisitos = anuncioVaga.getRequisitos();
         this.statusAnuncio = anuncioVaga.isStatusAnuncio();
         this.dataPostagem = anuncioVaga.getDataPostagem();
 

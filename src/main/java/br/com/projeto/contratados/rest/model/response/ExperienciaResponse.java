@@ -13,9 +13,13 @@ import java.util.stream.Collectors;
 public class ExperienciaResponse {
     private final Long id;
     private final String descricao;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
+    private final Date inicioFormatado;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private final Date terminoFormatado;
+
     private final Date inicio;
-    @JsonFormat(pattern = "dd-MM-yyyy")
     private final Date termino;
 
     //private Usuario usuario;
@@ -23,6 +27,10 @@ public class ExperienciaResponse {
     public ExperienciaResponse(Experiencia experiencia) {
         this.id = experiencia.getId();
         this.descricao = experiencia.getDescricao();
+
+        this.inicioFormatado = experiencia.getInicio();
+        this.terminoFormatado = experiencia.getTermino();
+
         this.inicio = experiencia.getInicio();
         this.termino = experiencia.getTermino();
     }

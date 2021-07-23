@@ -14,15 +14,23 @@ public class FormacaoResponse {
 
     private final Long id;
     private final String descricao;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
+    private final Date inicioFormatado;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private final Date terminoFormatado;
+
     private final Date inicio;
-    @JsonFormat(pattern = "dd-MM-yyyy")
     private final Date termino;
 
 
     public FormacaoResponse(Formacao formacao) {
         this.id = formacao.getId();
         this.descricao = formacao.getDescricao();
+
+        this.inicioFormatado = formacao.getInicio();
+        this.terminoFormatado = formacao.getTermino();
+
         this.inicio = formacao.getInicio();
         this.termino = formacao.getTermino();
     }

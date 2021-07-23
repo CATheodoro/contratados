@@ -1,6 +1,7 @@
 package br.com.projeto.contratados.rest.controller;
 
 import br.com.projeto.contratados.domain.entity.solicitacao.Solicitacao;
+import br.com.projeto.contratados.domain.entity.solicitacao.SolicitacaoEmpresaStatus;
 import br.com.projeto.contratados.domain.service.SolicitacaoService;
 import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoAtualizarEmpresaRequest;
 import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoEmpresaRequest;
@@ -34,10 +35,17 @@ public class SolicitacaoController {
         return ResponseEntity.created(uri).body(new SolicitacaoResponse(solicitacao));
     }
 
-    @GetMapping
-    public ResponseEntity<Page<SolicitacaoResponse>> listar(@PageableDefault(size = 10,page = 0,sort = "dataCriacaoSolicitacao", direction = Sort.Direction.DESC)Pageable paginacao){
-        Page<Solicitacao> solicitacao = solicitacaoService.listar(paginacao);
+    @GetMapping()
+    public ResponseEntity<Page<SolicitacaoResponse>> listar(@RequestParam (name = "status",required = false) SolicitacaoEmpresaStatus status,
+                                                            @PageableDefault(size = 10,page = 0,sort = "dataCriacaoSolicitacao", direction = Sort.Direction.DESC)Pageable paginacao){
+        Page<Solicitacao> solicitacao = solicitacaoService.listar(status, paginacao);
         return ResponseEntity.ok().body(SolicitacaoResponse.converter(solicitacao));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SolicitacaoResponse> listar(@PathVariable Long id){
+        Solicitacao solicitacao = solicitacaoService.getSolicitacao(id);
+        return ResponseEntity.ok().body(new SolicitacaoResponse(solicitacao));
     }
 
     @PutMapping("/empresaatualizar/{id}")
