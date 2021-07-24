@@ -20,19 +20,25 @@ import java.time.LocalDateTime;
 @Builder
 public class AnuncioVagaRequest {
 
-    private String enderecoCep;
-
     @NotNull @NotEmpty
     private String titulo;
-    @NotNull
-    private Time cargaHoraria;
+
     @NotNull @NotEmpty
     private String requisitos;
+
+    @NotNull @NotEmpty
+    private String enderecoCep;
+    @NotNull @NotEmpty
+    private String complemento;
+
+    private String descricao;
+
+    private Integer numero;
+
+    private Time cargaHoraria;
+
     private Float salario;
 
-    private String complemento;
-    @NotNull
-    private Integer numero;
 
     public AnuncioVaga converter(Empresa empresa) throws IOException {
 
@@ -55,6 +61,7 @@ public class AnuncioVagaRequest {
                 .empresa(empresa)
                 .endereco(endereco)
                 .titulo(this.titulo)
+                .descricao(this.descricao)
                 .cargaHoraria(this.cargaHoraria)
                 .requisitos(this.requisitos)
                 .salario(this.salario)

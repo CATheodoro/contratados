@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class TokenResponse {
-    private final Long id;
+    private final String id;
     private final String email;
     private final Perfil perfil;
 
@@ -14,7 +14,7 @@ public class TokenResponse {
     private final String tipo;
 
     public TokenResponse(User user, String token, String tipo) {
-        this.id = user.getId();
+        this.id = user.getId().toString();
         this.email = user.getEmail();
         this.perfil = user.getPerfil();
 

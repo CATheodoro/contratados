@@ -20,6 +20,8 @@ import java.sql.Time;
 public class SolicitacaoAtualizarEmpresaRequest {
 
     @NotNull
+    private String descricao;
+    
     private String enderecoCep;
     @NotNull
     private Time horaEntrevista;
@@ -32,22 +34,25 @@ public class SolicitacaoAtualizarEmpresaRequest {
 
     public Solicitacao atualizar(Solicitacao solicitacao) throws IOException {
 
-        var viaCEPClient = new ViaCEPClient();
-        var viaCEPEndereco = viaCEPClient.getEndereco(enderecoCep);
+        if(enderecoCep != null){
+            var viaCEPClient = new ViaCEPClient();
+            var viaCEPEndereco = viaCEPClient.getEndereco(enderecoCep);
 
-        var endereco = Endereco.builder()
-                .cep(viaCEPEndereco.getCep())
-                .logradouro(viaCEPEndereco.getLogradouro())
-                .complemento(this.complemento)
-                .bairro(viaCEPEndereco.getBairro())
-                .localidade(viaCEPEndereco.getLocalidade())
-                .uf(viaCEPEndereco.getUf())
-                .ibge(viaCEPEndereco.getIbge())
-                .numero(this.numero)
-                .build();
+            var endereco = Endereco.builder()
+                    .cep(viaCEPEndereco.getCep())
+                    .logradouro(viaCEPEndereco.getLogradouro())
+                    .complemento(this.complemento)
+                    .bairro(viaCEPEndereco.getBairro())
+                    .localidade(viaCEPEndereco.getLocalidade())
+                    .uf(viaCEPEndereco.getUf())
+                    .ibge(viaCEPEndereco.getIbge())
+                    .numero(this.numero)
+                    .build();
 
+            solicitacao.setEndereco(endereco);
+        }
 
-        solicitacao.setEndereco(endereco);
+        solicitacao.setDescricao(this.descricao);
         solicitacao.setHoraEntrevista(this.horaEntrevista);
         solicitacao.setDataEntrevista(this.dataEntrevista);
 

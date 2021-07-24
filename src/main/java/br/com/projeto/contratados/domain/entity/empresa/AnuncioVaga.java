@@ -29,6 +29,12 @@ public class AnuncioVaga {
     @Column(length = 50, nullable = false)
     private String titulo;
 
+    @Column(length = 200, nullable = false)
+    private String requisitos;
+
+    @Column(length = 200, nullable = false)
+    private String descricao;
+
     @ManyToOne
     private Empresa empresa;
 
@@ -37,8 +43,7 @@ public class AnuncioVaga {
 
     @Column(nullable = false)
     private Time cargaHoraria;
-    @Column(length = 255, nullable = false)
-    private String requisitos;
+
     private Float salario;
     private boolean statusAnuncio;
 

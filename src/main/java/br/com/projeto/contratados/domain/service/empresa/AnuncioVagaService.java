@@ -46,6 +46,10 @@ public class AnuncioVagaService {
         return tokenService.getAuthenticatedEmpresa();
     }
 
+    private Long getIdEmpresaSemValidacao() {
+        return tokenService.getAuthenticatedEmpresaSemValidacao();
+    }
+
     public AnuncioVaga cadastrar(AnuncioVagaRequest form) throws IOException {
         Optional<Empresa> optional = empresaRepository.findById(getIdEmpresa());
         if (optional.isEmpty())
@@ -61,9 +65,10 @@ public class AnuncioVagaService {
     }
 
     public Page<AnuncioVaga> listarResumida(Pageable paginacao, String localidade, String cargo) {
-        Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario());
-        if(optional.isEmpty())
-            throw new UsuarioNaoEncontradoException("Usuario não encontrado");
+        Optional<Empresa> empresaOptional = empresaRepository.findById(getIdEmpresaSemValidacao());
+        if(empresaOptional.isPresent()) {
+            return anuncioVagaRepository.findAllByEmpresaId(getIdEmpresaSemValidacao(), paginacao);
+        }
 
         if(localidade != "" && localidade != null && cargo !="" && cargo != null)
             return anuncioVagaRepository.findAllByEnderecoLocalidadeAndSetorCargoCargo(localidade, cargo, paginacao);

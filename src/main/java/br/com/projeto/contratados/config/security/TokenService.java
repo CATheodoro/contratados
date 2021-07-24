@@ -81,6 +81,23 @@ public class TokenService {
         }
     }
 
+    public Long getAuthenticatedEmpresaSemValidacao() {
+
+        try {
+            Optional<Object> principal = (Optional<Object>) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            if (principal.isPresent() && principal.get() instanceof Empresa) {
+                return ((Empresa)principal.get()).getId();
+            }  else {
+                return 0L;
+            }
+
+        } catch (Exception e) {
+            throw new UserAuthException(e.getMessage());
+        }
+
+    }
+
 
     public User getUser(Authentication authentication) {
         return (User) authentication.getPrincipal();

@@ -26,7 +26,6 @@ public class AtualizacaoUsuarioRequest {
     private String celular;
     private String telefone;
 
-    private StatusUsuario status;
 
     private String enderecoCep;
 
@@ -41,7 +40,6 @@ public class AtualizacaoUsuarioRequest {
         usuario.setDataNascimento((this.dataNascimento));
         usuario.setCelular(this.celular);
         usuario.setTelefone(this.telefone);
-        usuario.setStatus(this.status);
 
         if (enderecoCep !=null) {
             var viaCEPClient = new ViaCEPClient();

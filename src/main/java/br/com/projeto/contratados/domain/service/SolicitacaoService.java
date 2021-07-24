@@ -3,12 +3,14 @@ package br.com.projeto.contratados.domain.service;
 import br.com.projeto.contratados.config.exception.excecoes.*;
 import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.domain.entity.empresa.AnuncioVaga;
+import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.domain.entity.solicitacao.Solicitacao;
 import br.com.projeto.contratados.domain.entity.solicitacao.SolicitacaoEmpresaStatus;
 import br.com.projeto.contratados.domain.entity.solicitacao.SolicitacaoUsuarioStatus;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.repository.SolicitacaoRepository;
 import br.com.projeto.contratados.domain.repository.empresa.AnuncioVagaRepository;
+import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
 import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
 import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoAtualizarEmpresaRequest;
 import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoEmpresaRequest;
@@ -35,6 +37,10 @@ public class SolicitacaoService {
     private AnuncioVagaRepository anuncioVagaRepository;
 
     @Autowired
+    private EmpresaRepository empresaRepository;
+
+
+    @Autowired
     private TokenService tokenService;
 
     private Long getIdUsuario() {
@@ -42,7 +48,11 @@ public class SolicitacaoService {
     }
 
     private Long getIdEmpresa() {
-        return tokenService.getAuthenticatedEmpresa();
+        return tokenService.getAuthenticatedEmpresaSemValidacao();
+    }
+
+    private Long getIdEmpresaSemValidacao() {
+        return tokenService.getAuthenticatedEmpresaSemValidacao();
     }
 
     public Solicitacao cadastrar(SolicitacaoRequest form) {
@@ -65,9 +75,18 @@ public class SolicitacaoService {
 
 
     public Page<Solicitacao> listar(SolicitacaoEmpresaStatus status, Pageable paginacao) {
-        if(status !=null)
-            return solicitacaoRepository.findBySolicitacaoEmpresaStatus(status, paginacao);
-        return solicitacaoRepository.findAll(paginacao);
+        Optional<Empresa> empresaOptional = empresaRepository.findById(getIdEmpresaSemValidacao());
+        if(empresaOptional.isPresent())
+            return solicitacaoRepository.findByAnuncioVagaEmpresaId(getIdEmpresaSemValidacao(), paginacao);
+
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(getIdUsuario());
+        if(usuarioOptional.isPresent()){
+            if(status !=null)
+                return solicitacaoRepository.findAllByUsuarioIdAndSolicitacaoEmpresaStatus(getIdUsuario(), status, paginacao);
+
+            return solicitacaoRepository.findAllByUsuarioId(getIdUsuario(), paginacao);
+        }
+        throw new SolicitacaoNaoEncontradaException("Solicitação não encontrada");
     }
 
     public Solicitacao getSolicitacao(Long id) {

@@ -7,10 +7,7 @@ import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.repository.user.UserRepository;
 import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
-import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizacaoUsuarioRequest;
-import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizarEmailUsuarioRequest;
-import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizarSenhaUsuarioRequest;
-import br.com.projeto.contratados.rest.model.request.usuario.usuario.UsuarioRequest;
+import br.com.projeto.contratados.rest.model.request.usuario.usuario.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -111,4 +108,14 @@ public class UsuarioService {
     }
 
 
+    public Usuario atualizarStatus(AtualizarStatusUsuarioRequest form) {
+        Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario(null));
+
+        if(optional.isEmpty())
+            throw new UsuarioNaoEncontradoException("Usuario não encontrado, status não pode ser alterado");
+
+        var usuario = form.atualizarStatusUsuario(optional.get());
+
+        return usuarioRepository.save(usuario);
+    }
 }

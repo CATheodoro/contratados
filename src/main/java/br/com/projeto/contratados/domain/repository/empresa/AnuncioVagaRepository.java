@@ -16,4 +16,6 @@ public interface AnuncioVagaRepository extends JpaRepository<AnuncioVaga, Long> 
     Page<AnuncioVaga> findAllByEnderecoLocalidade(String localidade, Pageable paginacao);
 
     Page<AnuncioVaga> findAllBySetorCargoCargo(String cargo, Pageable paginacao);
+
+    Page<AnuncioVaga> findAllByEmpresaId(Long idEmpresaSemValidacao, Pageable paginacao);
 }

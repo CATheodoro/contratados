@@ -23,6 +23,8 @@ public class SolicitacaoEmpresaRequest {
     @NotNull
     private SolicitacaoEmpresaStatus solicitacaoEmpresaStatus;
     @NotNull
+    private String descricao;
+
     private String  enderecoCep;
     @NotNull
     private Time horaEntrevista;
@@ -38,21 +40,27 @@ public class SolicitacaoEmpresaRequest {
         solicitacao.setSolicitacaoEmpresaStatus(this.solicitacaoEmpresaStatus);
 
         if (this.solicitacaoEmpresaStatus == SolicitacaoEmpresaStatus.ACEITO){
-            var viaCEPClient = new ViaCEPClient();
-            var viaCEPEndereco = viaCEPClient.getEndereco(enderecoCep);
 
-            var endereco = Endereco.builder()
-                    .cep(viaCEPEndereco.getCep())
-                    .logradouro(viaCEPEndereco.getLogradouro())
-                    .complemento(this.complemento)
-                    .bairro(viaCEPEndereco.getBairro())
-                    .localidade(viaCEPEndereco.getLocalidade())
-                    .uf(viaCEPEndereco.getUf())
-                    .ibge(viaCEPEndereco.getIbge())
-                    .numero(this.numero)
-                    .build();
+            if(enderecoCep != null){
+                var viaCEPClient = new ViaCEPClient();
+                var viaCEPEndereco = viaCEPClient.getEndereco(enderecoCep);
 
-            solicitacao.setEndereco(endereco);
+                var endereco = Endereco.builder()
+                        .cep(viaCEPEndereco.getCep())
+                        .logradouro(viaCEPEndereco.getLogradouro())
+                        .complemento(this.complemento)
+                        .bairro(viaCEPEndereco.getBairro())
+                        .localidade(viaCEPEndereco.getLocalidade())
+                        .uf(viaCEPEndereco.getUf())
+                        .ibge(viaCEPEndereco.getIbge())
+                        .numero(this.numero)
+                        .build();
+
+                solicitacao.setEndereco(endereco);
+            }
+
+
+            solicitacao.setDescricao(this.descricao);
             solicitacao.setHoraEntrevista(this.horaEntrevista);
             solicitacao.setDataEntrevista(this.dataEntrevista);
         }

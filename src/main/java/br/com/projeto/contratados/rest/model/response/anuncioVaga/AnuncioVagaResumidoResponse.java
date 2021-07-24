@@ -21,6 +21,7 @@ public class AnuncioVagaResumidoResponse {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private final LocalDateTime dataPostagem;
 
+    private final Long empresaId;
     private final String nomeEmpresa;
 
     private String localidade;
@@ -40,6 +41,7 @@ public class AnuncioVagaResumidoResponse {
         this.statusAnuncio = anuncioVaga.isStatusAnuncio();
         this.dataPostagem = anuncioVaga.getDataPostagem();
 
+        this.empresaId = anuncioVaga.getEmpresa().getId();
         this.nomeEmpresa = anuncioVaga.getEmpresa().getNome();
     }
 

@@ -5,6 +5,7 @@ import br.com.projeto.contratados.rest.model.response.SetorCargoResponse;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,7 +14,11 @@ public class AnuncioVagaDetalhadoResponse {
     private final Long id;
     private List<SetorCargoResponse> setorCargoResponses;
     private final String titulo;
+    private final String descricao;
     private final String requisitos;
+    private final Time cargaHoraria;
+    private final Float salario;
+
     private final boolean statusAnuncio;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private final LocalDateTime dataPostagem;
@@ -39,8 +44,12 @@ public class AnuncioVagaDetalhadoResponse {
         if (anuncioVaga.getSetorCargo() != null)
             this.setorCargoResponses = SetorCargoResponse.converterList(anuncioVaga.getSetorCargo());
         this.titulo = anuncioVaga.getTitulo();
+        this.descricao = anuncioVaga.getDescricao();
 
         this.requisitos = anuncioVaga.getRequisitos();
+        this.cargaHoraria = anuncioVaga.getCargaHoraria();
+        this.salario = anuncioVaga.getSalario();
+
         this.statusAnuncio = anuncioVaga.isStatusAnuncio();
         this.dataPostagem = anuncioVaga.getDataPostagem();
 

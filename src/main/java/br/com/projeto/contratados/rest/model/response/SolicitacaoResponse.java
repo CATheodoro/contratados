@@ -26,6 +26,7 @@ public class SolicitacaoResponse {
 
     @JsonFormat(pattern = "dd-MM-yyyy")
     private final LocalDateTime dataCriacaoSolicitacao;
+    private final String descricao;
 
     private String cep;
     private String logradouro;
@@ -52,6 +53,8 @@ public class SolicitacaoResponse {
         this.horaEntrevista = solicitacao.getHoraEntrevista();
         this.dataEntrevista = solicitacao.getDataEntrevista();
         this.dataCriacaoSolicitacao = solicitacao.getDataCriacaoSolicitacao();
+
+        this.descricao = solicitacao.getDescricao();
 
         if (solicitacao.getEndereco() != null) {
             this.cep = solicitacao.getEndereco().getCep();

@@ -24,6 +24,7 @@ public class Solicitacao {
     private Usuario usuario;
     @ManyToOne
     private AnuncioVaga anuncioVaga;
+    private String descricao;
     @Embedded
     private Endereco endereco;
 

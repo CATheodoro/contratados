@@ -3,10 +3,7 @@ package br.com.projeto.contratados.rest.controller.usuario;
 import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import br.com.projeto.contratados.domain.service.usuario.UsuarioService;
-import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizacaoUsuarioRequest;
-import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizarEmailUsuarioRequest;
-import br.com.projeto.contratados.rest.model.request.usuario.usuario.AtualizarSenhaUsuarioRequest;
-import br.com.projeto.contratados.rest.model.request.usuario.usuario.UsuarioRequest;
+import br.com.projeto.contratados.rest.model.request.usuario.usuario.*;
 import br.com.projeto.contratados.rest.model.response.UsuarioResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -73,4 +70,12 @@ public class UsuarioController {
         var usuario = usuarioService.atualizarEmail(id, form);
         return ResponseEntity.ok(new UsuarioResponse(usuario));
     }
+
+    @PutMapping("/status")
+    @Transactional
+    public ResponseEntity<UsuarioResponse> atualizarStatus (@RequestBody @Valid AtualizarStatusUsuarioRequest form) {
+        var usuario = usuarioService.atualizarStatus(form);
+        return ResponseEntity.ok(new UsuarioResponse(usuario));
+    }
+
 }

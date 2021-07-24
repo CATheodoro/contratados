@@ -35,7 +35,7 @@ public class SolicitacaoController {
         return ResponseEntity.created(uri).body(new SolicitacaoResponse(solicitacao));
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<Page<SolicitacaoResponse>> listar(@RequestParam (name = "status",required = false) SolicitacaoEmpresaStatus status,
                                                             @PageableDefault(size = 10,page = 0,sort = "dataCriacaoSolicitacao", direction = Sort.Direction.DESC)Pageable paginacao){
         Page<Solicitacao> solicitacao = solicitacaoService.listar(status, paginacao);
@@ -43,7 +43,7 @@ public class SolicitacaoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SolicitacaoResponse> listar(@PathVariable Long id){
+    public ResponseEntity<SolicitacaoResponse> getSolicitacao(@PathVariable Long id){
         Solicitacao solicitacao = solicitacaoService.getSolicitacao(id);
         return ResponseEntity.ok().body(new SolicitacaoResponse(solicitacao));
     }
