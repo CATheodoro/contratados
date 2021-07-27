@@ -4,7 +4,7 @@ import br.com.projeto.contratados.domain.entity.solicitacao.Solicitacao;
 import br.com.projeto.contratados.domain.entity.solicitacao.SolicitacaoEmpresaStatus;
 import br.com.projeto.contratados.domain.service.SolicitacaoService;
 import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoAtualizarEmpresaRequest;
-import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoEmpresaRequest;
+import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoEmpresaStatusRequest;
 import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoRequest;
 import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoUsuarioRequest;
 import br.com.projeto.contratados.rest.model.response.SolicitacaoResponse;
@@ -37,8 +37,9 @@ public class SolicitacaoController {
 
     @GetMapping
     public ResponseEntity<Page<SolicitacaoResponse>> listar(@RequestParam (name = "status",required = false) SolicitacaoEmpresaStatus status,
+                                                            @RequestParam (name = "anuncioId",required = false) Long anuncioId,
                                                             @PageableDefault(size = 10,page = 0,sort = "dataCriacaoSolicitacao", direction = Sort.Direction.DESC)Pageable paginacao){
-        Page<Solicitacao> solicitacao = solicitacaoService.listar(status, paginacao);
+        Page<Solicitacao> solicitacao = solicitacaoService.listar(status, anuncioId, paginacao);
         return ResponseEntity.ok().body(SolicitacaoResponse.converter(solicitacao));
     }
 
@@ -56,7 +57,7 @@ public class SolicitacaoController {
     }
 
     @PutMapping("/empresa/{id}")
-    public ResponseEntity<SolicitacaoResponse> solicitacaoEmpresa(@PathVariable Long id, @RequestBody @Valid SolicitacaoEmpresaRequest form) throws IOException {
+    public ResponseEntity<SolicitacaoResponse> solicitacaoEmpresa(@PathVariable Long id, @RequestBody @Valid SolicitacaoEmpresaStatusRequest form) throws IOException {
         var solicitacao = solicitacaoService.solicitacaoEmpresa(id ,form);
 
         return ResponseEntity.ok().body(new SolicitacaoResponse(solicitacao));

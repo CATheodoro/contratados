@@ -35,7 +35,7 @@ public class AnuncioVagaDetalhadoResponse {
     private String bairro;
     private String localidade;
     private String uf;
-    private Integer numero;
+    private String numero;
 
 
 
@@ -66,7 +66,7 @@ public class AnuncioVagaDetalhadoResponse {
             this.bairro = anuncioVaga.getEndereco().getBairro();
             this.localidade = anuncioVaga.getEndereco().getLocalidade();
             this.uf = anuncioVaga.getEndereco().getUf();
-            this.numero = anuncioVaga.getEndereco().getNumero();
+            this.numero = anuncioVaga.getEndereco().getNumero().toString();
         }
 
     }

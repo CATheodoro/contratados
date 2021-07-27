@@ -57,10 +57,17 @@ public class UsuarioService {
     }
 
     public Usuario perfilUsuario(Long id) {
-        Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario(id));
+        if(id == null || id == 0){
+            Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario(id));
+            if(optional.isEmpty())
+                throw new UsuarioNaoEncontradoException("Ocorreu algum erro, Não foi possivel acessar seu perfil");
+            return optional.get();
+        }
+        Optional<Usuario> optional = usuarioRepository.findById(id);
         if(optional.isEmpty())
-            throw new UsuarioNaoEncontradoException("Ocorreu algum erro, Não foi possivel acessar seu perfil");
+            throw new UsuarioNaoEncontradoException("Ocorreu algum erro, Não foi possivel acessar o perfil do usuáiro");
         return optional.get();
+
     }
 
     public Usuario atualizar(Long id, AtualizacaoUsuarioRequest request) throws IOException {

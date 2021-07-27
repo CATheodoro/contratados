@@ -21,15 +21,13 @@ public class SolicitacaoAtualizarEmpresaRequest {
 
     @NotNull
     private String descricao;
-    
-    private String enderecoCep;
     @NotNull
     private Time horaEntrevista;
     @NotNull
     private Date dataEntrevista;
 
+    private String enderecoCep;
     private String complemento;
-    @NotNull
     private Integer numero;
 
     public Solicitacao atualizar(Solicitacao solicitacao) throws IOException {

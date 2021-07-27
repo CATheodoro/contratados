@@ -28,11 +28,11 @@ public class AnuncioVagaController {
     private AnuncioVagaService anuncioVagaService;
 
     @PostMapping
-    public ResponseEntity<AnuncioVagaResponse> cadastrar(@RequestBody @Valid AnuncioVagaRequest form, UriComponentsBuilder uriComponentsBuilder) throws IOException {
+    public ResponseEntity<AnuncioVagaDetalhadoResponse> cadastrar(@RequestBody @Valid AnuncioVagaRequest form, UriComponentsBuilder uriComponentsBuilder) throws IOException {
         var anuncioVaga = anuncioVagaService.cadastrar(form);
 
         var uri = uriComponentsBuilder.path("/anunciovaga/{id}").buildAndExpand(anuncioVaga.getId()).toUri();
-        return ResponseEntity.created(uri).body(new AnuncioVagaResponse(anuncioVaga));
+        return ResponseEntity.created(uri).body(new AnuncioVagaDetalhadoResponse(anuncioVaga));
     }
 
     @GetMapping

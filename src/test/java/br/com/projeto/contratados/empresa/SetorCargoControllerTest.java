@@ -83,7 +83,7 @@ public class SetorCargoControllerTest {
     @Test
     public void deveRetornarCreatedQuandoCriarSetorCargo() throws  Exception{
         SetorCargoRequest setorCargoRequest = SetorCargoRequest.builder()
-                .anuncioVaga(AnuncioVaga.builder().id(1L).build())
+                .anuncioVagaId(1L)
                 .cargo("Pedreiro")
                 .setor("Industrial")
                 .build();
@@ -99,7 +99,7 @@ public class SetorCargoControllerTest {
     @Test
     public void deveRetornarBadRequestQuandoCriarSemCargoSetorOuAnuncioVagaIDSetorCargo() throws  Exception{
         SetorCargoRequest setorCargoRequest = SetorCargoRequest.builder()
-                .anuncioVaga(AnuncioVaga.builder().id(1L).build())
+                .anuncioVagaId(1L)
                 .cargo("Pedreiro")
 
                 .build();

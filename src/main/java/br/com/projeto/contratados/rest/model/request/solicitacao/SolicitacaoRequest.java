@@ -21,8 +21,6 @@ public class SolicitacaoRequest {
 
     public Solicitacao converter(Usuario usuario, AnuncioVaga anuncioVaga) {
 
-
-
         return Solicitacao.builder()
                 .usuario(usuario)
                 .anuncioVaga(anuncioVaga)

@@ -18,15 +18,18 @@ import java.sql.Time;
 @Builder
 public class AnuncioVagaAtualizarRequest {
 
-    private String enderecoCep;
+
     private String titulo;
-    private Time cargaHoraria;
     private String requisitos;
+    private String descricao;
+
+    private String enderecoCep;
+    private String complemento;
+    private Integer numero;
+
+    private Time cargaHoraria;
     private Float salario;
 
-    private String complemento;
-    @NotNull
-    private Integer numero;
 
     public AnuncioVaga converter(AnuncioVaga anuncioVaga) throws IOException {
 
@@ -46,6 +49,8 @@ public class AnuncioVagaAtualizarRequest {
                     .build());
         }
 
+        if(this.descricao != null)
+            anuncioVaga.setDescricao(this.descricao);
         if(this.titulo != null)
             anuncioVaga.setTitulo(this.titulo);
         if (this.cargaHoraria != null)

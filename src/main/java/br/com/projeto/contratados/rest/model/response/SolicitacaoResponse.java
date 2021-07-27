@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 @Getter
 public class SolicitacaoResponse {
     private final Long id;
-    private final String usuario;
+    private final Long usuarioId;
+    private final String nomeUsuario;
 
     private final SolicitacaoEmpresaStatus solicitacaoEmpresaStatus;
     private final SolicitacaoUsuarioStatus solicitacaoUsuarioStatus;
@@ -34,7 +35,7 @@ public class SolicitacaoResponse {
     private String bairro;
     private String localidade;
     private String uf;
-    private Integer numero;
+    private String numero;
 
     private final Long anuncioVagaId;
     private final Long empresaId;
@@ -46,7 +47,8 @@ public class SolicitacaoResponse {
 
     public SolicitacaoResponse(Solicitacao solicitacao){
         this.id = solicitacao.getId();
-        this.usuario = solicitacao.getUsuario().getNome();
+        this.usuarioId = solicitacao.getUsuario().getId();
+        this.nomeUsuario = solicitacao.getUsuario().getNome();
 
         this.solicitacaoEmpresaStatus = solicitacao.getSolicitacaoEmpresaStatus();
         this.solicitacaoUsuarioStatus = solicitacao.getSolicitacaoUsuarioStatus();
@@ -63,7 +65,7 @@ public class SolicitacaoResponse {
             this.bairro = solicitacao.getEndereco().getBairro();
             this.localidade = solicitacao.getEndereco().getLocalidade();
             this.uf = solicitacao.getEndereco().getUf();
-            this.numero = solicitacao.getEndereco().getNumero();
+            this.numero = solicitacao.getEndereco().getNumero().toString();
         } else {
             this.uf = solicitacao.getAnuncioVaga().getEndereco().getUf();
             this.localidade = solicitacao.getAnuncioVaga().getEndereco().getLocalidade();

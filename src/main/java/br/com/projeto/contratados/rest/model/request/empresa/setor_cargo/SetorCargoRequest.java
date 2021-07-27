@@ -15,15 +15,15 @@ import javax.validation.constraints.NotNull;
 public class SetorCargoRequest {
 
     @NotNull
-    private AnuncioVaga anuncioVaga;
+    private Long anuncioVagaId;
     private String setor;
     @NotNull @NotEmpty
     private String cargo;
 
 
-    public SetorCargo converter(){
+    public SetorCargo converter(AnuncioVaga anuncioVaga){
         return SetorCargo.builder()
-                .anuncioVaga(this.anuncioVaga)
+                .anuncioVaga(anuncioVaga)
                 .setor(this.setor)
                 .cargo(this.cargo)
                 .build();

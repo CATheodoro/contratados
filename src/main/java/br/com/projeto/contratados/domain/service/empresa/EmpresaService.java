@@ -2,6 +2,7 @@ package br.com.projeto.contratados.domain.service.empresa;
 
 import br.com.projeto.contratados.config.exception.excecoes.EmailJaCadastradoException;
 import br.com.projeto.contratados.config.exception.excecoes.EmpresaNaoEncontradaException;
+import br.com.projeto.contratados.config.exception.excecoes.SenhaIncorretaException;
 import br.com.projeto.contratados.config.security.TokenService;
 import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
@@ -13,6 +14,7 @@ import br.com.projeto.contratados.rest.model.request.empresa.empresa.EmpresaRequ
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -76,6 +78,10 @@ public class EmpresaService {
         if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, E-mail não pode ser atualizada");
 
+        if(!new BCryptPasswordEncoder().matches(form.getOldPassword(), optional.get().getPassword()))
+            throw new SenhaIncorretaException("Senha Incorreta");
+
+
         var empresa = form.atualizarSenhaEmpresaRequest(optional.get());
 
         if (userRepository.existsByEmail(empresa.getEmail()))
@@ -89,6 +95,9 @@ public class EmpresaService {
         Optional<Empresa> optional = empresaRepository.findById(getIdEmpresa());
         if (optional.isEmpty())
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, senha não pode ser atualizada");
+
+        if(!new BCryptPasswordEncoder().matches(form.getOldPassword(), optional.get().getPassword()))
+            throw new SenhaIncorretaException("Senha Incorreta");
 
         var empresa = form.atualizarSenhaEmpresaRequest(optional.get());
         return empresaRepository.save(empresa);

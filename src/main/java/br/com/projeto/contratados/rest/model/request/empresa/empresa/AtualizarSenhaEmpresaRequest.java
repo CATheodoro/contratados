@@ -4,6 +4,7 @@ import br.com.projeto.contratados.domain.entity.empresa.Empresa;
 import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -12,10 +13,13 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class AtualizarSenhaEmpresaRequest {
     @NotNull @NotEmpty
-    private String senha;
+    private String oldPassword;
+
+    @NotNull @NotEmpty
+    private String password;
 
     public Empresa atualizarSenhaEmpresaRequest(Empresa empresa){
-        empresa.setPassword(this.senha);
+        empresa.setPassword(new BCryptPasswordEncoder().encode(this.password));
         return empresa;
     }
 }

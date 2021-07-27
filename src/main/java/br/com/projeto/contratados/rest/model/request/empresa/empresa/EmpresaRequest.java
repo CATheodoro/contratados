@@ -30,7 +30,6 @@ public class EmpresaRequest {
     private String celular;
     private String telefone;
     private String cnpj;
-    //    private img fotoPerfil;
     private Date dataFundacao;
 
 

@@ -35,14 +35,14 @@ public class SetorCargoService {
 
     public SetorCargo cadastrar(SetorCargoRequest form) {
 
-        Optional<AnuncioVaga> optional = anuncioVagaRepository.findById(form.getAnuncioVaga().getId());
+        Optional<AnuncioVaga> optional = anuncioVagaRepository.findById(form.getAnuncioVagaId());
         if (optional.isEmpty())
             throw new AnuncioVagaNaoEncontradoException("Anúncio vaga não encontrado, não foi possível cadastrar um setor e um cargo");
 
         if (!optional.get().getEmpresa().getId().equals(getIdEmpresa()))
             throw new EmpresaNaoEncontradaException("Empresa não encontrada, não foi possível cadastrar um setor e um cargo");
 
-        var setorCargo = form.converter();
+        var setorCargo = form.converter(optional.get());
 
         return setorCargoRepository.save(setorCargo);
     }

@@ -13,7 +13,7 @@ import br.com.projeto.contratados.domain.repository.empresa.AnuncioVagaRepositor
 import br.com.projeto.contratados.domain.repository.empresa.EmpresaRepository;
 import br.com.projeto.contratados.domain.repository.usuario.UsuarioRepository;
 import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoAtualizarEmpresaRequest;
-import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoEmpresaRequest;
+import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoEmpresaStatusRequest;
 import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoRequest;
 import br.com.projeto.contratados.rest.model.request.solicitacao.SolicitacaoUsuarioRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +61,7 @@ public class SolicitacaoService {
         if (anuncioVagaOptional.isEmpty())
             throw new AnuncioVagaNaoEncontradoException("Anúncio de Vaga não encontrado, não foi possível enviar a solicitação");
 
-        if (solicitacaoRepository.existsByUsuarioId(getIdUsuario()) && solicitacaoRepository.existsByAnuncioVagaId(form.getAnuncioVagaId()))
+        if (solicitacaoRepository.existsByAnuncioVagaIdAndUsuarioId(form.getAnuncioVagaId(), getIdUsuario()))
             throw new SolicitacaoJaEnviadaException("Usuário já enviou a solicitação");
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(getIdUsuario());
@@ -74,10 +74,16 @@ public class SolicitacaoService {
     }
 
 
-    public Page<Solicitacao> listar(SolicitacaoEmpresaStatus status, Pageable paginacao) {
+    public Page<Solicitacao> listar(SolicitacaoEmpresaStatus status, Long anuncioId, Pageable paginacao) {
         Optional<Empresa> empresaOptional = empresaRepository.findById(getIdEmpresaSemValidacao());
-        if(empresaOptional.isPresent())
+        if(empresaOptional.isPresent()){
+            if(status !=null)
+                return solicitacaoRepository.findByAnuncioVagaEmpresaIdAndSolicitacaoEmpresaStatus(getIdEmpresaSemValidacao(), status, paginacao);
+            if(anuncioId !=null)
+                return solicitacaoRepository.findByAnuncioVagaEmpresaIdAndAnuncioVagaId(getIdEmpresaSemValidacao(), anuncioId, paginacao);
             return solicitacaoRepository.findByAnuncioVagaEmpresaId(getIdEmpresaSemValidacao(), paginacao);
+        }
+
 
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(getIdUsuario());
         if(usuarioOptional.isPresent()){
@@ -119,7 +125,7 @@ public class SolicitacaoService {
     }
 
 
-    public Solicitacao solicitacaoEmpresa(Long id, SolicitacaoEmpresaRequest form) throws IOException {
+    public Solicitacao solicitacaoEmpresa(Long id, SolicitacaoEmpresaStatusRequest form) throws IOException {
 
         Optional<Solicitacao> optional = solicitacaoRepository.findById(id);
 

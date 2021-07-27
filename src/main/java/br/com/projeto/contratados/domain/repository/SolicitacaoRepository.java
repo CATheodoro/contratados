@@ -10,13 +10,17 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SolicitacaoRepository extends JpaRepository<Solicitacao, Long> {
-    boolean existsByUsuarioId(Long id);
-
-    boolean existsByAnuncioVagaId(Long id);
 
     Page<Solicitacao> findAllByUsuarioId(Long idUsuario, Pageable paginacao);
 
     Page<Solicitacao> findAllByUsuarioIdAndSolicitacaoEmpresaStatus(Long idUsuario, SolicitacaoEmpresaStatus status, Pageable paginacao);
 
     Page<Solicitacao> findByAnuncioVagaEmpresaId(Long idEmpresa, Pageable paginacao);
+
+    Page<Solicitacao> findByAnuncioVagaEmpresaIdAndSolicitacaoEmpresaStatus(Long idEmpresaSemValidacao, SolicitacaoEmpresaStatus status, Pageable paginacao);
+
+    Page<Solicitacao> findByAnuncioVagaEmpresaIdAndAnuncioVagaId(Long idEmpresaSemValidacao, Long anuncioId, Pageable paginacao);
+
+
+    boolean existsByAnuncioVagaIdAndUsuarioId(Long anuncioVagaId, Long idUsuario);
 }
