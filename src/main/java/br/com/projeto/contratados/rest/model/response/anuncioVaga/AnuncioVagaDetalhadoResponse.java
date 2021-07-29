@@ -17,7 +17,7 @@ public class AnuncioVagaDetalhadoResponse {
     private final String descricao;
     private final String requisitos;
     private final Time cargaHoraria;
-    private final Float salario;
+    private String salario;
 
     private final boolean statusAnuncio;
     @JsonFormat(pattern = "dd-MM-yyyy")
@@ -48,7 +48,8 @@ public class AnuncioVagaDetalhadoResponse {
 
         this.requisitos = anuncioVaga.getRequisitos();
         this.cargaHoraria = anuncioVaga.getCargaHoraria();
-        this.salario = anuncioVaga.getSalario();
+        if(anuncioVaga.getSalario() != null)
+            this.salario = anuncioVaga.getSalario().toString();
 
         this.statusAnuncio = anuncioVaga.isStatusAnuncio();
         this.dataPostagem = anuncioVaga.getDataPostagem();

@@ -28,6 +28,7 @@ public final class UsuarioBuilder {
     private Endereco endereco;
     private Date dataNascimento;
     private StatusUsuario status;
+    private String linkCurriculo;
 
     private UsuarioBuilder() {
     }
@@ -126,6 +127,11 @@ public final class UsuarioBuilder {
         return this;
     }
 
+    public UsuarioBuilder linkCurriculo(String linkCurriculo) {
+        this.linkCurriculo = linkCurriculo;
+        return this;
+    }
+
     public Usuario build() {
         Usuario usuario = new Usuario();
         usuario.setId(id);
@@ -146,6 +152,7 @@ public final class UsuarioBuilder {
         usuario.setEndereco(endereco);
         usuario.setDataNascimento(dataNascimento);
         usuario.setStatus(status);
+        usuario.setLinkCurriculo(linkCurriculo);
         return usuario;
     }
 }

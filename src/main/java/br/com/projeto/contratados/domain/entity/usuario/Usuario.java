@@ -37,4 +37,6 @@ public class Usuario extends User {
     @Enumerated(EnumType.STRING)
     private StatusUsuario status;
 
+    private String linkCurriculo;
+
 }

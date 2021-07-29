@@ -125,4 +125,15 @@ public class UsuarioService {
 
         return usuarioRepository.save(usuario);
     }
+
+    public Usuario atualizarCurriculo(AtualizarCurriculoUsuarioRequest form) {
+        Optional<Usuario> optional = usuarioRepository.findById(getIdUsuario(null));
+
+        if(optional.isEmpty())
+            throw new UsuarioNaoEncontradoException("Usuario não encontrado, currículo não pode ser alterado");
+
+        var usuario = form.atualizarCurriculoUsuarioRequest(optional.get());
+
+        return usuarioRepository.save(usuario);
+    }
 }

@@ -78,4 +78,11 @@ public class UsuarioController {
         return ResponseEntity.ok(new UsuarioResponse(usuario));
     }
 
+    @PutMapping("/curriculo")
+    @Transactional
+    public ResponseEntity<UsuarioResponse> atualizarCurriculo (@RequestBody @Valid AtualizarCurriculoUsuarioRequest form) {
+        var usuario = usuarioService.atualizarCurriculo(form);
+        return ResponseEntity.ok(new UsuarioResponse(usuario));
+    }
+
 }

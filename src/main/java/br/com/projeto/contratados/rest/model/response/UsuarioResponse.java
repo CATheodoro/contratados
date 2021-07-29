@@ -1,5 +1,6 @@
 package br.com.projeto.contratados.rest.model.response;
 
+import br.com.projeto.contratados.domain.entity.user.Perfil;
 import br.com.projeto.contratados.domain.entity.usuario.StatusUsuario;
 import br.com.projeto.contratados.domain.entity.usuario.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -43,6 +44,10 @@ public class UsuarioResponse {
     private String uf;
     private String numero;
 
+    private final String linkCurriculo;
+
+    private final Perfil perfil;
+
     public UsuarioResponse(Usuario usuario){
         this.id = usuario.getId();
         this.nome = usuario.getNome();
@@ -72,6 +77,9 @@ public class UsuarioResponse {
             this.uf = usuario.getEndereco().getUf();
             this.numero = usuario.getEndereco().getNumero().toString();
         }
+
+        this.linkCurriculo = usuario.getLinkCurriculo();
+        this.perfil = usuario.getPerfil();
 
     }
 
