@@ -22,21 +22,17 @@ public class AnuncioVagaRequest {
 
     @NotNull @NotEmpty
     private String titulo;
-
     @NotNull @NotEmpty
     private String requisitos;
+    private String descricao;
 
     @NotNull @NotEmpty
     private String enderecoCep;
     @NotNull @NotEmpty
     private String complemento;
-
-    private String descricao;
-
     private Integer numero;
 
     private Time cargaHoraria;
-
     private Float salario;
 
 

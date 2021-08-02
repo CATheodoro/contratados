@@ -19,12 +19,13 @@ public class UsuarioResponse {
     private final String email;
 
     private final Date dataNascimento;
-
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private final Date dataNascimentoFormatado;
     private final String celular;
     private final String telefone;
 
     private final StatusUsuario status;
-
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private final LocalDateTime dataCriacaoPerfil;
 
     private final boolean accountNonExpired;
@@ -58,7 +59,7 @@ public class UsuarioResponse {
 
         this.status = usuario.getStatus();
         this.dataCriacaoPerfil = usuario.getDataCriacaoPerfil();
-
+        this.dataNascimentoFormatado = usuario.getDataNascimento();
         this.accountNonExpired = usuario.isAccountNonExpired();
         this.accountNonLocked = usuario.isAccountNonLocked();
         this.credentialsNonExpired = usuario.isCredentialsNonExpired();

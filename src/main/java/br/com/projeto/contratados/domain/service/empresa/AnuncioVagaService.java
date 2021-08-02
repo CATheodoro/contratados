@@ -67,6 +67,15 @@ public class AnuncioVagaService {
     public Page<AnuncioVaga> listarResumida(Pageable paginacao, String localidade, String cargo) {
         Optional<Empresa> empresaOptional = empresaRepository.findById(getIdEmpresaSemValidacao());
         if(empresaOptional.isPresent()) {
+            if(localidade != "" && localidade != null && cargo !="" && cargo != null)
+                return anuncioVagaRepository.findAllByEmpresaIdAndEnderecoLocalidadeAndSetorCargoCargo(getIdEmpresaSemValidacao(), localidade, cargo, paginacao);
+
+            if(localidade !="" && localidade != null)
+                return anuncioVagaRepository.findAllByEmpresaIdAndEnderecoLocalidade(getIdEmpresaSemValidacao(), localidade, paginacao);
+
+            if(cargo !="" && cargo != null)
+                return anuncioVagaRepository.findAllByEmpresaIdAndSetorCargoCargo(getIdEmpresaSemValidacao(), cargo, paginacao);
+
             return anuncioVagaRepository.findAllByEmpresaId(getIdEmpresaSemValidacao(), paginacao);
         }
 

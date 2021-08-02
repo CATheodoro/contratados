@@ -53,12 +53,12 @@ public class AnuncioVagaAtualizarRequest {
             anuncioVaga.setDescricao(this.descricao);
         if(this.titulo != null)
             anuncioVaga.setTitulo(this.titulo);
-        if (this.cargaHoraria != null)
-            anuncioVaga.setCargaHoraria(this.cargaHoraria);
-        if (this.requisitos !=null && !this.requisitos.isEmpty())
-            anuncioVaga.setRequisitos(this.requisitos);
+
+        anuncioVaga.setCargaHoraria(this.cargaHoraria);
         if (this.requisitos !=null)
-            anuncioVaga.setSalario(this.salario);
+            anuncioVaga.setRequisitos(this.requisitos);
+
+        anuncioVaga.setSalario(this.salario);
 
 
         return anuncioVaga;

@@ -18,7 +18,8 @@ public class EmpresaResumidoResponse {
     private final String celular;
     private final String telefone;
     private final String cnpj;
-
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private final Date dataFundacaoFormatado;
     private final Date dataFundacao;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private final LocalDateTime dataCriacaoPerfil;
@@ -31,7 +32,9 @@ public class EmpresaResumidoResponse {
         this.celular = empresa.getCelular();
         this.telefone = empresa.getTelefone();
         this.cnpj = empresa.getCnpj();
+        this.dataFundacaoFormatado = empresa.getDataFundacao();
         this.dataFundacao = empresa.getDataFundacao();
         this.dataCriacaoPerfil = empresa.getDataCriacaoPerfil();
+
     }
 }
