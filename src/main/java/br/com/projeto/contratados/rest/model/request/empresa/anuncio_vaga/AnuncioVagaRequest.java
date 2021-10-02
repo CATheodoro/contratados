@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.sql.Time;
 import java.time.LocalDateTime;
@@ -20,15 +21,18 @@ import java.time.LocalDateTime;
 @Builder
 public class AnuncioVagaRequest {
 
+    @Size(min = 6)
     @NotNull @NotEmpty
     private String titulo;
+
+    @Size(min = 6)
     @NotNull @NotEmpty
     private String requisitos;
     private String descricao;
 
     @NotNull @NotEmpty
     private String enderecoCep;
-    @NotNull @NotEmpty
+
     private String complemento;
     private Integer numero;
 

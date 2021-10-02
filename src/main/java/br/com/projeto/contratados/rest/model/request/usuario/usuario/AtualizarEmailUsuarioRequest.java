@@ -8,13 +8,17 @@ import lombok.Setter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
 public class AtualizarEmailUsuarioRequest {
 
+    @Size(min = 6, max = 50)
     @NotNull @NotEmpty
     private String oldPassword;
+
+    @Size(min = 6, max = 100)
     @NotNull @NotEmpty @Email
     private String email;
 

@@ -8,13 +8,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
 public class AtualizarSenhaEmpresaRequest {
+
+    @Size(min = 6, max = 50)
     @NotNull @NotEmpty
     private String oldPassword;
 
+    @Size(min = 6, max = 50)
     @NotNull @NotEmpty
     private String password;
 

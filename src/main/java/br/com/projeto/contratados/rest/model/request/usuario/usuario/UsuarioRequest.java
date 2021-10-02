@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -27,10 +28,15 @@ public class UsuarioRequest {
     private String enderecoCep;
 
     //Dados Usuario
+    @Size(min = 6, max = 100)
     @NotNull @NotEmpty @Email
     private String email;
+
+    @Size(min = 6, max = 50)
     @NotNull @NotEmpty
     private String senha;
+
+    @Size(min = 6, max = 100)
     @NotNull @NotEmpty
     private String nome;
 
